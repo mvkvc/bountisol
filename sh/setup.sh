@@ -13,11 +13,14 @@ mix "do" local.rebar --force --if-missing &&
 mix "do" local.hex --force --if-missing &&
 if [ ! -f "$MIX_HOME/escripts/livebook" ]; then mix escript.install hex livebook; fi
 
-echo "Installing contract dependencies..."
-(cd ./contracts && npm i -D && poetry install --with=dev)
-
 echo "Installing app dependencies..."
 (cd ./app && mix setup)
 
+echo "Installing contract dependencies..."
+(cd ./contracts && npm i -D)
+
 echo "Installing site dependencies..."
-(cd ./site && poetry install --with=dev)
+(cd ./site && poetry npm i -D)
+
+echo "Installing research dependencies..."
+(cd ./research && mix deps.get)

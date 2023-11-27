@@ -1,6 +1,6 @@
-defmodule SolanaWalletStandard do
-  alias SolanaWalletStandard.SignInInput
-  alias SolanaWalletStandard.SignInOutput
+defmodule SIWS do
+  alias SIWS.SignInInput
+  alias SIWS.SignInOutput
 
   def verify_sign_in(%SignInInput{} = input, %SignInOutput{} = output) do
     %SignInOutput{

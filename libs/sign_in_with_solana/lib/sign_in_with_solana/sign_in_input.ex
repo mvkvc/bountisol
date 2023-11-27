@@ -1,4 +1,4 @@
-defmodule SolanaWalletStandard.SignInInput do
+defmodule SIWS.SignInInput do
   defstruct [
     :domain,
     :address,
@@ -19,6 +19,7 @@ defmodule SolanaWalletStandard.SignInInput do
     uri = "Your method to get the current URL here"
     domain = URI.parse(uri).host
 
+    # According to the docs this can be empty most of the time 
     # %__MODULE__{
     #   domain: domain,
     #   statement:
