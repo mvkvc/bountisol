@@ -1,0 +1,24 @@
+{
+  "name": "akashi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-phantom": "^0.9.24",
+    "@solana/wallet-adapter-walletconnect": "^0.1.16",
+    "@solana/wallet-adapter-wallets": "^0.19.23",
+    "@solana/web3.js": "^1.87.6",
+    "@web3auth/sign-in-with-solana": "^3.0.0"
+  },
+  "devDependencies": {
+    "daisyui": "^4.4.10",
+    "tailwindcss": "^3.3.5"
+  }
+}
