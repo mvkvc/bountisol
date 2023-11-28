@@ -8,6 +8,8 @@ Decentralized working agreements.
 - https://app.akashi.systems
 - https://github.com/mvkvc/akashi
 - https://github.com/users/mvkvc/projects/21
+- https://fly.io/dashboard/akashi-systems
+- https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
 
 ## Components
 
