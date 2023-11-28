@@ -19,7 +19,6 @@ defmodule Research.MixProject do
 
   defp deps do
     [
-      {:bayex, path: "../libs/bayex"}
     ]
   end
 end

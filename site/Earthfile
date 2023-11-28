@@ -1,0 +1,30 @@
+VERSION 0.7
+
+ARG --global DATE=(date +%y-%m-%d)
+ARG --global DEBIAN_VERSION=bullseye-slim
+ARG --global NODE_MAJOR=18
+
+image:
+    FROM node:${NODE_MAJOR}-${DEBIAN_VERSION}
+    WORKDIR /app
+
+deps:
+    FROM +image
+    COPY . .
+    RUN npm install -D
+
+build:
+    FROM +deps
+    RUN npm run build
+
+docker:
+    FROM +build
+    ENV HOST=0.0.0.0
+    ENV PORT=3000
+    EXPOSE 3000
+    CMD ["npm", "run", "serve"]
+    SAVE IMAGE akashi-site:latest
+    SAVE IMAGE --push registry.fly.io/akashi-site:latest registry.fly.io/akashi-site:${DATE}
+
+deploy:
+    RUN fly deploy --image registry.fly.io/akashi-site:latest

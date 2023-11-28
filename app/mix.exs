@@ -1,15 +1,25 @@
 defmodule Akashi.MixProject do
   use Mix.Project
 
+  @name "Akashi"
+  @description "Decentralized work agreements."
+  @source_url "https://github.com/mvkvc/akshi"
+  @version "0.1.0"
+
   def project do
     [
       app: :akashi,
-      version: "0.1.0",
-      elixir: "~> 1.14",
+      name: @name,
+      description: @description,
+      source_url: @source_url,
+      version: @version,
+      elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
-      deps: deps()
+      docs: docs(),
+      dialyzer: dialyzer(),
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -20,12 +30,37 @@ defmodule Akashi.MixProject do
     ]
   end
 
+  def cli do
+    [
+      default_env: :dev,
+      preferred_envs: [testd: :test]
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [{:"README.md", [title: "Overview"]}],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}"
+    ]
+  end
+
+  defp dialyzer do
+    [
+      plt_core_path: "plts",
+      plt_file: {:no_warn, "plts/dialyzer.plt"}
+    ]
+  end
+
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
   defp deps do
     [
-      {:sign_in_with_solana, path: "../libs/sign_in_with_solana"},
+      {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
+      {:sign_in_with_solana, path: "./libs/sign_in_with_solana"},
+      {:pgvector, "~> 0.2.0"},
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -44,7 +79,12 @@ defmodule Akashi.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:bandit, ">= 0.0.0"}
+      {:bandit, ">= 0.0.0"},
+      {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
+      {:styler, "~> 0.10", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.27", only: :dev, runtime: false}
     ]
   end
 
@@ -56,7 +96,9 @@ defmodule Akashi.MixProject do
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      testd: ["cmd sh/db_test.sh", "test", "cmd docker stop akashi_test_db"],
+      lint: ["format --check-formatted", "credo", "dialyzer"]
     ]
   end
 end

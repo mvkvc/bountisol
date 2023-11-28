@@ -1,1 +1,1 @@
-# akashi
+# contracts

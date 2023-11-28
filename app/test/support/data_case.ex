@@ -18,12 +18,12 @@ defmodule Akashi.DataCase do
 
   using do
     quote do
-      alias Akashi.Repo
-
+      import Akashi.DataCase
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Akashi.DataCase
+
+      alias Akashi.Repo
     end
   end
 

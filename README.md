@@ -5,6 +5,7 @@ Decentralized working agreements.
 ## Links
 
 - https://akashi.systems
+- https://app.akashi.systems
 - https://github.com/mvkvc/akashi
 - https://github.com/users/mvkvc/projects/21
 
@@ -27,7 +28,7 @@ Decentralized working agreements.
 
 ### Setup
 
-- Run `doppler login` to authenticat with Doppler.
+- Run `doppler login` to authenticate with Doppler.
 - Run `sh/secrets.sh` to download development secrets from Doppler.
 - Run `nix develop` to enter the project's Nix shell.
 - Run `sh/setup.sh` to install dependencies.

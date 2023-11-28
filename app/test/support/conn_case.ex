@@ -20,14 +20,14 @@ defmodule AkashiWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint AkashiWeb.Endpoint
-
       use AkashiWeb, :verified_routes
 
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
       import AkashiWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
+
+      @endpoint AkashiWeb.Endpoint
     end
   end
 

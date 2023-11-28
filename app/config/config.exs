@@ -11,6 +11,8 @@ config :akashi,
   ecto_repos: [Akashi.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :akashi, Akashi.Repo, types: Akashi.PostgrexTypes
+
 # Configures the endpoint
 config :akashi, AkashiWeb.Endpoint,
   url: [host: "localhost"],
@@ -35,8 +37,7 @@ config :akashi, Akashi.Mailer, adapter: Swoosh.Adapters.Local
 config :esbuild,
   version: "0.17.11",
   default: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
