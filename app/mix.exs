@@ -58,9 +58,12 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       {:sign_in_with_solana, path: "./libs/sign_in_with_solana"},
       {:pgvector, "~> 0.2.0"},
+      {:plug_cowboy, ">= 1.0.0"},
+      # 
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -80,6 +83,7 @@ defmodule Akashi.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, ">= 0.0.0"},
+      #
       {:excellent_migrations, "~> 0.1", only: [:dev, :test], runtime: false},
       {:styler, "~> 0.10", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
