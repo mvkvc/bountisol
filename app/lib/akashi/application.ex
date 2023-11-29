@@ -17,7 +17,8 @@ defmodule Akashi.Application do
       # Start a worker by calling: Akashi.Worker.start_link(arg)
       # {Akashi.Worker, arg},
       # Start to serve requests, typically the last entry
-      AkashiWeb.Endpoint
+      AkashiWeb.Endpoint,
+      AkashiWeb.Presence
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

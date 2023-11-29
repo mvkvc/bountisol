@@ -58,6 +58,7 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:random_color, "~> 0.1.0"},
       {:mnemonic_slugs, "~> 0.0.3"},
       {:phoenix_live_react, "~> 0.4"},
       {:bcrypt_elixir, "~> 3.0"},
