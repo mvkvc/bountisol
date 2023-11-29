@@ -21,7 +21,7 @@ defmodule AkashiWeb.Router do
     pipe_through :browser
 
     # get "/", PageController, :home
-    live "/", HomeLive, :home
+    live "/", HomeLive
   end
 
   # Other scopes may use custom stacks.

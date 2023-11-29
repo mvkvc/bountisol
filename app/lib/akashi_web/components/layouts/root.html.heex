@@ -47,9 +47,7 @@
       <%= live_render(@conn, Akashi.WalletLive, id: "wallet") %>
     </ul>
   </header>
-  <body class="h-screen">
-    <div class="p-20">
+  <body class="antialiased p-6">
       <%= @inner_content %>
-    </div>
   </body>
 </html>
