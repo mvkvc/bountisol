@@ -15,7 +15,7 @@ Decentralized working agreements.
 ## Components
 
 - `app/`: Main application.
-- `contracts/`: Smart contracts.
+- `contracts/`: Solana programs.
 - `libs/`: Shared libraries.
 - `research/`: Incentive research.
 - `site/`: Documentation and blog.
