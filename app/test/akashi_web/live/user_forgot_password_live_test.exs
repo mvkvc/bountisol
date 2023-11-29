@@ -1,8 +1,8 @@
 defmodule AkashiWeb.UserForgotPasswordLiveTest do
   use AkashiWeb.ConnCase
 
-  import Phoenix.LiveViewTest
   import Akashi.AccountsFixtures
+  import Phoenix.LiveViewTest
 
   alias Akashi.Accounts
   alias Akashi.Repo

@@ -1,4 +1,5 @@
 defmodule AkashiWeb.UserConfirmationInstructionsLive do
+  @moduledoc false
   use AkashiWeb, :live_view
 
   alias Akashi.Accounts

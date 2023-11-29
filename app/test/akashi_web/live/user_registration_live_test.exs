@@ -1,8 +1,8 @@
 defmodule AkashiWeb.UserRegistrationLiveTest do
   use AkashiWeb.ConnCase
 
-  import Phoenix.LiveViewTest
   import Akashi.AccountsFixtures
+  import Phoenix.LiveViewTest
 
   describe "Registration page" do
     test "renders registration page", %{conn: conn} do

@@ -86,12 +86,12 @@ defmodule AkashiWeb do
       import AkashiWeb.CoreComponents
       import AkashiWeb.Gettext
       import Phoenix.HTML
+      import PhoenixLiveReact
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
       # Live React components for wallet sign in
-      import PhoenixLiveReact
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

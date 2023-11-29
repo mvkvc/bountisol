@@ -1,9 +1,10 @@
 defmodule AkashiWeb.UserSettingsLiveTest do
   use AkashiWeb.ConnCase
 
-  alias Akashi.Accounts
-  import Phoenix.LiveViewTest
   import Akashi.AccountsFixtures
+  import Phoenix.LiveViewTest
+
+  alias Akashi.Accounts
 
   describe "Settings page" do
     test "renders settings page", %{conn: conn} do

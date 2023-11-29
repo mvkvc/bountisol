@@ -20,7 +20,8 @@ defmodule AkashiWeb.Router do
   scope "/", AkashiWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
+    live "/", HomeLive, :home
   end
 
   # Other scopes may use custom stacks.
@@ -73,6 +74,12 @@ defmodule AkashiWeb.Router do
 
   scope "/", AkashiWeb do
     pipe_through [:browser]
+
+    live "/bounties", BountyLive.Index, :index
+    live "/bounties/new", BountyLive.Index, :new
+    live "/bounties/:id/edit", BountyLive.Index, :edit
+    live "/bounties/:id", BountyLive.Show, :show
+    live "/bounties/:id/show/edit", BountyLive.Show, :editS
 
     delete "/users/log_out", UserSessionController, :delete
 

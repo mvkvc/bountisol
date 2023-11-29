@@ -1,4 +1,5 @@
 defmodule Akashi.Accounts.UserNotifier do
+  @moduledoc false
   import Swoosh.Email
 
   alias Akashi.Mailer

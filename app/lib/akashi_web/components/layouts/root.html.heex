@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<%# <html lang="en" class="[scrollbar-gutter:stable]"> %>
 <html lang="en" class="">
   <head>
     <meta charset="utf-8" />
@@ -12,51 +11,45 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <header class="flex flex-row p-6 justify-between align-middle w-full">
-      <div class="flex flex-row align-middle text-center">
-        <.link
-          href={~p"/"}
-          class="text-3xl italic font-semibold font-mono"
-        >
-          Akashi
+  <header class="flex flex-row items-center p-6 justify-between">
+    <div class="flex flex-row items-center text-center space-x-4">
+      <.link href={~p"/"} class="text-3xl italic font-semibold font-mono text-center align-middle">
+        Akashi
+      </.link>
+    </div>
+    <ul class="flex flex-row space-x-4">
+      <%= if @current_user do %>
+        <li class="text-2xl">
+          <%= @current_user.email %>
+        </li>
+      <% end %>
+      <li>
+        <.link href={~p"/bounties"} class="btn">
+          Bounties
         </.link>
-      </div>
-      <%# <div class="flex flex-row space-x-4"> %>
-      <ul class="flex flex-row space-x-4">
-        <%= if @current_user do %>
-          <li class="text-2xl">
-            <%= @current_user.email %>
-          </li>
-          <li>
-            <.link
-              href={~p"/users/settings"}
-              class="btn"
-            >
-              Settings
-            </.link>
-          </li>
-          <li>
-            <.link
-              href={~p"/users/log_out"}
-              method="delete"
-              class="btn"
-            >
-              Log out
-            </.link>
-          </li>
-        <% else %>
-          <.link
-            href={~p"/users/log_in"}
-            class="btn"
-          >
-            Log in
+      </li>
+      <%= if @current_user do %>
+        <li>
+          <.link href={~p"/users/settings"} class="btn">
+            Settings
           </.link>
-        <% end %>
-        <%= live_render(@conn, Akashi.WalletLive, id: "wallet") %>
-      </ul>
-    <%# </div> %>
+        </li>
+        <li>
+          <.link href={~p"/users/log_out"} method="delete" class="btn">
+            Log out
+          </.link>
+        </li>
+      <% else %>
+        <.link href={~p"/users/log_in"} class="btn">
+          Log in
+        </.link>
+      <% end %>
+      <%= live_render(@conn, Akashi.WalletLive, id: "wallet") %>
+    </ul>
   </header>
   <body class="h-screen">
-    <%= @inner_content %>
+    <div class="p-20">
+      <%= @inner_content %>
+    </div>
   </body>
 </html>

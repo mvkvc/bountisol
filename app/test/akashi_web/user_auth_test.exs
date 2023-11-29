@@ -1,10 +1,11 @@
 defmodule AkashiWeb.UserAuthTest do
   use AkashiWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
+  import Akashi.AccountsFixtures
+
   alias Akashi.Accounts
   alias AkashiWeb.UserAuth
-  import Akashi.AccountsFixtures
+  alias Phoenix.LiveView
 
   @remember_me_cookie "_akashi_web_user_remember_me"
 
@@ -139,7 +140,7 @@ defmodule AkashiWeb.UserAuthTest do
     end
 
     test "assigns nil to current_user assign if there isn't a user_token", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       {:cont, updated_socket} =
         UserAuth.on_mount(:mount_current_user, %{}, session, %LiveView.Socket{})
@@ -173,7 +174,7 @@ defmodule AkashiWeb.UserAuthTest do
     end
 
     test "redirects to login page if there isn't a user_token", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       socket = %LiveView.Socket{
         endpoint: AkashiWeb.Endpoint,
@@ -200,7 +201,7 @@ defmodule AkashiWeb.UserAuthTest do
     end
 
     test "doesn't redirect if there is no authenticated user", %{conn: conn} do
-      session = conn |> get_session()
+      session = get_session(conn)
 
       assert {:cont, _updated_socket} =
                UserAuth.on_mount(

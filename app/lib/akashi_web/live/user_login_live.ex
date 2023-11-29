@@ -1,4 +1,5 @@
 defmodule AkashiWeb.UserLoginLive do
+  @moduledoc false
   use AkashiWeb, :live_view
 
   def render(assigns) do

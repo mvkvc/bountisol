@@ -1,4 +1,5 @@
 defmodule AkashiWeb.UserForgotPasswordLive do
+  @moduledoc false
   use AkashiWeb, :live_view
 
   alias Akashi.Accounts

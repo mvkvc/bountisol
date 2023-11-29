@@ -22,14 +22,16 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import LiveReact, { initLiveReact } from "phoenix_live_react";
+import WalletAdapter from "./components/wallet_adapter";
+import TrackClientCursor from "./hooks/cursor";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-import WalletAdapter from "./components/wallet_adapter";
 window.Components = {
   WalletAdapter,
 };
 let hooks = { LiveReact };
+hooks.TrackClientCursor = TrackClientCursor;
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks,
   params: { _csrf_token: csrfToken },

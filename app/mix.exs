@@ -58,6 +58,7 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:mnemonic_slugs, "~> 0.0.3"},
       {:phoenix_live_react, "~> 0.4"},
       {:bcrypt_elixir, "~> 3.0"},
       {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},

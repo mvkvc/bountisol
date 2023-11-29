@@ -1,8 +1,9 @@
 defmodule AkashiWeb.UserAuth do
+  @moduledoc false
   use AkashiWeb, :verified_routes
 
-  import Plug.Conn
   import Phoenix.Controller
+  import Plug.Conn
 
   alias Akashi.Accounts
 

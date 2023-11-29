@@ -1,10 +1,11 @@
 defmodule Akashi.AccountsTest do
   use Akashi.DataCase
 
-  alias Akashi.Accounts
-
   import Akashi.AccountsFixtures
-  alias Akashi.Accounts.{User, UserToken}
+
+  alias Akashi.Accounts
+  alias Akashi.Accounts.User
+  alias Akashi.Accounts.UserToken
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
