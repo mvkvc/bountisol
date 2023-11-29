@@ -21,15 +21,23 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-// import {Wallet} from "./hooks/wallet.js"
+import LiveReact, { initLiveReact } from "phoenix_live_react";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
-let Hooks = {}
-// Example for adding hooks
-// Hooks.Wallet = Wallet
+import WalletAdapter from "./components/wallet_adapter";
+window.Components = {
+  WalletAdapter,
+};
+let hooks = { LiveReact };
+let liveSocket = new LiveSocket("/live", Socket, {
+  hooks,
+  params: { _csrf_token: csrfToken },
+});
 
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks: Hooks})
+document.addEventListener("DOMContentLoaded", (e) => {
+  initLiveReact();
+});
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

@@ -58,6 +58,7 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:phoenix_live_react, "~> 0.4"},
       {:bcrypt_elixir, "~> 3.0"},
       {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       {:sign_in_with_solana, path: "./libs/sign_in_with_solana"},
@@ -73,7 +74,7 @@ defmodule Akashi.MixProject do
       {:phoenix_live_view, "~> 0.20.1"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.2"},
-      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      # {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
@@ -94,13 +95,17 @@ defmodule Akashi.MixProject do
 
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "cmd --cd assets yarn install"],
+      # setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind default", "esbuild default"],
-      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
+      # "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.setup": ["cmd --cd assets yarn install --dev"],
+      # "assets.build": ["tailwind default", "esbuild default"],
+      "assets.build": ["cmd --cd assets node build.js"],
+      # "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["assets.build", "phx.digest"],
       testd: ["cmd sh/db_test.sh", "test", "cmd docker stop akashi_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]
     ]

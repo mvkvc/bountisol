@@ -10,6 +10,7 @@ Decentralized working agreements.
 - https://github.com/users/mvkvc/projects/21
 - https://fly.io/dashboard/akashi-systems
 - https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
+- https://dev.helius.xyz/dashboard/app
 
 ## Components
 

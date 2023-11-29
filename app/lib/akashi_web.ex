@@ -90,6 +90,9 @@ defmodule AkashiWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      # Live React components for wallet sign in
+      import PhoenixLiveReact
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end
