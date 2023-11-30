@@ -28,9 +28,8 @@ if config_env() == :prod do
       """
 
   config :akashi, Akashi.WalletLive,
-    # network: :main
-    # Use dev if production for now
-    network: :dev
+    # network: :mainnet
+    network: :testnet
 
   # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 

@@ -1,7 +1,5 @@
 # akashi
 
-Decentralized working agreements.
-
 ## Links
 
 - https://akashi.systems

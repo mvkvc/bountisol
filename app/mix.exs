@@ -58,12 +58,12 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:sign_in_with_solana, path: "./libs/sign_in_with_solana"},
+      {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       {:random_color, "~> 0.1.0"},
       {:mnemonic_slugs, "~> 0.0.3"},
       {:phoenix_live_react, "~> 0.4"},
       {:bcrypt_elixir, "~> 3.0"},
-      {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
-      {:sign_in_with_solana, path: "./libs/sign_in_with_solana"},
       {:pgvector, "~> 0.2.0"},
       {:plug_cowboy, ">= 1.0.0"},
       # 
@@ -77,7 +77,7 @@ defmodule Akashi.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.2"},
       # {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      # {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 0.6"},
