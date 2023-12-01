@@ -6,7 +6,8 @@ on:
     branches:
       - main
     paths:
-      - services/js
+      - .github/workflows/js_deploy.yml
+      - services/js/**
 
 jobs:
   deploy:

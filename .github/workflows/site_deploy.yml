@@ -6,7 +6,8 @@ on:
     branches:
       - main
     paths:
-      - services/site
+      - .github/workflows/site_deploy.yml
+      - services/site/**
 
 jobs:
   deploy:
