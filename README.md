@@ -12,11 +12,14 @@
 
 ## Components
 
-- `app/`: Main application.
-- `contracts/`: Solana programs.
+
 - `libs/`: Shared libraries.
+- `programs/`: Solana programs.
 - `research/`: Incentive research.
-- `site/`: Documentation and blog.
+- `services/app/`: Main application.
+- `services/js/`: Node server for using JS libs.
+- `services/site/`: Documentation and blog.
+
 
 ## Development
 

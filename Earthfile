@@ -1,22 +1,25 @@
 VERSION 0.7
 
 test:
-    BUILD ./app+test
-    BUILD ./contracts+test
+    BUILD ./programs+test
+    BUILD ./services/app+test
+    BUILD ./services/js+test
 
 build:
-    BUILD ./app+build
     BUILD ./contracts+build
-    BUILD ./site+build
+    BUILD ./services/app+build
+    BUILD ./services/js+build
+    BUILD ./services/site+build
 
 docker:
-    BUILD ./app+docker
-    BUILD ./site+docker
+    BUILD ./services/app+docker
+    BUILD ./services/js+build
+    BUILD ./services/site+docker
 
 deploy:
-    BUILD ./app+deploy
-    BUILD ./site+deploy
+    BUILD ./services/app+docker
+    BUILD ./services/js+build
+    BUILD ./services/site+docker
 
 libs:
-    BUILD ./app+libs
-    
+    BUILD ./services/app+libs

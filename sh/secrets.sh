@@ -1,6 +1,6 @@
 #! /bin/bash
 
-(cd ./app &&
+(cd ./services/app &&
 doppler secrets download \
     --project app \
     --config dev \
@@ -9,7 +9,7 @@ doppler secrets download \
     > .secret.dev
 )
 
-(cd ./app &&
+(cd ./services/app &&
 doppler secrets download \
     --project app \
     --config prd \
@@ -18,25 +18,25 @@ doppler secrets download \
     > .secret.prd
 )
 
-(cd ./contracts &&
+(cd ./services/js &&
 doppler secrets download \
-    --project contracts \
+    --project js \
     --config dev \
     --format env \
     --no-file \
     > .secret.dev
 )
 
-(cd ./contracts &&
+(cd ./services/js &&
 doppler secrets download \
-    --project contracts \
+    --project js \
     --config prd \
     --format env \
     --no-file \
     > .secret.prd
 )
 
-(cd ./site &&
+(cd ./services/site &&
 doppler secrets download \
     --project site \
     --config dev \
@@ -45,9 +45,9 @@ doppler secrets download \
     > .secret.dev
 )
 
-(cd ./site &&
+(cd ./services/site &&
 doppler secrets download \
-    --project site \
+    --project app \
     --config prd \
     --format env \
     --no-file \
