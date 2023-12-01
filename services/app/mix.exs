@@ -58,7 +58,8 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
-      {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
+      # {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
+      # {:tesla, "~> 1.8"},
       {:solana, path: "./libs/solana-elixir"},
       {:req, "~> 0.4.5"},
       {:random_color, "~> 0.1.0"},
