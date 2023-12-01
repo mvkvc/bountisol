@@ -2,6 +2,8 @@
 
 trap 'kill $(jobs -p)' SIGINT
 
-(cd ./app && iex -S mix phx.server) &
-(cd ./site && npm run dev) &
+(cd ./services/app && iex -S mix phx.server) &
+(cd ./services/js && yarn start) &
+(cd ./services/site && yarn start) &
 wait
+

@@ -14,12 +14,15 @@
             erlangR26
             pkgs.beam.packages.erlangR26.elixir
             nodejs-18_x
+            yarn
+            python310
+            python310Packages.pipx
             earthly
             direnv
           ];
           shellHook = ''
             eval "$(direnv hook bash)"
-
+            export POETRY_VIRTUALENVS_IN_PROJECT=true
             export MIX_HOME=$PWD/.nix_mix
             export HEX_HOME=$PWD/.nix_hex
             export PATH=$MIX_HOME/bin:$PATH
