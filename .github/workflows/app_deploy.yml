@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - .github/workflows/app_deploy.yml
-      - services/app
+      - services/app/**
 
 jobs:
   deploy:
