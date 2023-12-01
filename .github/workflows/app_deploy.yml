@@ -20,5 +20,5 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl auth login --acess-token ${{ secrets.FLY_API_TOKEN }}
+      - run: flyctl auth login --access-token ${{ secrets.FLY_API_TOKEN }}
       - run: earthly ./services/app+deploy
