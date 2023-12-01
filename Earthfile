@@ -13,13 +13,13 @@ build:
 
 docker:
     BUILD ./services/app+docker
-    BUILD ./services/js+build
+    BUILD ./services/js+docker
     BUILD ./services/site+docker
 
 deploy:
-    BUILD ./services/app+docker
-    BUILD ./services/js+build
-    BUILD ./services/site+docker
+    BUILD ./services/app+deploy
+    BUILD ./services/js+deploy
+    BUILD ./services/site+deploy
 
 libs:
     BUILD ./services/app+libs
