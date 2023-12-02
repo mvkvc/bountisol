@@ -1,6 +1,0 @@
-[submodule "libs/solana-elixir"]
-	path = libs/solana-elixir
-	url = git@github.com:mvkvc/solana-elixir.git
-[submodule "libs/sign-in-with-solana"]
-	path = libs/sign-in-with-solana
-	url = git@github.com:Web3Auth/sign-in-with-solana.git

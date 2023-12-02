@@ -12,7 +12,6 @@
 
 ## Components
 
-- `libs/`: Shared libraries.
 - `programs/`: Solana programs.
 - `research/`: Incentive research.
 - `services/app/`: Main application.
