@@ -60,7 +60,7 @@ defmodule Akashi.MixProject do
     [
       # {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       # {:tesla, "~> 1.8"},
-      {:solana, path: "./libs/solana-elixir"},
+      # {:solana, path: "./libs/solana-elixir"},
       {:req, "~> 0.4.5"},
       {:random_color, "~> 0.1.0"},
       {:mnemonic_slugs, "~> 0.0.3"},

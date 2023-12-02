@@ -11,7 +11,7 @@ image:
 deps:
     FROM +image
     COPY . .
-    RUN yarn install --dev
+    RUN yarn install
 
 build:
     FROM +deps

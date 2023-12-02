@@ -22,7 +22,6 @@ image:
 
 deps:
     FROM +image
-    COPY ../../libs /app/libs
     COPY mix.exs .
     COPY mix.lock .
     RUN mix deps.get
@@ -71,7 +70,3 @@ docker:
 
 deploy:
     RUN fly deploy --image registry.fly.io/akashi:latest
-
-libs:
-    LOCALLY
-    RUN ./sh/libs.sh
