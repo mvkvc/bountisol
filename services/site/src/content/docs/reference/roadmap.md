@@ -36,3 +36,6 @@ description: List of features to be implemented.
     - [ ] Outline working agreements non-legally binding but in a clear way
 - [ ] Design
     - [ ] Change the homepage cursors to be locked to a line corresponding to the bridge image in the background, basically round to nearest point inside of bridge if outside
+- [ ] Stable transfer program
+    - [ ] Is this needed or can we do it in the UI?
+    - [ ] What are the guarentees when you suggest a transfer? Can the user alter this at all

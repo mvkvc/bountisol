@@ -32,6 +32,8 @@ ENV NODE_MAJOR=18
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update
 RUN apt-get install nodejs -y
+RUN corepack enable
+RUN yarn set version stable
 
 # prepare build dir
 WORKDIR /app
@@ -63,7 +65,7 @@ COPY assets assets
 
 # compile assets
 WORKDIR /app/assets
-RUN npm i -D
+RUN yarn install
 WORKDIR /app
 RUN mix assets.deploy
 
