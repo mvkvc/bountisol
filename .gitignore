@@ -1,3 +1,4 @@
 .direnv
 .nix_hex
 .nix_mix
+.secret*

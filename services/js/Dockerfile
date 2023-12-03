@@ -24,11 +24,11 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY --link package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --dev --frozen-lockfile
 
 # Copy application code
 COPY --link . .
-
+RUN yarn build
 
 # Final stage for app image
 FROM base
@@ -38,4 +38,6 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "npx", "fastify", "start", "--address", "0.0.0.0", "-l", "info", "app.js" ]
+ENV HOST=0.0.0.0
+ENV PORT=3000
+CMD [ "yarn", "start"]

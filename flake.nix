@@ -17,6 +17,7 @@
             yarn
             python310
             python310Packages.pipx
+            rustup
             earthly
             direnv
           ];
