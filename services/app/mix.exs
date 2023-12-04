@@ -26,7 +26,7 @@ defmodule Akashi.MixProject do
   def application do
     [
       mod: {Akashi.Application, []},
-      extra_applications: [:logger, :runtime_tools, :wx, :observer]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -61,6 +61,8 @@ defmodule Akashi.MixProject do
       # {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       # {:tesla, "~> 1.8"},
       # {:solana, path: "./libs/solana-elixir"},
+      {:base58, "~> 0.1.1"},
+      # {:enacl, "~> 1.2"},
       {:req, "~> 0.4.5"},
       {:random_color, "~> 0.1.0"},
       {:mnemonic_slugs, "~> 0.0.3"},

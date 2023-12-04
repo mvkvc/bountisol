@@ -67,6 +67,7 @@ defmodule AkashiWeb.HomeLive do
         username: username,
         color: color
       })
+
       AkashiWeb.Endpoint.subscribe(@channel_topic)
     end
 

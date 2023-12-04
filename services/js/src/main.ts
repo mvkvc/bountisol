@@ -6,6 +6,8 @@ import snsHandler from "./handlers/sns";
 const app: Express = express();
 const port = process.env.PORT || "3000";
 
+app.use(express.json());
+
 app.get("/sns/:address", snsHandler);
 app.post("/siws", siwsHandler);
 

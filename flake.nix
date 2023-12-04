@@ -18,8 +18,10 @@
             python310
             python310Packages.pipx
             rustup
+            rebar3
             earthly
             direnv
+            libsodium
           ];
           shellHook = ''
             eval "$(direnv hook bash)"

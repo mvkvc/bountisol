@@ -14,8 +14,9 @@ defmodule Akashi.Accounts do
   def get_user_by_address(address), do: Repo.get_by(User, address: address)
 
   def generate_account_nonce do
-    :crypto.strong_rand_bytes(4)
-    |> Base.encode8()
+    10
+    |> :crypto.strong_rand_bytes()
+    |> Base.encode16()
   end
 
   def update_user_nonce(address) do
@@ -54,7 +55,7 @@ defmodule Akashi.Accounts do
 
   def verify_message_signature(address, signature) do
     # IO.puts("verify_message_signature")
-    with user = %User{} <- get_user_by_address(address) do
+    with %User{} = user <- get_user_by_address(address) do
       # IO.inspect(user, label: "user")
       message = "You are signing this message to sign in with Akashi. Nonce: #{user.nonce}"
       # IO.inspect(message, label: "message")
