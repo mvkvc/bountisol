@@ -24,7 +24,7 @@
         </li>
       <% end %>
       <li>
-        <.link href={~p"/"} class="btn">
+        <.link href={~p"/bounties"} class="btn">
           Bounties
         </.link>
       </li>
@@ -52,9 +52,6 @@
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>
-      </li>
-      <li>
-        <%= live_render(@conn, AkashiWeb.WalletLive, id: "wallet") %>
       </li>
     </ul>
   </header>

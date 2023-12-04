@@ -5,104 +5,83 @@ defmodule AkashiWeb.SignInLive do
   # alias Akashi.Accounts
 
   @impl true
+  def render(assigns) do
+    ~H"""
+      <div class="flex flex-row space-x-4">
+          <div id="wallet" phx-hook="Wallet">
+          <%= if @connected do %>
+            <button class="btn" phx-click="test-wallet-hook">
+              Sign in
+            </button>
+          <% else %>
+          <div class="relative">
+            <button class="btn" disabled>
+              Sign in
+            </button>
+            <span class="hidden absolute top-full mt-2 px-4 py-2 bg-black text-white text-sm rounded shadow-lg hover:block">
+              Please install a Solana wallet
+            </span>
+          </div>
+          <% end %>
+          </div>
+        <%= live_react_component(
+          "Components.WalletAdapter",
+          [network_type: Application.get_env(:akashi, Akashi.WalletLive)[:network]],
+          id: "wallet-adapter"
+        ) %>
+      </div>
+    """
+  end
+  
+  @impl true
   def mount(_params, _session, socket) do
-    IO.inspect("mount")
-    # Process.send_after(self(), :wallet_status, 100, [])
-
     {:ok,
      assign(socket,
-       has_wallet: false,
        connected: false,
-       current_wallet_address: nil,
+       address: nil,
        signature: nil,
        verify_signature: false
      )}
   end
 
   @impl true
-  def render(assigns) do
-    ~H"""
-    <span>
-      <%= if @connected do %>
-        <button class="btn">
-          Sign in
-        </button>
-      <% else %>
-        <button class="btn" disabled>
-          No Wallet
-        </button>
-      <% end %>
-    </span>
-    """
-  end
-
-  @impl true
-  def handle_event(event, _params, socket) do
-    IO.inspect(event, label: "SIGN IN LIVE")
+  def handle_event("test-wallet-hook", _params, socket) do
+    IO.puts("test-wallet-hook")
     {:noreply, socket}
   end
 
   @impl true
-  def handle_info(:wallet_status, socket) do
-    if connected?(socket) and !is_nil(socket.assigns.has_wallet) do
-      Process.send(self(), :has_wallet, [])
-    end
-
-    {:noreply, socket}
+  def handle_event("effect_connected", _params, socket) do
+    push_event(socket, "test", %{hello: "there"})
+    {:noreply, 
+      socket
+      |> assign(connected: true)
+    }
   end
 
   @impl true
-  def handle_info(info, socket) do
-    IO.inspect(info, "SIGN IN INFO")
+  def handle_event("effect_disconnecting", _params, socket) do
+    {:noreply, 
+    socket
+    |> assign(connected: false)
+    |> assign(address: nil)
+    }
+  end
 
-    {:noreply, socket}
+  @impl true
+  def handle_event("effect_public_key", %{"public_key" => public_key}, socket) do
+    IO.inspect(public_key, label: "public_key")
+    {:noreply, 
+      socket
+      |> assign(address: public_key)
+    }
   end
 
   # @impl true
-  # def handle_event("has-wallet", params, socket) do
-  #   # IO.inspect("has-wallet")
-  #   has_wallet = params["has_wallet"]
-
-  #   {:noreply, assign(socket, has_wallet: has_wallet)}
-  # end
-
-  # @impl true
-  # def handle_event("account-check", params, socket) do
-  #   # IO.inspect("account-check")
-
-  #   {:noreply,
-  #    assign(socket,
-  #      connected: params["connected"],
-  #      current_wallet_address: params["current_wallet_address"]
-  #    )}
-  # end
-
-  # @impl true
-  # def handle_event("connect-wallet", params, socket) do
-  #   # IO.inspect("connect-wallet")
-
-  #   {:noreply, push_event(socket, "connect-wallet", %{})}
-  # end
-
-  # @impl true
-  # def handle_event("wallet-connected", params, socket) do
-  #   # IO.inspect("wallet-connected")
-
-  #   {:noreply,
-  #    assign(socket,
-  #      connected: not is_nil(params["public_address"]),
-  #      current_wallet_address: params["public_address"]
-  #    )}
-  # end
-
-  # @impl true
-  # def handle_event("verify-current-wallet", _params, socket) do
-  #   # IO.inspect("verify-current-wallet")
-
+  # def handle_event("nonce", _params, socket) do
   #   address = socket.assigns.current_wallet_address
   #   {:ok, _user} = Accounts.create_user_if_not_exists(address)
 
-  #   # Not sure if this logic still
   #   nonce =
   #     case Accounts.get_user_by_eth_address(address) do
   #       nil -> Accounts.generate_account_nonce()
@@ -113,9 +92,7 @@ defmodule AkashiWeb.SignInLive do
   # end
 
   # @impl true
-  # def handle_event("verify-signature", params, socket) do
-  #   # IO.inspect("verify-signature")
-
+  # def handle_event("verify_signature", params, socket) do
   #   {:noreply, assign(socket, signature: params["signature"], verify_signature: true)}
   # end
 end

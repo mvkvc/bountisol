@@ -59,15 +59,16 @@ defmodule AkashiWeb.HomeLive do
     username = MnemonicSlugs.generate_slug()
     color = RandomColor.hex()
 
-    Presence.track(self(), @channel_topic, socket.id, %{
-      socket_id: socket.id,
-      x: 50,
-      y: 50,
-      username: username,
-      color: color
-    })
-
-    AkashiWeb.Endpoint.subscribe(@channel_topic)
+    if connected?(socket) do
+      Presence.track(self(), @channel_topic, socket.id, %{
+        socket_id: socket.id,
+        x: 50,
+        y: 50,
+        username: username,
+        color: color
+      })
+      AkashiWeb.Endpoint.subscribe(@channel_topic)
+    end
 
     initial_users =
       @channel_topic

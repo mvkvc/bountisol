@@ -10,6 +10,66 @@ defmodule Akashi.Accounts do
   alias Akashi.Accounts.UserToken
   alias Akashi.Repo
 
+  def get_user_by_address(nil), do: nil
+  def get_user_by_address(address), do: Repo.get_by(User, address: address)
+
+  def generate_account_nonce do
+    :crypto.strong_rand_bytes(4)
+    |> Base.encode8()
+  end
+
+  def update_user_nonce(address) do
+    user = get_user_by_address(address)
+
+    attrs = %{
+      "address" => address,
+      "nonce" => generate_account_nonce()
+    }
+
+    user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def create_user(attrs) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_user_if_not_exists(address) do
+    attrs = %{
+      "address" => address,
+      "nonce" => generate_account_nonce()
+    }
+
+    case get_user_by_address(address) do
+      nil ->
+        create_user(attrs)
+
+      user ->
+        {:ok, user}
+    end
+  end
+
+  def verify_message_signature(address, signature) do
+    # IO.puts("verify_message_signature")
+    with user = %User{} <- get_user_by_address(address) do
+      # IO.inspect(user, label: "user")
+      message = "You are signing this message to sign in with Akashi. Nonce: #{user.nonce}"
+      # IO.inspect(message, label: "message")
+
+      signing_address = ExWeb3EcRecover.recover_personal_signature(message, signature)
+      # IO.inspect(signing_address, label: "signing_address")
+      # IO.inspect(eth_address, label: "eth_address")
+
+      if String.downcase(signing_address) == String.downcase(address) do
+        update_user_nonce(address)
+        user
+      end
+    end
+  end
+
   ## Database getters
 
   @doc """

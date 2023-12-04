@@ -20,8 +20,8 @@ defmodule AkashiWeb.Router do
   scope "/", AkashiWeb do
     pipe_through :browser
 
-    # get "/", PageController, :home
-    live "/", HomeLive
+    get "/", PageController, :home
+    # live "/", HomeLive
     post "/siws", ServicesController, :siws
     get "/sns", ServicesController, :sns
   end

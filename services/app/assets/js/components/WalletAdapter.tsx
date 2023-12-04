@@ -8,41 +8,49 @@ import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-// import { WalletConnectWalletAdapter } from "@solana/wallet-adapter-walletconnect";
-// import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
+import { WalletConnectWalletAdapter, WalletConnectWalletAdapterConfig } from "@solana/wallet-adapter-walletconnect";
+import { SolflareWalletAdapter, SolflareWalletAdapterConfig } from "@solana/wallet-adapter-solflare";
 import { clusterApiUrl } from "@solana/web3.js";
 
-import WalletHandler from "./WalletHandler";
+import WalletEffectHandler from "./WalletEffectHandler";
+
+interface window {
+  solana: any;
+}
 
 interface WalletAdapterProps {
   network_type: string;
-  pushEventTo: (id: string, message: string) => void;
-  handleEvent: (event: any) => void;
+  pushEvent: (event: string, payload: any) => void;
+  pushEventTo: (target: string, event: string, payload: any) => void;
 }
 
-const WalletAdapter: React.FC<WalletAdapterProps> = ({ network_type, pushEventTo, handleEvent }) => {
+const WalletAdapter: React.FC<WalletAdapterProps> = ({ network_type, pushEvent, pushEventTo }) => {
   const network =
     network_type === "main"
       ? WalletAdapterNetwork.Mainnet
       : WalletAdapterNetwork.Devnet;
+
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const walletConnectConfig: WalletConnectWalletAdapterConfig = {
+    network: network,
+    options: {},
+  };
+  const solflareWalletConfig: SolflareWalletAdapterConfig = {};
   const wallets = useMemo(() => [
-    // new WalletConnectWalletAdapter();
-    // new SolflareWalletAdapter()
+    new WalletConnectWalletAdapter(walletConnectConfig),
+    new SolflareWalletAdapter(solflareWalletConfig)
   ], [network]);
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <div className="flex space-x-4">
-            <WalletMultiButton />
-            <WalletHandler pushEventTo={pushEventTo} handleEvent={handleEvent} />
-          </div>
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
-  );
+  <ConnectionProvider endpoint={endpoint}>
+    <WalletProvider wallets={wallets} autoConnect>
+      <WalletModalProvider>
+        <WalletMultiButton />
+        <WalletEffectHandler pushEvent={pushEvent} pushEventTo={pushEventTo} />
+      </WalletModalProvider>
+    </WalletProvider>
+  </ConnectionProvider>
+);
 };
 
 export default WalletAdapter;

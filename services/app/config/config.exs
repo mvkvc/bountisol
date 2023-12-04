@@ -18,8 +18,8 @@ config :akashi, Akashi.Repo, types: Akashi.PostgrexTypes
 # Configures the endpoint
 config :akashi, AkashiWeb.Endpoint,
   url: [host: "localhost"],
-  # adapter: Bandit.PhoenixAdapter,
-  adapter: Phoenix.Endpoint.Cowboy2Adapter,
+  adapter: Bandit.PhoenixAdapter,
+  # adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [html: AkashiWeb.ErrorHTML, json: AkashiWeb.ErrorJSON],
     layout: false

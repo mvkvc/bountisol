@@ -6,9 +6,12 @@ import "phoenix_html"
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
+
 import LiveReact, { initLiveReact } from "phoenix_live_react";
 import WalletAdapter from "./components/WalletAdapter";
+
 import TrackClientCursor from "./hooks/cursor";
+import Wallet from "./hooks/wallet";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
@@ -17,8 +20,8 @@ window.Components = {
 };
 
 let Hooks = { LiveReact };
-// let Hooks = {};
 Hooks.TrackClientCursor = TrackClientCursor;
+Hooks.Wallet = Wallet;
 
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,

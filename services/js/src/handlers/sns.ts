@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getAllDomains, performReverseLookup } from "@bonfida/spl-name-service";
+import { getAllDomains,reverseLookup } from "@bonfida/spl-name-service";
 import { PublicKey, Connection } from "@solana/web3.js";
 import rpcClient from "../utils/rpc";
 
@@ -13,7 +13,7 @@ export default async function (req: Request, res: Response) {
     const ownerWallet = new PublicKey(address);
     const allDomainKeys = await getAllDomains(connection, ownerWallet);
     const allDomainNames = await Promise.all(
-      allDomainKeys.map((key) => performReverseLookup(connection, key)),
+      allDomainKeys.map((key) => reverseLookup(connection, key)),
     );
     console.log(`${address} owns the following SNS domains:`);
     allDomainNames.forEach((domain, i) => console.log(` ${i + 1}.`, domain));
