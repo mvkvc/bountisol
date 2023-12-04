@@ -99,16 +99,12 @@ defmodule Akashi.MixProject do
 
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd --cd assets yarn install"],
-      # setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      # "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.setup": ["cmd --cd assets yarn install --dev"],
-      # "assets.build": ["tailwind default", "esbuild default"],
-      "assets.build": ["cmd --cd assets node build.js"],
-      # "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
+      "assets.build": ["cmd --cd assets yarn build"],
       "assets.deploy": ["assets.build", "phx.digest"],
       testd: ["cmd sh/db_test.sh", "test", "cmd docker stop akashi_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]

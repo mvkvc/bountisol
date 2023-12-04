@@ -3,9 +3,12 @@ import {
   useWallet,
 } from "@solana/wallet-adapter-react";
 
-// Listen for events from LiveView and handle
+interface WalletHandlerProps {
+  pushEventTo: (id: string, message: string) => void;
+  handleEvent: (event: any) => void;
+}
 
-const WalletHandler = ({ pushEventTo, handleEvent }) => {
+const WalletHandler: React.FC<WalletHandlerProps> = ({ pushEventTo, handleEvent }) => {
     const { publicKey } = useWallet();
     const [hasConnected, setHasConnected] = useState(false)
   

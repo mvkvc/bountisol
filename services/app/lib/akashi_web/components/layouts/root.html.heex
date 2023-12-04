@@ -19,13 +19,23 @@
     </div>
     <ul class="flex flex-row space-x-4">
       <%= if @current_user do %>
-        <li class="text-2xl">
+        <li>
           <%= @current_user.email %>
         </li>
       <% end %>
       <li>
-        <.link href={~p"/bounties"} class="btn">
+        <.link href={~p"/"} class="btn">
           Bounties
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/"} class="btn">
+          Invoices
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/"} class="btn">
+          Pay
         </.link>
       </li>
       <%= if @current_user do %>
@@ -39,15 +49,18 @@
             Log out
           </.link>
         </li>
-      <% else %>
-        <.link href={~p"/users/log_in"} class="btn">
-          Log in
-        </.link>
       <% end %>
-      <%= live_render(@conn, Akashi.WalletLive, id: "wallet") %>
+      <li>
+        <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>
+      </li>
+      <li>
+        <%= live_render(@conn, AkashiWeb.WalletLive, id: "wallet") %>
+      </li>
     </ul>
   </header>
-  <body class="antialiased p-6">
+  <body class="bg-antialiased">
+    <div class="p-8">
       <%= @inner_content %>
+    </div>
   </body>
 </html>

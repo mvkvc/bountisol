@@ -23,7 +23,7 @@ defmodule AkashiWeb.Router do
     # get "/", PageController, :home
     live "/", HomeLive
     post "/siws", ServicesController, :siws
-    get  "/sns", ServicesController, :sns
+    get "/sns", ServicesController, :sns
   end
 
   # Other scopes may use custom stacks.

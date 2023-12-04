@@ -7,8 +7,7 @@
 # General application configuration
 import Config
 
-config :akashi, Akashi.WalletLive,
-  network: :testnet
+config :akashi, Akashi.WalletLive, network: :testnet
 
 config :akashi,
   ecto_repos: [Akashi.Repo],
@@ -19,7 +18,8 @@ config :akashi, Akashi.Repo, types: Akashi.PostgrexTypes
 # Configures the endpoint
 config :akashi, AkashiWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Bandit.PhoenixAdapter,
+  # adapter: Bandit.PhoenixAdapter,
+  adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [html: AkashiWeb.ErrorHTML, json: AkashiWeb.ErrorJSON],
     layout: false

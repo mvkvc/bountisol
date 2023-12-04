@@ -1,19 +1,4 @@
-// If you want to use Phoenix channels, run `mix help phx.gen.channel`
-// to get started and then uncomment the line below.
 // import "./user_socket.js"
-
-// You can include dependencies in two ways.
-//
-// The simplest option is to put them in assets/vendor and
-// import them using relative paths:
-//
-//     import "../vendor/some-package.js"
-//
-// Alternatively, you can `npm install some-package --prefix assets` and import
-// them using a path starting with the package name:
-//
-//     import "some-package"
-//
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
@@ -22,7 +7,7 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 import LiveReact, { initLiveReact } from "phoenix_live_react";
-import WalletAdapter from "./components/wallet_adapter";
+import WalletAdapter from "./components/WalletAdapter";
 import TrackClientCursor from "./hooks/cursor";
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
@@ -32,6 +17,7 @@ window.Components = {
 };
 
 let Hooks = { LiveReact };
+// let Hooks = {};
 Hooks.TrackClientCursor = TrackClientCursor;
 
 let liveSocket = new LiveSocket("/live", Socket, {
