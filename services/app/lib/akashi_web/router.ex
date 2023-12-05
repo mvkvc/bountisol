@@ -20,8 +20,8 @@ defmodule AkashiWeb.Router do
   scope "/", AkashiWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    # live "/", HomeLive
+    # get "/", PageController, :home
+    live "/", HomeLive
     # post "/siws", ServicesController, :siws
     # get "/sns", ServicesController, :sns
   end
@@ -70,8 +70,8 @@ defmodule AkashiWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
       live "/pay", PayLive, :new
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      # live "/users/settings", UserSettingsLive, :edit
+      # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
   end
 

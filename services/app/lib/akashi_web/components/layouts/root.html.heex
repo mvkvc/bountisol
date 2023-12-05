@@ -19,16 +19,16 @@
     </div>
     <ul class="flex flex-row space-x-4">
       <li>
-        <.link href={~p"/"} class="btn">
+        <.link href={~p"/pay"} class="btn">
           Pay
         </.link>
       </li>
       <%= if @current_user do %>
-        <li>
+        <%# <li>
           <.link href={~p"/users/settings"} class="btn">
             Settings
           </.link>
-        </li>
+        </li> %>
         <li>
           <.link href={~p"/users/log_out"} method="delete" class="btn">
             Log out

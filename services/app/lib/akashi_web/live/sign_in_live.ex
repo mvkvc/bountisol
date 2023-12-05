@@ -11,41 +11,36 @@ defmodule AkashiWeb.SignInLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id="wallet" class="flex flex-row" phx-hook="Wallet">
+    <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
       <%= if @connected do %>
-        <%= if is_nil(@current_user) do %>
-          <div class="mr-4">
-            <.form
-              for={%{}}
-              action={~p"/users/log_in"}
-              as={:user}
-              phx-submit="verify"
-              phx-trigger-action={@trigger}
-            >
-              <.input type="hidden" name="address" value={@address} />
-              <.input type="hidden" name="message" value={@message} />
-              <.input type="hidden" name="signature" value={@signature} />
-              <button class="btn">
-                Sign in
-              </button>
-            </.form>
-          </div>
+        <%= if !@current_user do %>
+          <.form
+            for={%{}}
+            action={~p"/users/log_in"}
+            as={:user}
+            phx-submit="verify"
+            phx-trigger-action={@trigger}
+          >
+            <.input type="hidden" name="address" value={@address} />
+            <.input type="hidden" name="message" value={@message} />
+            <.input type="hidden" name="signature" value={@signature} />
+            <button class="btn">
+              Sign in
+            </button>
+          </.form>
         <% end %>
       <% else %>
-        <div class="relative">
-          <button class="btn" disabled>
-            Sign in
-          </button>
-          <span class="hidden absolute top-full mt-2 px-4 py-2 bg-black text-white text-sm rounded shadow-lg hover:block">
-            Please install a Solana wallet
-          </span>
-        </div>
+        <button class="btn" disabled>
+          Sign in
+        </button>
       <% end %>
-      <%= live_react_component(
-        "Components.WalletAdapter",
-        [network_type: Application.get_env(:akashi, Akashi.WalletLive)[:network]],
-        id: "wallet-adapter"
-      ) %>
+      <div>
+        <%= live_react_component(
+          "Components.WalletAdapter",
+          [network_type: Application.get_env(:akashi, Akashi.WalletLive)[:network]],
+          id: "wallet-adapter"
+        ) %>
+      </div>
     </div>
     """
   end
