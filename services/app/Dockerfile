@@ -65,6 +65,8 @@ COPY assets assets
 # compile assets
 WORKDIR /app/assets
 RUN yarn install
+RUN yarn tailwind
+RUN yarn build
 WORKDIR /app
 RUN mix assets.deploy
 
