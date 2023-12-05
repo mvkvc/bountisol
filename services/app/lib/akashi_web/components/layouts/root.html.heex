@@ -20,19 +20,9 @@
     <ul class="flex flex-row space-x-4">
       <%= if @current_user do %>
         <li>
-          <%= @current_user.email %>
+          <%= @current_user.address %>
         </li>
       <% end %>
-      <li>
-        <.link href={~p"/bounties"} class="btn">
-          Bounties
-        </.link>
-      </li>
-      <li>
-        <.link href={~p"/"} class="btn">
-          Invoices
-        </.link>
-      </li>
       <li>
         <.link href={~p"/"} class="btn">
           Pay

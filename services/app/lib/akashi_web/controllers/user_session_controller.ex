@@ -1,36 +1,34 @@
 defmodule AkashiWeb.UserSessionController do
   use AkashiWeb, :controller
 
-  alias Akashi.Accounts
+  alias Akashi.SIWS
+
+  # alias Akashi.Accounts
   alias AkashiWeb.UserAuth
 
-  def create(conn, %{"_action" => "registered"} = params) do
-    create(conn, params, "Account created successfully!")
-  end
-
-  def create(conn, %{"_action" => "password_updated"} = params) do
-    conn
-    |> put_session(:user_return_to, ~p"/users/settings")
-    |> create(params, "Password updated successfully!")
-  end
+  # Create a new controller for validation of the signature
+  # When validating, if correct then attach latest to the user
+  # The user will then log in with their address and signature and if it matches the latest then they are logged in
+  # Use Jason to pass around maps
 
   def create(conn, params) do
     create(conn, params, "Welcome back!")
   end
 
-  defp create(conn, %{"user" => user_params}, info) do
-    %{"email" => email, "password" => password} = user_params
+  defp create(conn, %{"message" => message, "address" => address, "signature" => signature} = params, info) do
+    signature = Jason.decode!(signature)
+    message = Jason.decode!(message)
 
-    if user = Accounts.get_user_by_email_and_password(email, password) do
+    user = SIWS.verify_signature(%{address: address, message: message, signature: signature})
+
+    if user do
       conn
       |> put_flash(:info, info)
-      |> UserAuth.log_in_user(user, user_params)
+      |> UserAuth.log_in_user(user, params)
     else
-      # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
       conn
-      |> put_flash(:error, "Invalid email or password")
-      |> put_flash(:email, String.slice(email, 0, 160))
-      |> redirect(to: ~p"/users/log_in")
+      |> put_flash(:error, "Invalid signature.")
+      |> redirect(to: ~p"/")
     end
   end
 

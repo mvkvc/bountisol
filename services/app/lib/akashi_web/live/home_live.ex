@@ -6,6 +6,7 @@ defmodule AkashiWeb.HomeLive do
 
   @channel_topic "cursor_page"
 
+  @impl true
   def render(assigns) do
     ~H"""
     <div class="bg-pattern flex justify-center items-center h-screen w-screen">
@@ -54,7 +55,7 @@ defmodule AkashiWeb.HomeLive do
   end
 
   @impl true
-  def mount(params, session, socket) do
+  def mount(_params, _session, socket) do
     IO.inspect(self(), label: "LIVEVIEW PORT")
     username = MnemonicSlugs.generate_slug()
     color = RandomColor.hex()
@@ -100,7 +101,8 @@ defmodule AkashiWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_info(%Phoenix.Socket.Broadcast{topic: "cursor_page", event: "presence_diff", payload: payload}, socket) do
+  @impl true
+  def handle_info(%Phoenix.Socket.Broadcast{topic: "cursor_page", event: "presence_diff", payload: _payload}, socket) do
     users =
       @channel_topic
       |> Presence.list()

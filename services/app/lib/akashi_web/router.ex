@@ -22,8 +22,8 @@ defmodule AkashiWeb.Router do
 
     get "/", PageController, :home
     # live "/", HomeLive
-    post "/siws", ServicesController, :siws
-    get "/sns", ServicesController, :sns
+    # post "/siws", ServicesController, :siws
+    # get "/sns", ServicesController, :sns
   end
 
   # Other scopes may use custom stacks.
@@ -55,10 +55,10 @@ defmodule AkashiWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{AkashiWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      # live "/users/register", UserRegistrationLive, :new
+      # live "/users/log_in", UserLoginLive, :new
+      # live "/users/reset_password", UserForgotPasswordLive, :new
+      # live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end
 
     post "/users/log_in", UserSessionController, :create
@@ -69,6 +69,7 @@ defmodule AkashiWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
+      live "/pay", PayLive, :new
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

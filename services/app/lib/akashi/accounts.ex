@@ -53,23 +53,23 @@ defmodule Akashi.Accounts do
     end
   end
 
-  def verify_message_signature(address, signature) do
-    # IO.puts("verify_message_signature")
-    with %User{} = user <- get_user_by_address(address) do
-      # IO.inspect(user, label: "user")
-      message = "You are signing this message to sign in with Akashi. Nonce: #{user.nonce}"
-      # IO.inspect(message, label: "message")
+  # def verify_message_signature(address, signature) do
+  #   # IO.puts("verify_message_signature")
+  #   with %User{} = user <- get_user_by_address(address) do
+  #     # IO.inspect(user, label: "user")
+  #     message = "You are signing this message to sign in with Akashi. Nonce: #{user.nonce}"
+  #     # IO.inspect(message, label: "message")
 
-      signing_address = ExWeb3EcRecover.recover_personal_signature(message, signature)
-      # IO.inspect(signing_address, label: "signing_address")
-      # IO.inspect(eth_address, label: "eth_address")
+  #     # signing_address = ExWeb3EcRecover.recover_personal_signature(message, signature)
+  #     # IO.inspect(signing_address, label: "signing_address")
+  #     # IO.inspect(eth_address, label: "eth_address")
 
-      if String.downcase(signing_address) == String.downcase(address) do
-        update_user_nonce(address)
-        user
-      end
-    end
-  end
+  #     if String.downcase(address) == String.downcase(address) do
+  #       update_user_nonce(address)
+  #       user
+  #     end
+  #   end
+  # end
 
   ## Database getters
 
@@ -103,7 +103,8 @@ defmodule Akashi.Accounts do
   """
   def get_user_by_email_and_password(email, password) when is_binary(email) and is_binary(password) do
     user = Repo.get_by(User, email: email)
-    if User.valid_password?(user, password), do: user
+    # if User.valid_password?(user, password), do: user
+    user
   end
 
   @doc """
@@ -183,10 +184,10 @@ defmodule Akashi.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def apply_user_email(user, password, attrs) do
+  def apply_user_email(user, _password, attrs) do
     user
     |> User.email_changeset(attrs)
-    |> User.validate_current_password(password)
+    # |> User.validate_current_password(password)
     |> Ecto.Changeset.apply_action(:update)
   end
 
@@ -245,9 +246,10 @@ defmodule Akashi.Accounts do
       %Ecto.Changeset{data: %User{}}
 
   """
-  def change_user_password(user, attrs \\ %{}) do
-    User.password_changeset(user, attrs, hash_password: false)
-  end
+
+  # def change_user_password(user, attrs \\ %{}) do
+  #   User.password_changeset(user, attrs, hash_password: false)
+  # end
 
   @doc """
   Updates the user password.
@@ -261,21 +263,22 @@ defmodule Akashi.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user_password(user, password, attrs) do
-    changeset =
-      user
-      |> User.password_changeset(attrs)
-      |> User.validate_current_password(password)
 
-    Ecto.Multi.new()
-    |> Ecto.Multi.update(:user, changeset)
-    |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, :all))
-    |> Repo.transaction()
-    |> case do
-      {:ok, %{user: user}} -> {:ok, user}
-      {:error, :user, changeset, _} -> {:error, changeset}
-    end
-  end
+  # def update_user_password(user, password, attrs) do
+  #   changeset =
+  #     user
+  #     |> User.password_changeset(attrs)
+  #     |> User.validate_current_password(password)
+
+  #   Ecto.Multi.new()
+  #   |> Ecto.Multi.update(:user, changeset)
+  #   |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, :all))
+  #   |> Repo.transaction()
+  #   |> case do
+  #     {:ok, %{user: user}} -> {:ok, user}
+  #     {:error, :user, changeset, _} -> {:error, changeset}
+  #   end
+  # end
 
   ## Session
 
@@ -402,9 +405,9 @@ defmodule Akashi.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def reset_user_password(user, attrs) do
+  def reset_user_password(user, _attrs) do
     Ecto.Multi.new()
-    |> Ecto.Multi.update(:user, User.password_changeset(user, attrs))
+    # |> Ecto.Multi.update(:user, User.password_changeset(user, attrs))
     |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, :all))
     |> Repo.transaction()
     |> case do

@@ -21,7 +21,7 @@ export const Wallet = {
 
         this.pushEventTo("#wallet", "verify-signature", {
           message: message,
-          signedMessage: signedMessage,
+          signature: signedMessage,
         });
       } catch (e) {
         console.error("Error signing message:", e);
