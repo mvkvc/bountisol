@@ -15,7 +15,6 @@ deps:
 
 build:
     FROM +deps
-    RUN yarn build
 
 docker:
     FROM +build

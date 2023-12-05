@@ -28,7 +28,6 @@ RUN yarn install --dev --frozen-lockfile
 
 # Copy application code
 COPY --link . .
-RUN yarn build
 
 # Final stage for app image
 FROM base
@@ -40,4 +39,4 @@ COPY --from=build /app /app
 EXPOSE 3000
 ENV HOST=0.0.0.0
 ENV PORT=3000
-CMD [ "yarn", "start"]
+CMD [ "yarn", "start" ]
