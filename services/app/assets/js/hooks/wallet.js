@@ -20,8 +20,8 @@ export const Wallet = {
         );
 
         this.pushEventTo("#wallet", "verify-signature", {
-          message: message,
-          signature: signedMessage,
+          message: JSON.stringify(message),
+          signature: JSON.stringify(signedMessage),
         });
       } catch (e) {
         console.error("Error signing message:", e);

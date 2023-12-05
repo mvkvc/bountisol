@@ -16,9 +16,6 @@ defmodule AkashiWeb.UserSessionController do
   end
 
   defp create(conn, %{"message" => message, "address" => address, "signature" => signature} = params, info) do
-    signature = Jason.decode!(signature)
-    message = Jason.decode!(message)
-
     user = SIWS.verify_signature(%{address: address, message: message, signature: signature})
 
     if user do

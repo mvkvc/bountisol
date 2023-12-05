@@ -11,33 +11,25 @@ defmodule AkashiWeb.SignInLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
+    <div id="wallet" class="flex flex-row" phx-hook="Wallet">
       <%= if @connected do %>
-        <%= if @current_user do %>
-          <.button class="btn" phx-click="sign_out">
-            Sign out
-          </.button>
-        <% else %>
-          <.form
-            for={%{}}
-            action={~p"/users/log_in"}
-            as={:user}
-            phx-submit="verify"
-            phx-trigger-action={@verified}
-          >
-            <.input type="hidden" name="address" value={@address} />
-            <p>ADDRESS: <%= @address %></p>
-            <p><%= is_binary(@address) %></p>
-            <.input type="hidden" name="message" value={@message} />
-            <p>MESSAGE: <%= @message %></p>
-            <p><%= is_binary(@message) %></p>
-            <.input type="hidden" name="signature" value={@signature} />
-            <p>SIG: <%= @signature %></p>
-            <p><%= is_binary(@signature) %></p>
-            <.button class="btn">
-              Sign in
-            </.button>
-          </.form>
+        <%= if is_nil(@current_user) do %>
+          <div class="mr-4">
+            <.form
+              for={%{}}
+              action={~p"/users/log_in"}
+              as={:user}
+              phx-submit="verify"
+              phx-trigger-action={@trigger}
+            >
+              <.input type="hidden" name="address" value={@address} />
+              <.input type="hidden" name="message" value={@message} />
+              <.input type="hidden" name="signature" value={@signature} />
+              <button class="btn">
+                Sign in
+              </button>
+            </.form>
+          </div>
         <% end %>
       <% else %>
         <div class="relative">
@@ -61,11 +53,10 @@ defmodule AkashiWeb.SignInLive do
   @impl true
   def mount(_params, session, socket) do
     socket = assign_current_user(socket, session)
-    current_user = socket.assigns.current_user
 
     {:ok,
      assign(socket,
-       current_user: current_user,
+       trigger: false,
        connected: false,
        verified: false,
        address: nil,
@@ -102,14 +93,15 @@ defmodule AkashiWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("verify-signature", %{"signature" => signature, "message" => message} = _payload, socket) do
-    signature = Jason.encode!(signature)
-    message = Jason.encode!(message)
-
+  def handle_event("verify-signature", %{
+    "signature" => signature, 
+    "message" => message
+    } = _payload, socket) do
     {:noreply,
      socket
      |> assign(signature: signature)
-     |> assign(message: message)}
+     |> assign(message: message)
+     |> assign(trigger: true)}
   end
 
   @impl true

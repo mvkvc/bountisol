@@ -18,11 +18,6 @@
       </.link>
     </div>
     <ul class="flex flex-row space-x-4">
-      <%= if @current_user do %>
-        <li>
-          <%= @current_user.address %>
-        </li>
-      <% end %>
       <li>
         <.link href={~p"/"} class="btn">
           Pay
