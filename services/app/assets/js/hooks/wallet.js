@@ -11,30 +11,27 @@ export const Wallet = {
 
       try {
         const message = createSolanaMessage(address, statement, nonce);
-        console.log("Signing message:", message);
-        const encodedMessage = new TextEncoder().encode(message.prepareMessage());
-        const signedMessage = await provider.signMessage(encodedMessage, "utf8");
-        // const signedMessage = await provider.request({
-        //   method: "signMessage",
-        //   params: {
-        //     message: encodedMessage,
-        //     display: "utf8",
-        //   },
-        // });
+        const encodedMessage = new TextEncoder().encode(
+          message.prepareMessage(),
+        );
+        const signedMessage = await provider.signMessage(
+          encodedMessage,
+          "utf8",
+        );
 
         this.pushEventTo("#wallet", "verify-signature", {
           message: message,
-          signedMessage: signedMessage});
+          signedMessage: signedMessage,
+        });
       } catch (e) {
         console.error("Error signing message:", e);
       }
-
-    })
-  }
+    });
+  },
 };
 
 const getProvider = () => {
-  if ('phantom' in window) {
+  if ("phantom" in window) {
     const provider = window.phantom?.solana;
 
     if (provider?.isPhantom) {
@@ -42,10 +39,8 @@ const getProvider = () => {
     }
   }
 
-  // window.open('https://phantom.app/', '_blank');
-  console.error("Phantom wallet not installed");
+  console.error("No provider found (try installing Phantom wallet).");
 };
-
 
 function createSolanaMessage(address, statement, nonce) {
   try {
@@ -68,25 +63,10 @@ function createSolanaMessage(address, statement, nonce) {
       payload,
     });
 
-    // const preparedMessage = message.prepareMessage();
-    // console.log("Prepared message:", preparedMessage);
     return message;
   } catch (error) {
-    console.error("Error preparing message:", JSON.stringify(error));
+    console.error("Error creating message:", JSON.stringify(error));
   }
 }
-
-// function connectWallet() {
-//   try {
-//     window.solana.connect().then((resp) => {
-//       // Successful connection
-//       // Get the publicKey (string)
-//       // publicKey = resp.publicKey.toString();
-//       console.log("Connected to wallet:", resp);
-//     });
-//   } catch (error) {
-//     console.log("User rejected the request." + error);
-//   }
-// }
 
 export default Wallet;

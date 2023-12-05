@@ -4,8 +4,8 @@
   "description": "",
   "main": "tailwind.config.js",
   "scripts": {
-    "build": "npx tsc && node ./build.js",
-    "format": "prettier --write .",
+    "build": "node ./build.js",
+    "format": "prettier --write ./js",
     "tailwind": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css",
     "tailwind:watch": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --watch"
   },
@@ -13,16 +13,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/react": "^18.2.41",
-    "@types/react-dom": "^18.2.17",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.14",
     "esbuild": "^0.19.8",
     "esbuild-plugins-node-modules-polyfill": "^1.6.1",
     "postcss": "^8.4.31",
     "prettier": "^3.1.0",
-    "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.2"
+    "tailwindcss": "^3.3.5"
   },
   "dependencies": {
     "@bonfida/spl-name-service": "^2.0.0-alpha.25",
