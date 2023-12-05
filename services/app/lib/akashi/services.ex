@@ -1,10 +1,10 @@
-defmodule Akashi.SIWS do
+defmodule Akashi.Services do
   @moduledoc false
   alias Akashi.Accounts
 
   def verify_signature(%{address: address, message: message, signature: signature}) do
-    request =
-      Req.post!(
+    req =
+      Req.post(
         "http://localhost:3000/siws",
         json: %{
           message: message,
@@ -13,19 +13,18 @@ defmodule Akashi.SIWS do
         }
       )
 
-    case request.status do
-      200 ->
-        if Map.get(request.body, "verified") && Map.get(request.body, "verified") == true do
+    case req do
+      {:ok, %Req.Response{status: 200, body: body}} ->
+        if Map.get(body, "verified") == true do
           IO.puts("Verified")
-          {:ok, user} = Accounts.create_user_if_not_exists(address)
-          user
+          Accounts.get_user_by_address(address)
         else
           IO.puts("Not verified")
           nil
         end
 
       _ ->
-        IO.puts("Error")
+        IO.puts("Error with request for verification")
         nil
     end
   end

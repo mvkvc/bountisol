@@ -24,16 +24,17 @@
         </.link>
       </li>
       <%= if @current_user do %>
+        <%# <%= @current_user.address %>
         <%# <li>
           <.link href={~p"/users/settings"} class="btn">
             Settings
           </.link>
         </li> %>
-        <li>
+        <%# <li>
           <.link href={~p"/users/log_out"} method="delete" class="btn">
             Log out
           </.link>
-        </li>
+        </li> %>
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>

@@ -2,6 +2,8 @@ defmodule AkashiWeb.PayLive do
   @moduledoc false
   use AkashiWeb, :live_view
 
+  alias Akashi.Accounts
+
   @impl true
   def render(assigns) do
     ~H"""

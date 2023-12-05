@@ -12,28 +12,38 @@ defmodule AkashiWeb.SignInLive do
   def render(assigns) do
     ~H"""
     <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
-      <%= if @connected do %>
         <%= if !@current_user do %>
-          <.form
-            for={%{}}
-            action={~p"/users/log_in"}
-            as={:user}
-            phx-submit="verify"
-            phx-trigger-action={@trigger}
-          >
-            <.input type="hidden" name="address" value={@address} />
-            <.input type="hidden" name="message" value={@message} />
-            <.input type="hidden" name="signature" value={@signature} />
-            <button class="btn">
+          <%= if @connected do %>
+            <.form
+              for={%{}}
+              action={~p"/users/log_in"}
+              as={:user}
+              phx-submit="verify"
+              phx-trigger-action={@trigger_sign_in}
+            >
+              <.input type="hidden" name="address" value={@address} />
+              <.input type="hidden" name="message" value={@message} />
+              <.input type="hidden" name="signature" value={@signature} />
+              <button class="btn">
+                Sign in
+              </button>
+            </.form>
+          <% else %>
+            <button class="btn" disabled>
               Sign in
             </button>
+          <% end %>
+        <% else %>
+          <.form
+            for={%{}}
+            action={~p"/users/log_out"}
+            as={:user}
+            method="delete"
+            phx-trigger-action={@trigger_sign_out}
+          >
+            <button type="submit" class="btn">Log out</button>
           </.form>
         <% end %>
-      <% else %>
-        <button class="btn" disabled>
-          Sign in
-        </button>
-      <% end %>
       <div>
         <%= live_react_component(
           "Components.WalletAdapter",
@@ -51,7 +61,8 @@ defmodule AkashiWeb.SignInLive do
 
     {:ok,
      assign(socket,
-       trigger: false,
+       trigger_sign_in: false,
+       trigger_sign_out: false,
        connected: false,
        verified: false,
        address: nil,
@@ -81,10 +92,11 @@ defmodule AkashiWeb.SignInLive do
 
   @impl true
   def handle_event("sign_out", _params, socket) do
+    IO.puts("SIGN OUT TRIGGERED")
     {:noreply,
      socket
-     |> UserAuth.log_out_user()
-     |> assign(verified: false)}
+     |> assign(verified: false)
+     |> assign(trigger_sign_out: true)}
   end
 
   @impl true
@@ -96,7 +108,7 @@ defmodule AkashiWeb.SignInLive do
      socket
      |> assign(signature: signature)
      |> assign(message: message)
-     |> assign(trigger: true)}
+     |> assign(trigger_sign_in: true)}
   end
 
   @impl true
@@ -109,10 +121,14 @@ defmodule AkashiWeb.SignInLive do
 
   @impl true
   def handle_event("effect_disconnecting", _params, socket) do
+    push_event(socket, "sign_out", %{})
+
     {:noreply,
      socket
      |> assign(connected: false)
-     |> assign(address: nil)}
+     |> assign(address: nil)
+     |> assign(verified: false)
+     |> assign(trigger_sign_out: true)}
   end
 
   @impl true

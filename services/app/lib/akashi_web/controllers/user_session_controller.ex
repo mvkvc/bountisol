@@ -1,7 +1,7 @@
 defmodule AkashiWeb.UserSessionController do
   use AkashiWeb, :controller
 
-  alias Akashi.SIWS
+  alias Akashi.Services
 
   # alias Akashi.Accounts
   alias AkashiWeb.UserAuth
@@ -16,7 +16,7 @@ defmodule AkashiWeb.UserSessionController do
   end
 
   defp create(conn, %{"message" => message, "address" => address, "signature" => signature} = params, info) do
-    user = SIWS.verify_signature(%{address: address, message: message, signature: signature})
+    user = Services.verify_signature(%{address: address, message: message, signature: signature})
 
     if user do
       conn

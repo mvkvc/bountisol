@@ -1,8 +1,8 @@
 defmodule AkashiWeb.HomeLive do
   @moduledoc false
   use AkashiWeb, :live_view
-
   alias AkashiWeb.Presence
+  alias Akashi.Accounts
 
   @channel_topic "cursor_page"
 
@@ -55,9 +55,10 @@ defmodule AkashiWeb.HomeLive do
   end
 
   @impl true
-  def mount(_params, _session, socket) do
-    IO.inspect(self(), label: "LIVEVIEW PORT")
-    username = MnemonicSlugs.generate_slug()
+  def mount(_params, session, socket) do
+    socket = assign_current_user(socket, session)
+    current_user = socket.assigns.current_user
+    username = if current_user, do: current_user.address |> truncate_address(), else: MnemonicSlugs.generate_slug()
     color = RandomColor.hex()
 
     if connected?(socket) do
@@ -114,5 +115,21 @@ defmodule AkashiWeb.HomeLive do
       |> assign(socket_id: socket.id)
 
     {:noreply, updated}
+  end
+
+  defp truncate_address(address) do
+    String.slice(address, 0, 8) <> "..."
+  end
+
+  defp assign_current_user(socket, session) do
+    case session do
+      %{"user_token" => user_token} ->
+        assign_new(socket, :current_user, fn ->
+          Accounts.get_user_by_session_token(user_token)
+        end)
+
+      %{} ->
+        assign_new(socket, :current_user, fn -> nil end)
+    end
   end
 end
