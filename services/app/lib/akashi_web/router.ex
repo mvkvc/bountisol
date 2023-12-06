@@ -78,11 +78,19 @@ defmodule AkashiWeb.Router do
   scope "/", AkashiWeb do
     pipe_through [:browser]
 
+    # Ensure routes authenticated when needed
+
     live "/bounties", BountyLive.Index, :index
     live "/bounties/new", BountyLive.Index, :new
     live "/bounties/:id/edit", BountyLive.Index, :edit
     live "/bounties/:id", BountyLive.Show, :show
-    live "/bounties/:id/show/edit", BountyLive.Show, :editS
+    live "/bounties/:id/show/edit", BountyLive.Show, :edit
+
+    live "/payments", PaymentLive.Index, :index
+    live "/payments/new", PaymentLive.Index, :new
+    live "/payments/:id/edit", PaymentLive.Index, :edit
+    live "/payments/:id", PaymentLive.Show, :show
+    live "/payments/:id/show/edit", PaymentLive.Show, :edit
 
     delete "/users/log_out", UserSessionController, :delete
 

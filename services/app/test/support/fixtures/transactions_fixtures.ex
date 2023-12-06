@@ -24,4 +24,25 @@ defmodule Akashi.TransactionsFixtures do
 
     bounty
   end
+
+  @doc """
+  Generate a payment.
+  """
+  def payment_fixture(attrs \\ %{}) do
+    {:ok, payment} =
+      attrs
+      |> Enum.into(%{
+        crypto_amount: 42,
+        crypto_denom: "some crypto_denom",
+        fiat_amount: 42,
+        fiat_denom: "some fiat_denom",
+        reciever_address: "some reciever_address",
+        reciever_domain: "some reciever_domain",
+        reciever_email: "some reciever_email",
+        status: "some status"
+      })
+      |> Akashi.Transactions.create_payment()
+
+    payment
+  end
 end
