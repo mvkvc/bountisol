@@ -1,16 +1,18 @@
 defmodule AkashiWeb.HomeLive do
   @moduledoc false
   use AkashiWeb, :live_view
+  require Logger
   alias AkashiWeb.Presence
   alias Akashi.Accounts
-
+  
   @channel_topic "cursor_page"
 
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="bg-pattern flex justify-center items-center h-screen w-screen">
-      <ul class="list-none mt-9 max-h-full max-w-full" id="cursor" phx-hook="TrackClientCursor">
+    <div class="flex justify-center items-center h-screen"
+    style={"background-image: url('" <> ~p"/images/bridge.jpg" <> "'); background-size: 100% auto; background-position: center; background-repeat: no-repeat;"}>
+      <ul class="list-none mt-9" id="cursor" phx-hook="TrackClientCursor">
         <%= for user <- @users do %>
           <li
             style={"left: #{user.x}%; top: #{user.y}%"}
@@ -43,7 +45,7 @@ defmodule AkashiWeb.HomeLive do
             </svg>
             <span
               style={"background-color: #{user.color};"}
-              class="mt-1 ml-4 px-1 text-sm text-white rounded-xl"
+              class="mt-1 ml-4 px-1 text-sm text-black rounded-xl"
             >
               <%= user.username %>
             </span>
@@ -56,10 +58,13 @@ defmodule AkashiWeb.HomeLive do
 
   @impl true
   def mount(_params, session, socket) do
+    Logger.disable(self()) # Disable logger due to mouse move events
+    image_url = Path.join(:code.priv_dir(:akashi), "static/images/bridge.png")
+    
     socket = assign_current_user(socket, session)
     current_user = socket.assigns.current_user
     username = if current_user, do: current_user.address |> truncate_address(), else: MnemonicSlugs.generate_slug()
-    color = RandomColor.hex()
+    color = RandomColor.hex(luminosity: :light)
 
     if connected?(socket) do
       Presence.track(self(), @channel_topic, socket.id, %{
@@ -83,6 +88,7 @@ defmodule AkashiWeb.HomeLive do
       |> assign(:username, username)
       |> assign(:users, initial_users)
       |> assign(:socket_id, socket.id)
+      |> assign(:image_url, image_url)
 
     {:ok, updated}
   end

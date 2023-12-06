@@ -7,7 +7,6 @@ defmodule AkashiWeb.PayLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <h1>Pay</h1>
     """
   end
 

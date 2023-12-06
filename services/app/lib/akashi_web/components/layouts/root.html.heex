@@ -18,6 +18,11 @@
       </.link>
     </div>
     <ul class="flex flex-row space-x-4">
+      <%# <li>
+        <.link href={~p"/bounties"} class="btn">
+          Bounties
+        </.link>
+      </li> %>
       <li>
         <.link href={~p"/pay"} class="btn">
           Pay
@@ -42,8 +47,7 @@
     </ul>
   </header>
   <body class="bg-antialiased">
-    <div class="p-8">
-      <%= @inner_content %>
-    </div>
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
   </body>
 </html>

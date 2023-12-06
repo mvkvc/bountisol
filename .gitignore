@@ -1,4 +1,5 @@
-.direnv
-.nix_hex
-.nix_mix
+.direnv/
+.nix_hex/
+.nix_mix/
+assets/og/
 .secret*
