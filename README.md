@@ -31,5 +31,5 @@
 
 - Run `doppler login` to authenticate with Doppler.
 - Run `sh/secrets.sh` to download development secrets from Doppler.
-- Run `nix develop` to enter the project's Nix shell.
-- Run `sh/setup.sh` to install dependencies.
+- Run `nix develop` to enter the Nix shell (or `direnv allow` if you have [direnv](https://direnv.net/) to automatically enter the Nix shell when you `cd` into the project directory).
+- Run `sh/setup.sh` to install dependencies (only needs to be run once).
