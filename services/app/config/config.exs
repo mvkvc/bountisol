@@ -7,9 +7,8 @@
 # General application configuration
 import Config
 
-config :akashi, Akashi.WalletLive, network: :testnet
-
 config :akashi,
+  network: :devnet,
   ecto_repos: [Akashi.Repo],
   generators: [timestamp_type: :utc_datetime]
 

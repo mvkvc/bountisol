@@ -8,7 +8,7 @@ defmodule AkashiWeb.WalletLive do
     <div>
       <%= live_react_component(
         "Components.WalletAdapter",
-        [network_type: Application.get_env(:akashi, Akashi.WalletLive)[:network]],
+        [network_type: Application.get_env(:akashi,:network)],
         id: "wallet"
       ) %>
     </div>
