@@ -10,9 +10,13 @@ defmodule AkashiWeb.PaymentLive.Send do
             Payment <%= @payment.id %>
             <:subtitle>Click to send this payment!</:subtitle>
             <:actions>
-            <.link phx-click="send-payment" phx-hook="Pay" id="send-payment">
-                <.button>Send payment</.button>
-            </.link>
+            <% if @payment.status == "requested" do %>
+              <.link phx-click="send-payment" phx-hook="Pay" id="send-payment">
+                  <.button class="btn">Send payment</.button>
+              </.link>
+            <% else %>
+              <.button class="btn" disabled>Send payment</.button>
+            <% end %>
             </:actions>
         </.header>
 
@@ -70,7 +74,10 @@ defmodule AkashiWeb.PaymentLive.Send do
 
       case Transactions.update_payment(payment, attrs) do
         {:ok, payment} ->
-          {:noreply, socket |> assign(:payment, payment)}
+          {:noreply, 
+            socket 
+            |> assign(:payment, payment)
+            |> put_flash(:info, "Payment sent!")}
         {:error, _changeset} ->
           {:noreply, socket}
       end
