@@ -58,6 +58,8 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      {:sentry, "~> 8.0"},
+      {:hackney, "~> 1.8"},
       # {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
       # {:tesla, "~> 1.8"},
       # {:solana, path: "./libs/solana-elixir"},
