@@ -5,7 +5,7 @@ defmodule Akashi.Services do
   def verify_signature(%{address: address, message: message, signature: signature}) do
     req =
       Req.post(
-        "http://localhost:3000/siws",
+        System.fetch_env!("APP_VERIFY_URL"),
         json: %{
           message: message,
           address: address,
