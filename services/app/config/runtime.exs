@@ -27,9 +27,12 @@ if config_env() == :prod do
       environment variable APP_DB_URL is missing.
       """
 
-  config :akashi, Akashi.WalletLive,
+  config :akashi, AkashiWeb.WalletLive,
     # network: :mainnet
-    network: :testnet
+    network: :devnet
+
+  config :akashi, AkashiWeb.PayLive,
+    runtime_env: :prod
 
   # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 

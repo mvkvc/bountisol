@@ -23,7 +23,7 @@ defmodule AkashiWeb.PaymentLive.Send do
         <:item title="Reciever address"><%= @payment.reciever_address %></:item>
 
         <:item title="Transaction">
-          <.link href={"https://solana.fm/tx/#{@payment.tx_hash}" <> if Mix.env == :dev, do: "?cluster=devnet-solana", else: ""}>
+          <.link href={"https://solana.fm/tx/#{@payment.tx_hash}" <> if Application.get_env(:akashi, :runtime_env) && Application.get_env(:akashi, :runtime_env) == :prod, do: "?cluster=devnet-solana", else: ""}>
             <%= @payment.tx_hash %>
           </.link>
         </:item>
