@@ -1,5 +1,5 @@
-require("@sentry/node");
-const ProfilingIntegration = require("@sentry/profiling-node");
+const Sentry =require("@sentry/node");
+const ProfilingIntegration = require("@sentry/profiling-node").ProfilingIntegration;
 const express = require("express");
 const siwsHandler = require("./handlers/siws");
 const snsHandler = require("./handlers/sns");

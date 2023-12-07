@@ -1,8 +1,8 @@
 defmodule Akashi.Accounts.User do
   @moduledoc false
   use Ecto.Schema
-
   import Ecto.Changeset
+  alias Akashi.Transactions.Payment
 
   schema "users" do
     field :address, :string
@@ -10,6 +10,8 @@ defmodule Akashi.Accounts.User do
     field :email, :string
     field :confirmed_at, :naive_datetime
     field :domain, :string
+
+    has_many :payments, Payment
 
     timestamps(type: :utc_datetime)
   end

@@ -116,6 +116,15 @@ defmodule Akashi.Transactions do
     Repo.all(Payment)
   end
 
+def list_payments_by_address(address) do
+  from(p in Payment,
+    where: p.address == ^address,
+    order_by: fragment("CASE WHEN ? = 'requested' THEN 1 WHEN ? = 'sent' THEN 2 ELSE 3 END", p.status, p.status)
+  )
+  |> Repo.all()
+end
+
+
   @doc """
   Gets a single payment.
 

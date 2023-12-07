@@ -71,9 +71,15 @@ defmodule AkashiWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
-      # live "/pay", PayLive, :new
       # live "/users/settings", UserSettingsLive, :edit
       # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      live "/payments", PaymentLive.Index, :index
+      live "/payments/new", PaymentLive.Index, :new
+      live "/payments/:id/edit", PaymentLive.Index, :edit
+      live "/payments/:id", PaymentLive.Show, :show
+      live "/payments/:id/show/edit", PaymentLive.Show, :edit
+      live "/payments/:id/send", PaymentLive.Send
     end
   end
 
@@ -87,13 +93,6 @@ defmodule AkashiWeb.Router do
     live "/bounties/:id/edit", BountyLive.Index, :edit
     live "/bounties/:id", BountyLive.Show, :show
     live "/bounties/:id/show/edit", BountyLive.Show, :edit
-
-    live "/payments", PaymentLive.Index, :index
-    live "/payments/new", PaymentLive.Index, :new
-    live "/payments/:id/edit", PaymentLive.Index, :edit
-    live "/payments/:id", PaymentLive.Show, :show
-    live "/payments/:id/show/edit", PaymentLive.Show, :edit
-    live "/payments/:id/send", PaymentLive.Send
 
     delete "/users/log_out", UserSessionController, :delete
 

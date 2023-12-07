@@ -1,8 +1,9 @@
 # akashi
 
-Work with everyone, everywhere.
-
-<img src="assets/bridge.jpg" width="50%">
+<div align="center">
+    <p>Work with everyone, everywhere.</p>
+    <img src="assets/bridge.jpg" width="50%">
+</div>
 
 ## Links
 
@@ -11,17 +12,17 @@ Work with everyone, everywhere.
 - https://github.com/mvkvc/akashi
 - https://github.com/users/mvkvc/projects/21
 - https://fly.io/dashboard/akashi-systems
+- https://akashi-systems-345904ce.sentry.io/issues/?project=4506352893624320
 - https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
 - https://dev.helius.xyz/dashboard/app
-- https://akashi.goatcounter.com
+- https://stats.akashi.systems
 
 ## Components
 
 - `programs/`: Solana programs.
-- `research/`: Incentive research.
 - `services/app/`: Main application.
-- `services/js/`: Node server for using JS libs.
-- `services/site/`: Documentation and blog.
+- `services/js/`: NodeJS server for using JS libraries.
+- `services/site/`: Landing page, documentation, and blog.
 
 ## Development
 
@@ -35,6 +36,6 @@ Work with everyone, everywhere.
 ### Setup
 
 - Run `doppler login` to authenticate with Doppler.
-- Run `sh/secrets.sh` to download development secrets from Doppler.
-- Run `nix develop` to enter the Nix shell (or `direnv allow` if you have [direnv](https://direnv.net/) to automatically enter the Nix shell when you `cd` into the project directory).
-- Run `sh/setup.sh` to install dependencies (only needs to be run once).
+- Run `sh/secrets.sh` to download secrets locally.
+- Run `nix develop` to enter the Nix shell.
+- Run `sh/setup.sh` to install dependencies.

@@ -6,8 +6,10 @@ defmodule AkashiWeb.PaymentLive.Index do
   alias Akashi.Transactions.Payment
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, stream(socket, :payments, Transactions.list_payments())}
+  def mount(_params, session, socket) do
+    socket = assign_current_user(socket, session)
+    current_user = socket.assigns.current_user
+    {:ok, stream(socket, :payments, Transactions.list_payments_by_address(current_user.address))}
   end
 
   @impl true
@@ -44,5 +46,17 @@ defmodule AkashiWeb.PaymentLive.Index do
     {:ok, _} = Transactions.delete_payment(payment)
 
     {:noreply, stream_delete(socket, :payments, payment)}
+  end
+
+  defp assign_current_user(socket, session) do
+    case session do
+      %{"user_token" => user_token} ->
+        assign_new(socket, :current_user, fn ->
+          Accounts.get_user_by_session_token(user_token)
+        end)
+
+      %{} ->
+        assign_new(socket, :current_user, fn -> nil end)
+    end
   end
 end
