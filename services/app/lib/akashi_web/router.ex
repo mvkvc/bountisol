@@ -71,23 +71,33 @@ defmodule AkashiWeb.Router do
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
       # live "/users/settings", UserSettingsLive, :edit
       # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
       live "/payments", PaymentLive.Index, :index
       live "/payments/new", PaymentLive.Index, :new
       live "/payments/:id/edit", PaymentLive.Index, :edit
       live "/payments/:id", PaymentLive.Show, :show
       live "/payments/:id/show/edit", PaymentLive.Show, :edit
+
+      live "/invoices", InvoiceLive.Index, :index
+      live "/invoices/new", InvoiceLive.Index, :new
+      live "/invoices/:id/edit", InvoiceLive.Index, :edit
+      live "/invoices/:id", InvoiceLive.Show, :show
+      live "/invoices/:id/show/edit", InvoiceLive.Show, :edit
+
+      live "/bounties/new", BountyLive.Index, :new
+      live "/bounties/:id/edit", BountyLive.Index, :edit
+      live "/bounties/:id/show/edit", BountyLive.Show, :edit
     end
   end
 
   scope "/", AkashiWeb do
     pipe_through [:browser]
     delete "/users/log_out", UserSessionController, :delete
+
     live "/payments/:id/send", PaymentLive.Send
+
     live "/bounties", BountyLive.Index, :index
-    live "/bounties/new", BountyLive.Index, :new
-    live "/bounties/:id/edit", BountyLive.Index, :edit
     live "/bounties/:id", BountyLive.Show, :show
-    live "/bounties/:id/show/edit", BountyLive.Show, :edit
 
     live_session :current_user,
       on_mount: [{AkashiWeb.UserAuth, :mount_current_user}] do

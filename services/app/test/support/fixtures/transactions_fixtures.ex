@@ -45,4 +45,26 @@ defmodule Akashi.TransactionsFixtures do
 
     payment
   end
+
+  @doc """
+  Generate a invoice.
+  """
+  def invoice_fixture(attrs \\ %{}) do
+    {:ok, invoice} =
+      attrs
+      |> Enum.into(%{
+        cancelled: true,
+        crypto_amount: 42,
+        crypto_denom: "some crypto_denom",
+        end_date: ~N[2023-12-06 17:45:00],
+        fiat_amount: 42,
+        fiat_denom: "some fiat_denom",
+        paused: true,
+        recurring: true,
+        start_date: ~N[2023-12-06 17:45:00]
+      })
+      |> Akashi.Transactions.create_invoice()
+
+    invoice
+  end
 end

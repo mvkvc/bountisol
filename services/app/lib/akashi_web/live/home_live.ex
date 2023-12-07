@@ -12,10 +12,7 @@ defmodule AkashiWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div
-      class="flex justify-center items-center h-screen"
-      style={"background-image: url('" <> ~p"/images/bridge.jpg" <> "'); background-size: 100% auto; background-position: center; background-repeat: no-repeat;"}
-    >
+    <div class="flex justify-center items-center h-screen">
       <ul class="list-none mt-9" id="cursor" phx-hook="TrackClientCursor">
         <%= for user <- @users do %>
           <li

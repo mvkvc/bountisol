@@ -36,7 +36,7 @@ if config_env() == :prod do
     enable_source_code_context: true,
     root_source_code_path: File.cwd!(),
     tags: %{
-    env: "production"
+      env: "production"
     },
     included_environments: [:prod]
 

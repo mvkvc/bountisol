@@ -1,7 +1,9 @@
 defmodule Akashi.Accounts.User do
   @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias Akashi.Transactions.Payment
 
   schema "users" do
