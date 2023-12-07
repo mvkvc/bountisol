@@ -1,4 +1,5 @@
 defmodule AkashiWeb.PaymentLive.FormComponent do
+  @moduledoc false
   use AkashiWeb, :live_component
 
   alias Akashi.Transactions
@@ -19,12 +20,13 @@ defmodule AkashiWeb.PaymentLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:crypto_amount]} type="number" label="Crypto amount" />
+        <.input field={@form[:reciever_address]} type="text" label="Reciever address" />
+
         <.input field={@form[:fiat_amount]} type="number" label="Fiat amount" />
         <.input field={@form[:fiat_denom]} type="text" label="Fiat denom" />
-        <.input field={@form[:crypto_amount]} type="number" label="Crypto amount" />
         <.input field={@form[:crypto_denom]} type="text" label="Crypto denom" />
         <.input field={@form[:status]} type="text" label="Status" />
-        <.input field={@form[:reciever_address]} type="text" label="Reciever address" />
         <.input field={@form[:reciever_email]} type="text" label="Reciever email" />
         <.input field={@form[:reciever_domain]} type="text" label="Reciever domain" />
         <:actions>

@@ -12,38 +12,38 @@ defmodule AkashiWeb.SignInLive do
   def render(assigns) do
     ~H"""
     <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
-        <%= if !@current_user do %>
-          <%= if @connected do %>
-            <.form
-              for={%{}}
-              action={~p"/users/log_in"}
-              as={:user}
-              phx-submit="verify"
-              phx-trigger-action={@trigger_sign_in}
-            >
-              <.input type="hidden" name="address" value={@address} />
-              <.input type="hidden" name="message" value={@message} />
-              <.input type="hidden" name="signature" value={@signature} />
-              <button class="btn">
-                Sign in
-              </button>
-            </.form>
-          <% else %>
-            <button class="btn" disabled>
-              Sign in
-            </button>
-          <% end %>
-        <% else %>
+      <%= if !@current_user do %>
+        <%= if @connected do %>
           <.form
             for={%{}}
-            action={~p"/users/log_out"}
+            action={~p"/users/log_in"}
             as={:user}
-            method="delete"
-            phx-trigger-action={@trigger_sign_out}
+            phx-submit="verify"
+            phx-trigger-action={@trigger_sign_in}
           >
-            <button type="submit" class="btn">Log out</button>
+            <.input type="hidden" name="address" value={@address} />
+            <.input type="hidden" name="message" value={@message} />
+            <.input type="hidden" name="signature" value={@signature} />
+            <button class="btn">
+              Sign in
+            </button>
           </.form>
+        <% else %>
+          <button class="btn" disabled>
+            Sign in
+          </button>
         <% end %>
+      <% else %>
+        <.form
+          for={%{}}
+          action={~p"/users/log_out"}
+          as={:user}
+          method="delete"
+          phx-trigger-action={@trigger_sign_out}
+        >
+          <button type="submit" class="btn">Log out</button>
+        </.form>
+      <% end %>
       <div>
         <%= live_react_component(
           "Components.WalletAdapter",
@@ -93,6 +93,7 @@ defmodule AkashiWeb.SignInLive do
   @impl true
   def handle_event("sign_out", _params, socket) do
     IO.puts("SIGN OUT TRIGGERED")
+
     {:noreply,
      socket
      |> assign(verified: false)
@@ -100,10 +101,7 @@ defmodule AkashiWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("verify-signature", %{
-    "signature" => signature, 
-    "message" => message
-    } = _payload, socket) do
+  def handle_event("verify-signature", %{"signature" => signature, "message" => message} = _payload, socket) do
     {:noreply,
      socket
      |> assign(signature: signature)

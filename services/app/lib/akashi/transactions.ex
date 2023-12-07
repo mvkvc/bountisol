@@ -7,6 +7,7 @@ defmodule Akashi.Transactions do
 
   alias Akashi.Repo
   alias Akashi.Transactions.Bounty
+  alias Akashi.Transactions.Payment
 
   @doc """
   Returns the list of bounties.
@@ -101,8 +102,6 @@ defmodule Akashi.Transactions do
   def change_bounty(%Bounty{} = bounty, attrs \\ %{}) do
     Bounty.changeset(bounty, attrs)
   end
-
-  alias Akashi.Transactions.Payment
 
   @doc """
   Returns the list of payments.

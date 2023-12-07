@@ -100,11 +100,20 @@ defmodule Akashi.TransactionsTest do
   end
 
   describe "payments" do
-    alias Akashi.Transactions.Payment
-
     import Akashi.TransactionsFixtures
 
-    @invalid_attrs %{status: nil, fiat_amount: nil, fiat_denom: nil, crypto_amount: nil, crypto_denom: nil, reciever_address: nil, reciever_email: nil, reciever_domain: nil}
+    alias Akashi.Transactions.Payment
+
+    @invalid_attrs %{
+      status: nil,
+      fiat_amount: nil,
+      fiat_denom: nil,
+      crypto_amount: nil,
+      crypto_denom: nil,
+      reciever_address: nil,
+      reciever_email: nil,
+      reciever_domain: nil
+    }
 
     test "list_payments/0 returns all payments" do
       payment = payment_fixture()
@@ -117,7 +126,16 @@ defmodule Akashi.TransactionsTest do
     end
 
     test "create_payment/1 with valid data creates a payment" do
-      valid_attrs = %{status: "some status", fiat_amount: 42, fiat_denom: "some fiat_denom", crypto_amount: 42, crypto_denom: "some crypto_denom", reciever_address: "some reciever_address", reciever_email: "some reciever_email", reciever_domain: "some reciever_domain"}
+      valid_attrs = %{
+        status: "some status",
+        fiat_amount: 42,
+        fiat_denom: "some fiat_denom",
+        crypto_amount: 42,
+        crypto_denom: "some crypto_denom",
+        reciever_address: "some reciever_address",
+        reciever_email: "some reciever_email",
+        reciever_domain: "some reciever_domain"
+      }
 
       assert {:ok, %Payment{} = payment} = Transactions.create_payment(valid_attrs)
       assert payment.status == "some status"
@@ -136,7 +154,17 @@ defmodule Akashi.TransactionsTest do
 
     test "update_payment/2 with valid data updates the payment" do
       payment = payment_fixture()
-      update_attrs = %{status: "some updated status", fiat_amount: 43, fiat_denom: "some updated fiat_denom", crypto_amount: 43, crypto_denom: "some updated crypto_denom", reciever_address: "some updated reciever_address", reciever_email: "some updated reciever_email", reciever_domain: "some updated reciever_domain"}
+
+      update_attrs = %{
+        status: "some updated status",
+        fiat_amount: 43,
+        fiat_denom: "some updated fiat_denom",
+        crypto_amount: 43,
+        crypto_denom: "some updated crypto_denom",
+        reciever_address: "some updated reciever_address",
+        reciever_email: "some updated reciever_email",
+        reciever_domain: "some updated reciever_domain"
+      }
 
       assert {:ok, %Payment{} = payment} = Transactions.update_payment(payment, update_attrs)
       assert payment.status == "some updated status"

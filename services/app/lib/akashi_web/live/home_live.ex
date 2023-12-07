@@ -1,17 +1,21 @@
 defmodule AkashiWeb.HomeLive do
   @moduledoc false
   use AkashiWeb, :live_view
-  require Logger
-  alias AkashiWeb.Presence
+
   alias Akashi.Accounts
-  
+  alias AkashiWeb.Presence
+
+  require Logger
+
   @channel_topic "cursor_page"
 
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex justify-center items-center h-screen"
-    style={"background-image: url('" <> ~p"/images/bridge.jpg" <> "'); background-size: 100% auto; background-position: center; background-repeat: no-repeat;"}>
+    <div
+      class="flex justify-center items-center h-screen"
+      style={"background-image: url('" <> ~p"/images/bridge.jpg" <> "'); background-size: 100% auto; background-position: center; background-repeat: no-repeat;"}
+    >
       <ul class="list-none mt-9" id="cursor" phx-hook="TrackClientCursor">
         <%= for user <- @users do %>
           <li
@@ -58,12 +62,13 @@ defmodule AkashiWeb.HomeLive do
 
   @impl true
   def mount(_params, session, socket) do
-    Logger.disable(self()) # Disable logger due to mouse move events
+    # Disable logger due to mouse move events
+    Logger.disable(self())
     image_url = Path.join(:code.priv_dir(:akashi), "static/images/bridge.png")
-    
+
     socket = assign_current_user(socket, session)
     current_user = socket.assigns.current_user
-    username = if current_user, do: current_user.address |> truncate_address(), else: MnemonicSlugs.generate_slug()
+    username = if current_user, do: truncate_address(current_user.address), else: MnemonicSlugs.generate_slug()
     color = RandomColor.hex(luminosity: :light)
 
     if connected?(socket) do

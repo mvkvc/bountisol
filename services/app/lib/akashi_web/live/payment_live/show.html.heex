@@ -9,19 +9,27 @@
 </.header>
 
 <.list>
+  <h2>Required</h2>
+  <:item title="Crypto amount"><%= @payment.crypto_amount %></:item>
+  <:item title="Reciever address"><%= @payment.reciever_address %></:item>
+
+  <h2>Optional</h2>
   <:item title="Fiat amount"><%= @payment.fiat_amount %></:item>
   <:item title="Fiat denom"><%= @payment.fiat_denom %></:item>
-  <:item title="Crypto amount"><%= @payment.crypto_amount %></:item>
   <:item title="Crypto denom"><%= @payment.crypto_denom %></:item>
   <:item title="Status"><%= @payment.status %></:item>
-  <:item title="Reciever address"><%= @payment.reciever_address %></:item>
   <:item title="Reciever email"><%= @payment.reciever_email %></:item>
   <:item title="Reciever domain"><%= @payment.reciever_domain %></:item>
 </.list>
 
 <.back navigate={~p"/payments"}>Back to payments</.back>
 
-<.modal :if={@live_action == :edit} id="payment-modal" show on_cancel={JS.patch(~p"/payments/#{@payment}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="payment-modal"
+  show
+  on_cancel={JS.patch(~p"/payments/#{@payment}")}
+>
   <.live_component
     module={AkashiWeb.PaymentLive.FormComponent}
     id={@payment.id}

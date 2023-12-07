@@ -24,7 +24,7 @@ defmodule AkashiWeb.UserSessionController do
       |> UserAuth.log_in_user(user, params)
     else
       conn
-      |> put_flash(:error, "Invalid signature.")
+      |> put_flash(:error, "Unable to verify signature.")
       |> redirect(to: ~p"/")
     end
   end

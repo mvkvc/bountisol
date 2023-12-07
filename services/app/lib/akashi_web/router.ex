@@ -27,9 +27,11 @@ defmodule AkashiWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", AkashiWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AkashiWeb do
+    pipe_through :api
+
+    post "/rpc", RPCController, :webhook
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:akashi, :dev_routes) do
@@ -69,7 +71,7 @@ defmodule AkashiWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
-      live "/pay", PayLive, :new
+      # live "/pay", PayLive, :new
       # live "/users/settings", UserSettingsLive, :edit
       # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
@@ -91,6 +93,7 @@ defmodule AkashiWeb.Router do
     live "/payments/:id/edit", PaymentLive.Index, :edit
     live "/payments/:id", PaymentLive.Show, :show
     live "/payments/:id/show/edit", PaymentLive.Show, :edit
+    live "/payments/:id/send", PaymentLive.Send
 
     delete "/users/log_out", UserSessionController, :delete
 

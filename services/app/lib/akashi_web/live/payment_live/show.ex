@@ -1,4 +1,5 @@
 defmodule AkashiWeb.PaymentLive.Show do
+  @moduledoc false
   use AkashiWeb, :live_view
 
   alias Akashi.Transactions

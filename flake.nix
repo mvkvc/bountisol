@@ -17,7 +17,8 @@
             yarn
             python310
             python310Packages.pipx
-            rustup
+            # Erroring trying to create temp dir
+            # rustup
             rebar3
             earthly
             direnv

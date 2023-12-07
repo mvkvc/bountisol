@@ -1,4 +1,6 @@
 import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
+import { sendPayment } from "../utils/payments";
+import { PublicKey } from "@solana/web3.js";
 
 export const Wallet = {
   mounted() {

@@ -1,12 +1,39 @@
 defmodule AkashiWeb.PaymentLiveTest do
   use AkashiWeb.ConnCase
 
-  import Phoenix.LiveViewTest
   import Akashi.TransactionsFixtures
+  import Phoenix.LiveViewTest
 
-  @create_attrs %{status: "some status", fiat_amount: 42, fiat_denom: "some fiat_denom", crypto_amount: 42, crypto_denom: "some crypto_denom", reciever_address: "some reciever_address", reciever_email: "some reciever_email", reciever_domain: "some reciever_domain"}
-  @update_attrs %{status: "some updated status", fiat_amount: 43, fiat_denom: "some updated fiat_denom", crypto_amount: 43, crypto_denom: "some updated crypto_denom", reciever_address: "some updated reciever_address", reciever_email: "some updated reciever_email", reciever_domain: "some updated reciever_domain"}
-  @invalid_attrs %{status: nil, fiat_amount: nil, fiat_denom: nil, crypto_amount: nil, crypto_denom: nil, reciever_address: nil, reciever_email: nil, reciever_domain: nil}
+  @create_attrs %{
+    status: "some status",
+    fiat_amount: 42,
+    fiat_denom: "some fiat_denom",
+    crypto_amount: 42,
+    crypto_denom: "some crypto_denom",
+    reciever_address: "some reciever_address",
+    reciever_email: "some reciever_email",
+    reciever_domain: "some reciever_domain"
+  }
+  @update_attrs %{
+    status: "some updated status",
+    fiat_amount: 43,
+    fiat_denom: "some updated fiat_denom",
+    crypto_amount: 43,
+    crypto_denom: "some updated crypto_denom",
+    reciever_address: "some updated reciever_address",
+    reciever_email: "some updated reciever_email",
+    reciever_domain: "some updated reciever_domain"
+  }
+  @invalid_attrs %{
+    status: nil,
+    fiat_amount: nil,
+    fiat_denom: nil,
+    crypto_amount: nil,
+    crypto_denom: nil,
+    reciever_address: nil,
+    reciever_email: nil,
+    reciever_domain: nil
+  }
 
   defp create_payment(_) do
     payment = payment_fixture()

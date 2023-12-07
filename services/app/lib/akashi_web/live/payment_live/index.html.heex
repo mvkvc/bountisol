@@ -25,6 +25,7 @@
       <.link navigate={~p"/payments/#{payment}"}>Show</.link>
     </div>
     <.link patch={~p"/payments/#{payment}/edit"}>Edit</.link>
+    <.link patch={~p"/payments/#{payment}/send"}>Send</.link>
   </:action>
   <:action :let={{id, payment}}>
     <.link
@@ -36,7 +37,12 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="payment-modal" show on_cancel={JS.patch(~p"/payments")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="payment-modal"
+  show
+  on_cancel={JS.patch(~p"/payments")}
+>
   <.live_component
     module={AkashiWeb.PaymentLive.FormComponent}
     id={@payment.id || :new}

@@ -18,28 +18,18 @@
       </.link>
     </div>
     <ul class="flex flex-row space-x-4">
-      <%# <li>
+      <li>
         <.link href={~p"/bounties"} class="btn">
           Bounties
         </.link>
-      </li> %>
+      </li>
       <li>
-        <.link href={~p"/pay"} class="btn">
-          Pay
+        <.link href={~p"/payments"} class="btn">
+          Payments
         </.link>
       </li>
       <%= if @current_user do %>
-        <%# <%= @current_user.address %>
-        <%# <li>
-          <.link href={~p"/users/settings"} class="btn">
-            Settings
-          </.link>
-        </li> %>
-        <%# <li>
-          <.link href={~p"/users/log_out"} method="delete" class="btn">
-            Log out
-          </.link>
-        </li> %>
+        
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>
@@ -48,6 +38,8 @@
   </header>
   <body class="bg-antialiased">
     <.flash_group flash={@flash} />
-    <%= @inner_content %>
+    <div class={if @conn.request_path == "/", do: "", else: "p-6"}>
+      <%= @inner_content %>
+    </div>
   </body>
 </html>
