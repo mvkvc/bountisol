@@ -22,8 +22,6 @@ defmodule AkashiWeb.Router do
 
     # get "/", PageController, :home
     live "/", HomeLive
-    # post "/siws", ServicesController, :siws
-    # get "/sns", ServicesController, :sns
   end
 
   # Other scopes may use custom stacks.
@@ -73,28 +71,23 @@ defmodule AkashiWeb.Router do
       on_mount: [{AkashiWeb.UserAuth, :ensure_authenticated}] do
       # live "/users/settings", UserSettingsLive, :edit
       # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-
       live "/payments", PaymentLive.Index, :index
       live "/payments/new", PaymentLive.Index, :new
       live "/payments/:id/edit", PaymentLive.Index, :edit
       live "/payments/:id", PaymentLive.Show, :show
       live "/payments/:id/show/edit", PaymentLive.Show, :edit
-      live "/payments/:id/send", PaymentLive.Send
     end
   end
 
   scope "/", AkashiWeb do
     pipe_through [:browser]
-
-    # Ensure routes authenticated when needed
-
+    delete "/users/log_out", UserSessionController, :delete
+    live "/payments/:id/send", PaymentLive.Send
     live "/bounties", BountyLive.Index, :index
     live "/bounties/new", BountyLive.Index, :new
     live "/bounties/:id/edit", BountyLive.Index, :edit
     live "/bounties/:id", BountyLive.Show, :show
     live "/bounties/:id/show/edit", BountyLive.Show, :edit
-
-    delete "/users/log_out", UserSessionController, :delete
 
     live_session :current_user,
       on_mount: [{AkashiWeb.UserAuth, :mount_current_user}] do
