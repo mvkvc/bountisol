@@ -13,6 +13,7 @@ Work with everyone, everywhere.
 - https://fly.io/dashboard/akashi-systems
 - https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
 - https://dev.helius.xyz/dashboard/app
+- https://akashi.goatcounter.com
 
 ## Components
 
