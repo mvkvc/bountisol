@@ -1,6 +1,5 @@
 .env.*
 .secret*
-src/**/*.js
 dist/
 
 # Logs
