@@ -17,7 +17,7 @@
         Akashi
       </.link>
       <h1 class="font-semibold">
-          DEVNET
+        DEVNET
       </h1>
     </div>
     <ul class="flex flex-row space-x-4">
@@ -32,7 +32,6 @@
         </.link>
       </li>
       <%= if @current_user do %>
-        
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>
