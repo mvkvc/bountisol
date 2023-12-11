@@ -1,16 +1,16 @@
-const express = require("express");
-const { getAllDomains, reverseLookup } = require("@bonfida/spl-name-service");
-const { PublicKey } = require("@solana/web3.js");
-const rpcClient = require("../utils/rpc");
-const Sentry = require("@sentry/node");
+import express, { Request, Response } from "express";
+import { getAllDomains, reverseLookup } from "@bonfida/spl-name-service";
+import { PublicKey } from "@solana/web3.js";
+import createConnection from "../utils/rpc";
+import * as Sentry from "@sentry/node";
 
-async function SNSHandler(req, res) {
+async function SNSHandler(req: Request, res: Response): Promise<void> {
   const transaction = Sentry.startTransaction({ name: 'sns' });
 
   const address = req.params.address;
   const network = process.env.RPC_NETWORK || "mainnet";
   const api_key = process.env.RPC_API_KEY;
-  const connection = rpcClient(network, api_key);
+  const connection = createConnection(network, api_key);
 
   try {
     const ownerWallet = new PublicKey(address);
@@ -29,4 +29,4 @@ async function SNSHandler(req, res) {
   }
 }
 
-module.exports = SNSHandler;
+export default SNSHandler;

@@ -14,7 +14,13 @@ import { clusterApiUrl } from "@solana/web3.js";
 
 import WalletEffectHandler from "./WalletEffectHandler";
 
-const WalletAdapter = ({ network_type, pushEvent, pushEventTo }) => {
+interface WalletAdapterProps {
+  network_type: string;
+  pushEvent: () => void;
+  pushEventTo: () => void;
+}
+
+const WalletAdapter: React.FC<WalletAdapterProps> = ({ network_type, pushEvent, pushEventTo }) => {
   const network =
     network_type === "main"
       ? WalletAdapterNetwork.Mainnet

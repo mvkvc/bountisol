@@ -1,8 +1,8 @@
-const Sentry =require("@sentry/node");
-const ProfilingIntegration = require("@sentry/profiling-node").ProfilingIntegration;
-const express = require("express");
-const siwsHandler = require("./handlers/siws");
-const snsHandler = require("./handlers/sns");
+import * as Sentry from "@sentry/node";
+import { ProfilingIntegration } from "@sentry/profiling-node";
+import express from "express";
+import siwsHandler from "./handlers/siws";
+import snsHandler from "./handlers/sns";
 
 Sentry.init({
   dsn: process.env.SENTRY_URL,

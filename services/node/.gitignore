@@ -1,6 +1,7 @@
 .env.*
 .secret*
 dist/
+dist/
 
 # Logs
 logs

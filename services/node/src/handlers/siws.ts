@@ -1,9 +1,15 @@
-const express = require("express");
-const { SIWS } = require("@web3auth/sign-in-with-solana");
-const bs58 = require("bs58");
-const Sentry = require("@sentry/node");
+import express, { Request, Response } from "express";
+import { SIWS } from "@web3auth/sign-in-with-solana";
+import bs58 from "bs58";
+import * as Sentry from "@sentry/node";
 
-async function SIWSHandler(req, res) {
+interface SIWSSignature {
+  signature: {
+    data: string[];
+  };
+}
+
+async function SIWSHandler(req: Request, res: Response): Promise<void> {
   const transaction = Sentry.startTransaction({ name: 'siws' });
 
   try {
@@ -11,7 +17,7 @@ async function SIWSHandler(req, res) {
     const header = message.header;
     const payload = message.payload;
     
-    let signatureData = JSON.parse(req.body.signature);
+    const signatureData: SIWSSignature = JSON.parse(req.body.signature);
     const signature_str = Uint8Array.from(Buffer.from(signatureData.signature.data));
     
     const signature = {
@@ -27,7 +33,7 @@ async function SIWSHandler(req, res) {
       transaction.finish();
       res.status(200).json({ verified: true });
     } else {
-      console.log("Signature NOT verified for address: ", address);
+      console.log("Signature NOT verified for address: ", payload.address);
       transaction.finish();
       res.status(200).json({ verified: false });
     }
@@ -38,4 +44,4 @@ async function SIWSHandler(req, res) {
   }
 }
 
-module.exports = SIWSHandler;
+export default SIWSHandler;

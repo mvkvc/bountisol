@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const WalletEffectHandler = ({ pushEvent, pushEventTo }) => {
+interface WalletEffectHandlerProps {
+  pushEvent: () => void;
+  pushEventTo: (selector: string, eventName: string, detail?: Object) => void;
+}
+
+const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({ pushEvent, pushEventTo }) => {
   const { publicKey, connected, disconnecting } = useWallet();
 
   useEffect(() => {

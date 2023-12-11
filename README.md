@@ -1,9 +1,8 @@
 # akashi
 
-<div align="center">
-    <p>Work with everyone, everywhere.</p>
-    <img src="assets/bridge.jpg" width="50%">
-</div>
+Work with everyone, everywhere.
+
+<img src="assets/bridge.jpg" width="50%">
 
 ## Links
 
@@ -21,7 +20,7 @@
 
 - `programs/`: Solana programs.
 - `services/app/`: Main application.
-- `services/js/`: NodeJS server for using JS libraries.
+- `services/node/`: NodeJS server for using JS libraries.
 - `services/site/`: Landing page, documentation, and blog.
 
 ## Development

@@ -3,3 +3,4 @@
 .nix_mix/
 assets/og/
 .secret*
+*.code-workspace

@@ -1,11 +1,11 @@
-const { Connection } = require("@solana/web3.js");
+import { Connection } from "@solana/web3.js";
 
-function createConnection(network, api_key) {
+function createConnection(network: string, api_key: string): Connection {
   if (!api_key) {
     throw new Error("RPC_API_KEY environment variable is not set");
   }
 
-  let url_base;
+  let url_base: string;
   switch (network) {
     case "mainnet":
       url_base = "https://mainnet.helius-rpc.com/?api-key=";
@@ -26,4 +26,4 @@ function createConnection(network, api_key) {
   }
 }
 
-module.exports = createConnection;
+export default createConnection;
