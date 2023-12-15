@@ -7,18 +7,32 @@ import {
   Signer,
 } from "@solana/web3.js";
 
-interface Provider {
-  signAndSendTransaction: (transaction: Transaction) => Promise<{ signature: string }>;
-}
+export const getProvider = (name: string) => {
+  switch (name) {
+    case "phantom": return (window as any).phantom;
+    case "solflare": return (window as any).solflare;
+    default: console.error("No compatible wallet found (supports Phantom and Solflare).")
+  }
+};
+
+export const getAndConnectProvider = async (name: string) => {
+  const provider = getProvider(name);
+  try {
+    await provider.connect();
+    return provider;
+  } catch (e: any) {
+      console.error("ERROR: ", e.message);
+  }
+};
 
 export const sendPayment = async (
-  provider: Provider,
+  provider: any,
   network_url: string,
   from_pubkey: PublicKey,
   to_pubkey: PublicKey,
   fee_pubkey: PublicKey,
   amount_sol: number,
-  fee_pct: number
+  fee_pct: number,
 ): Promise<{ signature: string }> => {
   const connection = new Connection(network_url);
   const amount = Math.ceil(amount_sol * LAMPORTS_PER_SOL);
@@ -38,9 +52,12 @@ export const sendPayment = async (
     }),
   ];
 
-  const blockhash = (await connection.getLatestBlockhash("finalized")).blockhash;
-  const message = new Transaction({ recentBlockhash: blockhash, feePayer: from_pubkey })
-    .add(...instructions);
+  const blockhash = (await connection.getLatestBlockhash("finalized"))
+    .blockhash;
+  const message = new Transaction({
+    recentBlockhash: blockhash,
+    feePayer: from_pubkey,
+  }).add(...instructions);
 
   return await provider.signAndSendTransaction(message);
 };

@@ -11,7 +11,7 @@ import WalletAdapter from "./components/WalletAdapter";
 
 import TrackClientCursor from "./hooks/cursor";
 import Wallet from "./hooks/wallet";
-import Pay from "./hooks/pay";
+// import Pay from "./hooks/pay";
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
@@ -24,7 +24,7 @@ window.Components = {
 let Hooks = { LiveReact };
 Hooks.TrackClientCursor = TrackClientCursor;
 Hooks.Wallet = Wallet;
-Hooks.Pay = Pay;
+// Hooks.Pay = Pay;
 
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Hooks,

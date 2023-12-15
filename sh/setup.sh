@@ -26,7 +26,7 @@ echo "Installing app dependencies..."
 (cd ./services/app && mix setup)
 
 echo "Installing site dependencies..."
-(cd ./services/js && yarn install --dev)
+(cd ./services/node && yarn install --dev)
 
 echo "Installing site dependencies..."
 (cd ./services/site && yarn install --dev)

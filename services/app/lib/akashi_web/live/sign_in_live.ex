@@ -13,7 +13,7 @@ defmodule AkashiWeb.SignInLive do
     ~H"""
     <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
       <%= if !@current_user do %>
-        <%= if @connected do %>
+        <%= if true do %>
           <.form
             for={%{}}
             action={~p"/users/log_in"}
@@ -67,7 +67,8 @@ defmodule AkashiWeb.SignInLive do
        verified: false,
        address: nil,
        message: nil,
-       signature: nil
+       signature: nil,
+       wallet: nil
      )}
   end
 
@@ -84,6 +85,7 @@ defmodule AkashiWeb.SignInLive do
 
     {:noreply,
      push_event(socket, "signature", %{
+       wallet: socket.assigns.wallet,
        address: address,
        statement: @statement,
        nonce: nonce
@@ -110,10 +112,11 @@ defmodule AkashiWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("effect_connected", _params, socket) do
+  def handle_event("effect_connected", %{"wallet" => wallet} = params, socket) do
     {:noreply,
      socket
      |> assign(connected: true)
+     |> assign(wallet: wallet)
      |> push_event("test", %{hello: "there"})}
   end
 

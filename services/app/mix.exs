@@ -2,7 +2,7 @@ defmodule Akashi.MixProject do
   use Mix.Project
 
   @name "Akashi"
-  @description "Decentralized work agreements."
+  @description "Work with everyone, everywhere."
   @source_url "https://github.com/mvkvc/akshi"
   @version "0.1.0"
 
@@ -58,22 +58,21 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
+      # {:solana, git: "https://github.com/mvkvc/solana-elixir.git"},
+      {:solana, path: "../../../../forks/solana-elixir"},
+      # {:phoenix_live_react, "https://github.com/mvkvc/phoenix_live_react.git"},
+      {:phoenix_live_react, path: "../../../../forks/phoenix_live_react"},
+      #
       {:sentry, "~> 8.0"},
       {:hackney, "~> 1.8"},
-      # {:ipfs_pinning_service_api, path: "./libs/ipfs_pinning_service_api"},
-      # {:tesla, "~> 1.8"},
-      # {:solana, path: "./libs/solana-elixir"},
       {:base58, "~> 0.1.1"},
-      # {:enacl, "~> 1.2"},
       {:req, "~> 0.4.5"},
       {:random_color, "~> 0.1.0"},
       {:mnemonic_slugs, "~> 0.0.3"},
-      # {:phoenix_live_react, "~> 0.4"},
-      {:phoenix_live_react, path: "../../../../forks/phoenix_live_react"},
       {:bcrypt_elixir, "~> 3.0"},
       {:pgvector, "~> 0.2.0"},
       {:plug_cowboy, ">= 1.0.0"},
-      # 
+      #
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},

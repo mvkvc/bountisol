@@ -10,12 +10,6 @@
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
-    <script
-      data-goatcounter="https://akashi.goatcounter.com/count"
-      async
-      src="//gc.zgo.at/count.js"
-    >
-    </script>
   </head>
   <header class="flex flex-row items-center p-6 justify-between">
     <div class="flex flex-row items-center text-center space-x-4">
@@ -24,6 +18,16 @@
       </.link>
     </div>
     <ul class="flex flex-row space-x-4">
+      <li>
+        <.link href={~p"/agreements"} class="btn" disabled>
+          Agreements
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/disputes"} class="btn" disabled>
+          Disputes
+        </.link>
+      </li>
       <li>
         <.link href={~p"/bounties"} class="btn">
           Bounties
@@ -36,10 +40,18 @@
       </li>
       <li>
         <.link href={~p"/payments"} class="btn">
-          Payments
+          Pay
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/link"} class="btn" disabled>
+          Link
         </.link>
       </li>
       <%= if @current_user do %>
+        <li>
+          <.link href={~p"/users/settings"} class="btn">Settings</.link>
+        </li>
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>

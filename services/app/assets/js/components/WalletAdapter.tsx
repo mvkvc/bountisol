@@ -8,7 +8,10 @@ import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-import { WalletConnectWalletAdapter } from "@solana/wallet-adapter-walletconnect";
+// import {
+//   WalletConnectWalletAdapter,
+//   WalletConnectWalletAdapterConfig,
+// } from "@solana/wallet-adapter-walletconnect";
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { clusterApiUrl } from "@solana/web3.js";
 
@@ -20,15 +23,27 @@ interface WalletAdapterProps {
   pushEventTo: () => void;
 }
 
-const WalletAdapter: React.FC<WalletAdapterProps> = ({ network_type, pushEvent, pushEventTo }) => {
+const WalletAdapter: React.FC<WalletAdapterProps> = ({
+  network_type,
+  pushEvent,
+  pushEventTo,
+}) => {
   const network =
     network_type === "main"
       ? WalletAdapterNetwork.Mainnet
       : WalletAdapterNetwork.Devnet;
 
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  // const walletConnectConfig: WalletConnectWalletAdapterConfig = {
+  //   network: network,
+  //   options: {},
+  // };
   const wallets = useMemo(
-    () => [new WalletConnectWalletAdapter(), new SolflareWalletAdapter()],
+    () => [
+      // Phantom included in default
+      new SolflareWalletAdapter(),
+      // new WalletConnectWalletAdapter(walletConnectConfig),
+    ],
     [network],
   );
 

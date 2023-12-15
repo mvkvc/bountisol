@@ -21,7 +21,7 @@ function createConnection(network: string, api_key: string): Connection {
   try {
     const connection = new Connection(url, "confirmed");
     return connection;
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(`Error occurred: ${e.message}`);
   }
 }

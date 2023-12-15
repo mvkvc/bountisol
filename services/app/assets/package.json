@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "build": "yarn build:ts && yarn build:esb && yarn build:tw",
-    "build:ts": "tsc --jsx react ./js/**/*.ts",
+    "build:ts": "tsc --project ./tsconfig.json",
     "build:esb": "node ./build.js",
     "build:tw": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css",
     "build:tww": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --watch",

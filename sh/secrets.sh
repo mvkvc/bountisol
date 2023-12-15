@@ -8,11 +8,11 @@ doppler secrets download \
     > .secret.app.dev
 
 doppler secrets download \
-    --project js \
+    --project node \
     --config dev \
     --format env \
     --no-file \
-    > .secret.js.dev
+    > .secret.node.dev
 
 doppler secrets download \
     --project site \

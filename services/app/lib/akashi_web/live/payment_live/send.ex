@@ -12,7 +12,7 @@ defmodule AkashiWeb.PaymentLive.Send do
       <:subtitle>Click to send this payment!</:subtitle>
       <:actions>
         <%= if @payment.status == "requested" do %>
-          <.link phx-click="send-payment" phx-hook="Pay" id="send-payment">
+          <.link phx-click="send-payment" phx-hook="Wallet" id="send-payment">
             <button class="btn">Send payment</button>
           </.link>
         <% end %>

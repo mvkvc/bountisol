@@ -27,7 +27,7 @@ config :akashi, AkashiWeb.Endpoint,
   secret_key_base: "N2qf8BsxGov/e4xRvt/wOIzF47AbW/P92Ki2ewabVecZorV5n4k6q1JHVzfpTINi",
   watchers: [
     node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)],
-    yarn: ["run", "tailwind:watch", cd: Path.expand("../assets", __DIR__)]
+    yarn: ["run", "build:tww", cd: Path.expand("../assets", __DIR__)]
     # esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     # tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]

@@ -6,8 +6,11 @@ interface WalletEffectHandlerProps {
   pushEventTo: (selector: string, eventName: string, detail?: Object) => void;
 }
 
-const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({ pushEvent, pushEventTo }) => {
-  const { publicKey, connected, disconnecting } = useWallet();
+const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({
+  pushEvent,
+  pushEventTo,
+}) => {
+  const { wallet, publicKey, connected, disconnecting } = useWallet();
 
   useEffect(() => {
     if (publicKey) {
@@ -18,14 +21,16 @@ const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({ pushEvent, pu
   }, [publicKey, pushEventTo]);
 
   useEffect(() => {
-    if (connected) {
-      pushEventTo("#wallet-adapter", "effect_connected", {});
+    if (connected && wallet) {
+      const wallet_name = wallet.adapter.name.toLowerCase()
+      console.log(wallet_name)
+      pushEventTo("#wallet-adapter", "effect_connected", {"wallet": wallet_name});
     }
 
     if (disconnecting) {
       pushEventTo("#wallet-adapter", "effect_disconnecting", {});
     }
-  }, [connected, disconnecting, pushEventTo]);
+  }, [wallet, connected, disconnecting, pushEventTo]);
 
   return null;
 };

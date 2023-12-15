@@ -14,7 +14,6 @@ Work with everyone, everywhere.
 - https://akashi-systems-345904ce.sentry.io/issues/?project=4506352893624320
 - https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
 - https://dev.helius.xyz/dashboard/app
-- https://stats.akashi.systems
 
 ## Components
 
