@@ -11,29 +11,33 @@ defmodule AkashiWeb.UserSettingsLive do
       <:subtitle>Manage your account</:subtitle>
     </.header>
 
-    <div class="space-y-12 divide-y">
-      <div>
-        <.simple_form
-          for={@email_form}
-          id="email_form"
-          phx-submit="update_email"
-          phx-change="validate_email"
-        >
-          <.input field={@email_form[:email]} type="email" label="Email" required />
-          <%!-- <.input
-            field={@email_form[:current_password]}
-            name="current_password"
-            id="current_password_for_email"
-            type="password"
-            label="Current password"
-            value={@email_form_current_password}
-            required
-          /> --%>
-          <:actions>
-            <.button phx-disable-with="Changing...">Change Email</.button>
-          </:actions>
-        </.simple_form>
-      </div>
+    <div class="max-w-screen text-center items-center align-center space-y-12">
+      <%= if @current_email do %>
+        <p>Your email is confirmed as <%= @current_email %>.</p>
+      <% else %>
+        <p>You do not have a confirmed email.</p>
+      <% end %>
+      <.simple_form
+        for={@email_form}
+        id="email_form"
+        phx-submit="update_email"
+        phx-change="validate_email"
+        class="max-w-lg items-center"
+      >
+        <.input field={@email_form[:email]} type="email" label="Email" required />
+        <%!-- <.input
+          field={@email_form[:current_password]}
+          name="current_password"
+          id="current_password_for_email"
+          type="password"
+          label="Current password"
+          value={@email_form_current_password}
+          required
+        /> --%>
+        <:actions>
+          <.button phx-disable-with="Changing...">Change Email</.button>
+        </:actions>
+      </.simple_form>
       <%!-- <div>
         <.simple_form
           for={@password_form}
@@ -68,8 +72,7 @@ defmodule AkashiWeb.UserSettingsLive do
           <:actions>
             <.button phx-disable-with="Changing...">Change Password</.button>
           </:actions>
-        </.simple_form>
-      </div> --%>
+        </.simple_form> --%>
     </div>
     """
   end

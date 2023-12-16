@@ -65,7 +65,7 @@ defmodule AkashiWeb.HomeLive do
 
     socket = assign_current_user(socket, session)
     current_user = socket.assigns.current_user
-    username = if current_user, do: truncate_address(current_user.address), else: MnemonicSlugs.generate_slug()
+    username = if current_user, do: Accounts.truncate_address(current_user.address), else: MnemonicSlugs.generate_slug()
     color = RandomColor.hex(luminosity: :light)
 
     if connected?(socket) do
@@ -123,10 +123,6 @@ defmodule AkashiWeb.HomeLive do
       |> assign(socket_id: socket.id)
 
     {:noreply, updated}
-  end
-
-  defp truncate_address(address) do
-    String.slice(address, 0, 8) <> "..."
   end
 
   defp assign_current_user(socket, session) do

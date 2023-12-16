@@ -17,20 +17,26 @@
         Akashi
       </.link>
     </div>
-    <ul class="flex flex-row space-x-4">
+    <ul class="flex flex-row space-x-4 items-center">
+      <%= if @current_user do %>
       <li>
-        <.link href={~p"/agreements"} class="btn" disabled>
-          Agreements
-        </.link>
+        <p><%= Akashi.Accounts.truncate_address(@current_user.address) %></p>
       </li>
-      <li>
-        <.link href={~p"/disputes"} class="btn" disabled>
-          Disputes
-        </.link>
-      </li>
+      <% end %>
       <li>
         <.link href={~p"/bounties"} class="btn">
           Bounties
+        </.link>
+      </li>
+      <%= if @current_user do %>
+      <li>
+        <.link href={~p"/arbitration"} class="btn" disabled>
+          Arbitration
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/agreements"} class="btn" disabled>
+          Agreements
         </.link>
       </li>
       <li>
@@ -40,18 +46,33 @@
       </li>
       <li>
         <.link href={~p"/payments"} class="btn">
-          Pay
+          Payments
         </.link>
       </li>
       <li>
-        <.link href={~p"/link"} class="btn" disabled>
-          Link
+        <.link href={~p"/users/settings"} class="btn">Settings</.link>
+      </li>
+      <% else %>
+      <li>
+        <.link href={~p"/arbitration"} class="btn" disabled>
+          Arbitration
         </.link>
       </li>
-      <%= if @current_user do %>
-        <li>
-          <.link href={~p"/users/settings"} class="btn">Settings</.link>
-        </li>
+      <li>
+        <.link href={~p"/agreements"} class="btn" disabled>
+          Agreements
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/invoices"} class="btn" disabled>
+          Invoices
+        </.link>
+      </li>
+      <li>
+        <.link href={~p"/payments"} class="btn" disabled>
+          Payments
+        </.link>
+      </li>
       <% end %>
       <li>
         <%= live_render(@conn, AkashiWeb.SignInLive, id: "sign-in") %>
@@ -60,7 +81,7 @@
   </header>
   <body class="bg-antialiased">
     <.flash_group flash={@flash} />
-    <div class={if @conn.request_path == "/", do: "", else: "p-6"}>
+    <div class={if @conn.request_path == "/", do: "", else: "p-4 mx-8"}>
       <%= @inner_content %>
     </div>
   </body>

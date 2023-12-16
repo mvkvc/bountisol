@@ -1,19 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState, FC } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-interface WalletEffectHandlerProps {
-  pushEvent: () => void;
-  pushEventTo: (selector: string, eventName: string, detail?: Object) => void;
-}
-
-const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({
-  pushEvent,
-  pushEventTo,
-}) => {
+const WalletEffectHandler: FC<any> = ({ pushEventTo }) => {
   const { wallet, publicKey, connected, disconnecting } = useWallet();
 
   useEffect(() => {
-    if (publicKey) {
+    if (publicKey && pushEventTo) {
       pushEventTo("#wallet-adapter", "effect_public_key", {
         public_key: publicKey.toString(),
       });
@@ -21,13 +13,13 @@ const WalletEffectHandler: React.FC<WalletEffectHandlerProps> = ({
   }, [publicKey, pushEventTo]);
 
   useEffect(() => {
-    if (connected && wallet) {
-      const wallet_name = wallet.adapter.name.toLowerCase()
-      console.log(wallet_name)
+    if (connected && wallet && pushEventTo) {
+      const wallet_name = wallet.adapter.name.toLowerCase();
+      sessionStorage.setItem("_wallet_name", wallet_name);
       pushEventTo("#wallet-adapter", "effect_connected", {"wallet": wallet_name});
     }
 
-    if (disconnecting) {
+    if (disconnecting && pushEventTo) {
       pushEventTo("#wallet-adapter", "effect_disconnecting", {});
     }
   }, [wallet, connected, disconnecting, pushEventTo]);

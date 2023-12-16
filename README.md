@@ -2,8 +2,6 @@
 
 Work with everyone, everywhere.
 
-<img src="assets/bridge.jpg" width="50%">
-
 ## Links
 
 - https://akashi.systems

@@ -1,6 +1,5 @@
 import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
-import { PublicKey, Transaction } from "@solana/web3.js";
-import { getAndConnectProvider, sendPayment } from "../utils/wallet";
+import { getProvider } from "../utils/walletUtils";
 
 function createSolanaMessage(
   address: string,
@@ -29,20 +28,17 @@ function createSolanaMessage(
   }
 }
 
-let provider: any;
-
 export const Wallet = {
   mounted() {
     window.addEventListener("phx:signature", async (e: any) => {
-      const { address, statement, nonce, wallet } = e.detail;
+      const { address, statement, nonce } = e.detail;
 
       try {
-        provider = await getAndConnectProvider(wallet);
+        const provider: any = await getProvider()
         const message = createSolanaMessage(address, statement, nonce);
         const encodedMessage = new TextEncoder().encode(
           message.prepareMessage(),
         );
-        console.log("PROVIDER", provider);
         const signedMessage = await provider.signMessage(
           encodedMessage,
           "utf8",
@@ -54,28 +50,6 @@ export const Wallet = {
         });
       } catch (e) {
         console.error("Error signing message:", e);
-      }
-    });
-
-    window.addEventListener("phx:send-payment", async (e: any) => {
-      const { network_url, to_address, amount_sol, fee_pct, fee_address, wallet } =
-        e.detail;
-
-      console.log("PROVIDER", provider);
-
-      try {
-        const signature = await sendPayment(
-          provider,
-          network_url,
-          provider.publicKey,
-          new PublicKey(to_address),
-          new PublicKey(fee_address),
-          amount_sol,
-          fee_pct,
-        );
-        (this as any).pushEventTo("#send-payment", "payment-sent", signature);
-      } catch (e) {
-        console.error("Error sending payment:", e);
       }
     });
   }

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, FC } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   WalletModalProvider,
@@ -8,22 +8,13 @@ import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-// import {
-//   WalletConnectWalletAdapter,
-//   WalletConnectWalletAdapterConfig,
-// } from "@solana/wallet-adapter-walletconnect";
+// Importing below makes it available in the app
 import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
 import { clusterApiUrl } from "@solana/web3.js";
 
 import WalletEffectHandler from "./WalletEffectHandler";
 
-interface WalletAdapterProps {
-  network_type: string;
-  pushEvent: () => void;
-  pushEventTo: () => void;
-}
-
-const WalletAdapter: React.FC<WalletAdapterProps> = ({
+const WalletAdapter: FC<any> = ({
   network_type,
   pushEvent,
   pushEventTo,
@@ -34,15 +25,11 @@ const WalletAdapter: React.FC<WalletAdapterProps> = ({
       : WalletAdapterNetwork.Devnet;
 
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  // const walletConnectConfig: WalletConnectWalletAdapterConfig = {
-  //   network: network,
-  //   options: {},
-  // };
   const wallets = useMemo(
     () => [
       // Phantom included in default
-      new SolflareWalletAdapter(),
-      // new WalletConnectWalletAdapter(walletConnectConfig),
+      // Solflare is added using import and below enables Metamask snap
+      // new SolflareWalletAdapter(),
     ],
     [network],
   );

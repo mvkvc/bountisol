@@ -32,7 +32,6 @@
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.34",
     "@solana/wallet-adapter-solflare": "^0.6.28",
-    "@solana/wallet-adapter-walletconnect": "^0.1.16",
     "@solana/web3.js": "^1.87.6",
     "@web3auth/sign-in-with-solana": "^3.0.0",
     "phoenix": "file:../deps/phoenix",

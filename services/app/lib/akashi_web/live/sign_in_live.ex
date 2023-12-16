@@ -13,7 +13,7 @@ defmodule AkashiWeb.SignInLive do
     ~H"""
     <div id="wallet" class="flex flex-row space-x-4" phx-hook="Wallet">
       <%= if !@current_user do %>
-        <%= if true do %>
+        <%= if @connected do %>
           <.form
             for={%{}}
             action={~p"/users/log_in"}
