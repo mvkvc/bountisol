@@ -9,8 +9,6 @@
   },
   "dependencies": {
     "@bonfida/spl-name-service": "^2.0.0-alpha.25",
-    "@sentry/node": "^7.85.0",
-    "@sentry/profiling-node": "^1.2.6",
     "@solana/web3.js": "^1.87.6",
     "@web3auth/sign-in-with-solana": "^3.0.0",
     "bs58": "^5.0.0",

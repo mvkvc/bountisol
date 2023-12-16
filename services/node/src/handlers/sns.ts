@@ -2,11 +2,8 @@ import { Request, Response } from "express";
 import { getAllDomains, reverseLookup } from "@bonfida/spl-name-service";
 import { PublicKey } from "@solana/web3.js";
 import createConnection from "../utils/rpc";
-import * as Sentry from "@sentry/node";
 
 async function SNSHandler(req: Request, res: Response): Promise<void> {
-  const transaction = Sentry.startTransaction({ name: 'sns' });
-
   const address = req.params.address;
   const network = process.env.RPC_NETWORK || "mainnet";
   const api_key = process.env.RPC_API_KEY || "";
@@ -29,8 +26,6 @@ async function SNSHandler(req: Request, res: Response): Promise<void> {
   } else {
     res.status(400).json({ error: "RPC not connected." });
   }
-
-  transaction.finish();
 }
 
 export default SNSHandler;

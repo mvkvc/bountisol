@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import bs58 from "bs58";
-import * as Sentry from "@sentry/node";
 
 async function SIWSHandler(req: Request, res: Response): Promise<void> {
-  const transaction = Sentry.startTransaction({ name: 'siws' });
-
   try {
     const message = JSON.parse(req.body.message);
     const header = message.header;
@@ -33,8 +30,6 @@ async function SIWSHandler(req: Request, res: Response): Promise<void> {
     console.error("Error occurred:", e.message);
     res.status(400).json({ error: e.message });
   }
-
-  transaction.finish();
 }
 
 export default SIWSHandler;

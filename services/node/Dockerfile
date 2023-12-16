@@ -28,7 +28,7 @@ RUN apt-get update -qq && \
 
 # Copy application code
 COPY . .
-RUN yarn install --dev
+RUN yarn install
 RUN yarn build
 
 # Final stage for app image
