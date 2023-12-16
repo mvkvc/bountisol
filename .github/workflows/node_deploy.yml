@@ -1,4 +1,4 @@
-name: js_deploy
+name: node_deploy
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/js_deploy.yml
-      - services/js/**
+      - .github/workflows/node_deploy.yml
+      - services/node/**
 
 jobs:
   deploy:
@@ -18,4 +18,4 @@ jobs:
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        working-directory: services/js
+        working-directory: services/node

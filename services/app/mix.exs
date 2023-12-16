@@ -99,20 +99,6 @@ defmodule Akashi.MixProject do
     ]
   end
 
-  defp solana_dep do
-    case Mix.env() do
-      :dev -> [path: "../../../../forks/solana-elixir"]
-      _ -> [git: "https://github.com/mvkvc/solana-elixir.git"]
-    end
-  end
-
-  defp phoenix_live_react_dep do
-    case Mix.env() do
-      :dev -> [path: "../../../../forks/phoenix_live_react"]
-      _ -> [git: "https://github.com/mvkvc/phoenix_live_react.git"]
-    end
-  end
-
   defp aliases do
     [
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
@@ -125,5 +111,19 @@ defmodule Akashi.MixProject do
       testd: ["cmd sh/db_test.sh", "test", "cmd docker stop akashi_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]
     ]
+  end
+
+  defp solana_dep do
+    case Mix.env() do
+      :dev -> [path: "../../../../forks/solana-elixir"]
+      _ -> [git: "https://github.com/mvkvc/solana-elixir.git"]
+    end
+  end
+
+  defp phoenix_live_react_dep do
+    case Mix.env() do
+      :dev -> [path: "../../../../forks/phoenix_live_react"]
+      _ -> [git: "https://github.com/mvkvc/phoenix_live_react.git"]
+    end
   end
 end
