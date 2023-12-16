@@ -58,10 +58,8 @@ defmodule Akashi.MixProject do
 
   defp deps do
     [
-      # {:solana, git: "https://github.com/mvkvc/solana-elixir.git"},
-      {:solana, path: "../../../../forks/solana-elixir"},
-      # {:phoenix_live_react, "https://github.com/mvkvc/phoenix_live_react.git"},
-      {:phoenix_live_react, path: "../../../../forks/phoenix_live_react"},
+      {:solana, solana_dep()},
+      {:phoenix_live_react, phoenix_live_react_dep()},
       #
       {:sentry, "~> 8.0"},
       {:hackney, "~> 1.8"},
@@ -99,6 +97,20 @@ defmodule Akashi.MixProject do
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.27", only: :dev, runtime: false}
     ]
+  end
+
+  defp solana_dep do
+    case Mix.env() do
+      :dev -> {:solana, path: "../../../../forks/solana-elixir"}
+      _ -> {:solana, git: "https://github.com/mvkvc/solana-elixir.git"}
+    end
+  end
+
+  defp phoenix_live_react_dep do
+    case Mix.env() do
+      :dev -> {:phoenix_live_react, path: "../../../../forks/phoenix_live_react"}
+      _ -> {:phoenix_live_react, git: "https://github.com/mvkvc/phoenix_live_react.git"}
+    end
   end
 
   defp aliases do

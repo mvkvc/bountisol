@@ -9,9 +9,9 @@ Work with everyone, everywhere.
 - https://github.com/mvkvc/akashi
 - https://github.com/users/mvkvc/projects/21
 - https://fly.io/dashboard/akashi-systems
-- https://akashi-systems-345904ce.sentry.io/issues/?project=4506352893624320
 - https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
 - https://dev.helius.xyz/dashboard/app
+- https://akashi-systems-345904ce.sentry.io/issues/?project=4506352893624320
 
 ## Components
 
