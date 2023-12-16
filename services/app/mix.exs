@@ -101,15 +101,15 @@ defmodule Akashi.MixProject do
 
   defp solana_dep do
     case Mix.env() do
-      :dev -> {:solana, path: "../../../../forks/solana-elixir"}
-      _ -> {:solana, git: "https://github.com/mvkvc/solana-elixir.git"}
+      :dev -> [path: "../../../../forks/solana-elixir"]
+      _ -> [git: "https://github.com/mvkvc/solana-elixir.git"]
     end
   end
 
   defp phoenix_live_react_dep do
     case Mix.env() do
-      :dev -> {:phoenix_live_react, path: "../../../../forks/phoenix_live_react"}
-      _ -> {:phoenix_live_react, git: "https://github.com/mvkvc/phoenix_live_react.git"}
+      :dev -> [path: "../../../../forks/phoenix_live_react"]
+      _ -> [git: "https://github.com/mvkvc/phoenix_live_react.git"]
     end
   end
 
