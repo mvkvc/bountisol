@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.CreateBounties do
+defmodule CTransfer.Repo.Migrations.CreateBounties do
   use Ecto.Migration
 
   def change do

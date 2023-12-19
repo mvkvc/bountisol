@@ -1,2 +1,2 @@
 set PHX_SERVER=true
-call "%~dp0\akashi" start
+call "%~dp0\ctransfer" start

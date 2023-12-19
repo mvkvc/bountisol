@@ -1,14 +1,14 @@
-defmodule Akashi.MixProject do
+defmodule CTransfer.MixProject do
   use Mix.Project
 
-  @name "Akashi"
+  @name "CTransfer"
   @description "Work with everyone, everywhere."
   @source_url "https://github.com/mvkvc/akshi"
   @version "0.1.0"
 
   def project do
     [
-      app: :akashi,
+      app: :ctransfer,
       name: @name,
       description: @description,
       source_url: @source_url,
@@ -25,7 +25,7 @@ defmodule Akashi.MixProject do
 
   def application do
     [
-      mod: {Akashi.Application, []},
+      mod: {CTransfer.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -108,7 +108,7 @@ defmodule Akashi.MixProject do
       "assets.setup": ["cmd --cd assets yarn install --dev"],
       "assets.build": ["cmd --cd assets yarn build"],
       "assets.deploy": ["assets.build", "phx.digest"],
-      testd: ["cmd sh/db_test.sh", "test", "cmd docker stop akashi_test_db"],
+      testd: ["cmd sh/db_test.sh", "test", "cmd docker stop ctransfer_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]
     ]
   end

@@ -1,7 +1,7 @@
-defmodule Akashi.AccountsFixtures do
+defmodule CTransfer.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Akashi.Accounts` context.
+  entities via the `CTransfer.Accounts` context.
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -18,7 +18,7 @@ defmodule Akashi.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> Akashi.Accounts.register_user()
+      |> CTransfer.Accounts.register_user()
 
     user
   end
@@ -40,7 +40,7 @@ defmodule Akashi.AccountsFixtures do
         domain: "some domain",
         email: "some email"
       })
-      |> Akashi.Accounts.create_contact()
+      |> CTransfer.Accounts.create_contact()
 
     contact
   end

@@ -1,7 +1,7 @@
-defmodule Akashi.TransactionsFixtures do
+defmodule CTransfer.TransactionsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Akashi.Transactions` context.
+  entities via the `CTransfer.Transactions` context.
   """
 
   @doc """
@@ -20,7 +20,7 @@ defmodule Akashi.TransactionsFixtures do
         status: "some status",
         title: "some title"
       })
-      |> Akashi.Transactions.create_bounty()
+      |> CTransfer.Transactions.create_bounty()
 
     bounty
   end
@@ -41,7 +41,7 @@ defmodule Akashi.TransactionsFixtures do
         reciever_email: "some reciever_email",
         status: "some status"
       })
-      |> Akashi.Transactions.create_payment()
+      |> CTransfer.Transactions.create_payment()
 
     payment
   end
@@ -63,7 +63,7 @@ defmodule Akashi.TransactionsFixtures do
         recurring: true,
         start_date: ~N[2023-12-06 17:45:00]
       })
-      |> Akashi.Transactions.create_invoice()
+      |> CTransfer.Transactions.create_invoice()
 
     invoice
   end

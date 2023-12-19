@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.ChangeUserLogin do
+defmodule CTransfer.Repo.Migrations.ChangeUserLogin do
   use Ecto.Migration
 
   def change do

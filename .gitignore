@@ -2,5 +2,6 @@
 .nix_hex/
 .nix_mix/
 assets/og/
-.secret*
+.secret
 *.code-workspace
+.elixir-tools/

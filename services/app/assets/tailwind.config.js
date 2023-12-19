@@ -9,8 +9,8 @@ module.exports = {
   content: [
     "js/**/*.js",
     "js/**/*.jsx",
-    "../lib/akashi_web.ex",
-    "../lib/akashi_web/**/*.*ex",
+    "../lib/ctransfer_web.ex",
+    "../lib/ctransfer_web/**/*.*ex",
   ],
   theme: {
     extend: {

@@ -12,12 +12,12 @@ import Config
 # If you use `mix release`, you need to explicitly enable the server
 # by passing the PHX_SERVER=true when you start it:
 #
-#     PHX_SERVER=true bin/akashi start
+#     PHX_SERVER=true bin/ctransfer start
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if System.get_env("PHX_SERVER") do
-  config :akashi, AkashiWeb.Endpoint, server: true
+  config :ctransfer, CTransferWeb.Endpoint, server: true
 end
 
 if config_env() == :prod do
@@ -27,7 +27,7 @@ if config_env() == :prod do
       environment variable APP_DB_URL is missing.
       """
 
-  config :akashi,
+  config :ctransfer,
     network: :devnet
 
   config :sentry,
@@ -43,7 +43,7 @@ if config_env() == :prod do
   # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   # Enable SSL later and determine if `maybe_ipv6` needed
-  config :akashi, Akashi.Repo,
+  config :ctransfer, CTransfer.Repo,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -61,14 +61,14 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "app.akashi.systems"
+  host = System.get_env("PHX_HOST") || "app.ctransfer.systems"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
-  config :akashi, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :ctransfer, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :akashi, AkashiWeb.Endpoint,
+  config :ctransfer, CTransferWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
-    check_origin: ["#{host}", "https://#{host}", "//*.akashi.systems"],
+    check_origin: ["#{host}", "https://#{host}", "//*.ctransfer.systems"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -84,7 +84,7 @@ if config_env() == :prod do
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  #     config :akashi, AkashiWeb.Endpoint,
+  #     config :ctransfer, CTransferWeb.Endpoint,
   #       https: [
   #         ...,
   #         port: 443,
@@ -106,7 +106,7 @@ if config_env() == :prod do
   # We also recommend setting `force_ssl` in your endpoint, ensuring
   # no data is ever sent via http, always redirecting to https:
   #
-  #     config :akashi, AkashiWeb.Endpoint,
+  #     config :ctransfer, CTransferWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
@@ -118,7 +118,7 @@ if config_env() == :prod do
   # are not using SMTP. Here is an example of the configuration:
   #
 
-  config :akashi, Akashi.Mailer,
+  config :ctransfer, CTransfer.Mailer,
     adapter: Swoosh.Adapters.Postmark,
     api_key: System.get_env("POSTMARK_API_KEY")
 

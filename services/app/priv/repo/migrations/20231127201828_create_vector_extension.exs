@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.CreateVectorExtension do
+defmodule CTransfer.Repo.Migrations.CreateVectorExtension do
   use Ecto.Migration
 
   def up do

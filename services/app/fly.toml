@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for akashi-app on 2023-11-27T14:27:44-05:00
+# fly.toml app configuration file generated for ctransfer-app on 2023-11-27T14:27:44-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "akashi-app"
+app = "ctransfer-app"
 primary_region = "yyz"
 kill_signal = "SIGTERM"
 
@@ -13,7 +13,7 @@ kill_signal = "SIGTERM"
   release_command = "/app/bin/migrate"
 
 [env]
-  PHX_HOST = "akashi-app.fly.dev"
+  PHX_HOST = "ctransfer-app.fly.dev"
   PORT = "8080"
 
 [http_service]

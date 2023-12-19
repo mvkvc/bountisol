@@ -23,8 +23,8 @@ docker:
     ENV PORT=3000
     EXPOSE 3000
     CMD ["yarn", "serve"]
-    SAVE IMAGE akashi-site:latest
-    SAVE IMAGE --push registry.fly.io/akashi-site:latest registry.fly.io/akashi-site:${DATE}
+    SAVE IMAGE ctransfer-site:latest
+    SAVE IMAGE --push registry.fly.io/ctransfer-site:latest registry.fly.io/ctransfer-site:${DATE}
 
 deploy:
-    RUN fly deploy --image registry.fly.io/akashi-site:latest
+    RUN fly deploy --image registry.fly.io/ctransfer-site:latest

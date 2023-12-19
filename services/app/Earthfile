@@ -62,11 +62,11 @@ docker:
     ENV LANGUAGE en_US:en
     ENV LC_ALL en_US.UTF-8
     ENV MIX_ENV="prod"
-    COPY +build/app/_build/${MIX_ENV}/rel/akashi ./
+    COPY +build/app/_build/${MIX_ENV}/rel/ctransfer ./
     USER nobody
     CMD ["/app/bin/server"]
-    SAVE IMAGE akashi:latest
-    SAVE IMAGE --push registry.fly.io/akashi:latest registry.fly.io/akashi:${DATE}
+    SAVE IMAGE ctransfer:latest
+    SAVE IMAGE --push registry.fly.io/ctransfer:latest registry.fly.io/ctransfer:${DATE}
 
 deploy:
-    RUN fly deploy --image registry.fly.io/akashi:latest
+    RUN fly deploy --image registry.fly.io/ctransfer:latest

@@ -1,1 +1,1 @@
-call "%~dp0\akashi" eval Akashi.Release.migrate
+call "%~dp0\ctransfer" eval CTransfer.Release.migrate

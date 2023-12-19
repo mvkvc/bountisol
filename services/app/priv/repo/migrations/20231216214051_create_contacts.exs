@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.CreateContacts do
+defmodule CTransfer.Repo.Migrations.CreateContacts do
   use Ecto.Migration
 
   def change do

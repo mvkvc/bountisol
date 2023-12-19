@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.CreatePayments do
+defmodule CTransfer.Repo.Migrations.CreatePayments do
   use Ecto.Migration
 
   def change do

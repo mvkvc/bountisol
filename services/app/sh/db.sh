@@ -1,7 +1,7 @@
 export POSTGRES_USER=postgres
 export POSTGRES_PASSWORD=postgres
-export POSTGRES_DB=akashi_dev
-export CONTAINER=akashi_dev_db
+export POSTGRES_DB=ctransfer_dev
+export CONTAINER=ctransfer_dev_db
 export IMAGE=ankane/pgvector
 
 if docker ps -a | grep -w $CONTAINER; then docker stop $CONTAINER; fi

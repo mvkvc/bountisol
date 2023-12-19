@@ -12,9 +12,9 @@ export default defineConfig({
 	        	Sidebar: 'starlight-blog/overrides/Sidebar.astro',
 	       		ThemeSelect: 'starlight-blog/overrides/ThemeSelect.astro',
        		},
-			title: 'Akashi Systems',
+			title: 'CTransfer Systems',
 			social: {
-				github: 'https://github.com/mvkvc/akashi',
+				github: 'https://github.com/mvkvc/ctransfer',
 			},
 			sidebar: [
 				{

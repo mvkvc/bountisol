@@ -1,5 +1,5 @@
 {
-  description = "akashi";
+  description = "ctransfer";
 
   inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs//bf744fe90419885eefced41b3e5ae442d732712d";

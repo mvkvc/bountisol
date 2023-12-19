@@ -1,17 +1,14 @@
-# akashi
+# ctransfer
 
-Work with everyone, everywhere.
+Easily work with anyone and manage your payments using Solana.
 
-## Links
+## Features
 
-- https://akashi.systems
-- https://app.akashi.systems
-- https://github.com/mvkvc/akashi
-- https://github.com/users/mvkvc/projects/21
-- https://fly.io/dashboard/akashi-systems
-- https://supabase.com/dashboard/project/snucvgeeegpsqkhkkazi
-- https://dev.helius.xyz/dashboard/app
-- https://akashi-systems-345904ce.sentry.io/issues/?project=4506352893624320
+- [X] ~~Payments~~
+- [ ] Invoices
+- [ ] Bounties
+- [ ] Agreements
+- [ ] Disputes
 
 ## Components
 
@@ -20,18 +17,17 @@ Work with everyone, everywhere.
 - `services/node/`: NodeJS server for using JS libraries.
 - `services/site/`: Landing page, documentation, and blog.
 
-## Development
+## Requirements
 
-### Requirements
-
-- [Fly](https://fly.io/docs/hands-on/install-flyctl)
-- [Doppler](https://docs.doppler.com/docs/install-cli)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Nix](https://nixos.org/download.html) (w/ Nix [flakes](https://nixos.wiki/wiki/Flakes) enabled)
+- [Nix](https://nixos.org/download.html) (w/ [flakes](https://nixos.wiki/wiki/Flakes) enabled)
 
-### Setup
+## Setup
 
-- Run `doppler login` to authenticate with Doppler.
-- Run `sh/secrets.sh` to download secrets locally.
-- Run `nix develop` to enter the Nix shell.
+- Copy `.secret_` to `.secret` and fill in the values.
+- Run `nix develop` to enter the Nix environment shell.
 - Run `sh/setup.sh` to install dependencies.
+
+## Related
+
+- [cachet](https://github.com/mvkvc/cachet): On-chain reputation and voting system using Solana.

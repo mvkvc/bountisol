@@ -1,0 +1,38 @@
+<.header>
+  Bounty <%= @bounty.id %>
+  <:subtitle>This is a bounty record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/bounties/#{@bounty}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit bounty</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Title"><%= @bounty.title %></:item>
+  <:item title="Description"><%= @bounty.description %></:item>
+  <:item title="Date created"><%= @bounty.date_created %></:item>
+  <:item title="Status"><%= @bounty.status %></:item>
+  <:item title="Date closed"><%= @bounty.date_closed %></:item>
+  <:item title="Funds amount"><%= @bounty.funds_amount %></:item>
+  <:item title="Funds currency"><%= @bounty.funds_currency %></:item>
+  <:item title="Attachments"><%= @bounty.attachments %></:item>
+</.list>
+
+<.back navigate={~p"/bounties"}>Back to bounties</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="bounty-modal"
+  show
+  on_cancel={JS.patch(~p"/bounties/#{@bounty}")}
+>
+  <.live_component
+    module={CTransferWeb.BountyLive.FormComponent}
+    id={@bounty.id}
+    title={@page_title}
+    action={@live_action}
+    bounty={@bounty}
+    patch={~p"/bounties/#{@bounty}"}
+  />
+</.modal>

@@ -1,4 +1,4 @@
-defmodule Akashi.Repo.Migrations.AddTxHash do
+defmodule CTransfer.Repo.Migrations.AddTxHash do
   use Ecto.Migration
 
   def change do

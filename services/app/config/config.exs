@@ -7,23 +7,23 @@
 # General application configuration
 import Config
 
-config :akashi,
+config :ctransfer,
   network: :devnet,
-  ecto_repos: [Akashi.Repo],
+  ecto_repos: [CTransfer.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :akashi, Akashi.Repo, types: Akashi.PostgrexTypes
+config :ctransfer, CTransfer.Repo, types: CTransfer.PostgrexTypes
 
 # Configures the endpoint
-config :akashi, AkashiWeb.Endpoint,
+config :ctransfer, CTransferWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   # adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
-    formats: [html: AkashiWeb.ErrorHTML, json: AkashiWeb.ErrorJSON],
+    formats: [html: CTransferWeb.ErrorHTML, json: CTransferWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Akashi.PubSub,
+  pubsub_server: CTransfer.PubSub,
   live_view: [signing_salt: "gHc3jy5v"]
 
 # Configures the mailer
@@ -33,7 +33,7 @@ config :akashi, AkashiWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :akashi, Akashi.Mailer, adapter: Swoosh.Adapters.Local
+config :ctransfer, CTransfer.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 # config :esbuild,
