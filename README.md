@@ -1,7 +1,5 @@
 # ctransfer
 
-Easily work with anyone and manage your payments using Solana.
-
 ## Features
 
 - [X] ~~Payments~~
