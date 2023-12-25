@@ -7,7 +7,7 @@
   </:actions>
 </.header>
 
-<.table
+<.table class="table"
   id="payments"
   rows={@streams.payments}
   row_click={fn {_id, payment} -> JS.navigate(~p"/payments/#{payment}") end}

@@ -26,6 +26,14 @@ config :ctransfer, CTransferWeb.Endpoint,
   pubsub_server: CTransfer.PubSub,
   live_view: [signing_salt: "gHc3jy5v"]
 
+config :ctransfer, Oban,
+  repo: CTransfer.Repo,
+  plugins: [
+    {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
+    {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)}],
+  queues: [default: 10, mailers: 20]
+
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

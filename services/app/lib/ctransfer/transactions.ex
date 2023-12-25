@@ -9,6 +9,7 @@ defmodule CTransfer.Transactions do
   alias CTransfer.Transactions.Bounty
   alias CTransfer.Transactions.Invoice
   alias CTransfer.Transactions.Payment
+  import Swoosh.Email
 
   @doc """
   Returns the list of bounties.

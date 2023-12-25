@@ -1,10 +1,11 @@
 defmodule CTransfer.Transactions.Payment do
   @moduledoc false
   use Ecto.Schema
-
   import Ecto.Changeset
+  alias CTransfer.Accounts.User
 
   schema "payments" do
+    field :type, :string
     field :status, :string, default: "requested"
     field :fiat_amount, :integer
     field :fiat_denom, :string
@@ -13,8 +14,9 @@ defmodule CTransfer.Transactions.Payment do
     field :reciever_address, :string
     field :reciever_email, :string
     field :reciever_domain, :string
-    field :user_id, :id
     field :tx_hash, :string
+
+    belongs_to :user, User
 
     timestamps(type: :utc_datetime)
   end

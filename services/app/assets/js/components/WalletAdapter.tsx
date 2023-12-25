@@ -29,7 +29,7 @@ const WalletAdapter: FC<any> = ({
     () => [
       // Phantom included in default
       // Solflare is added using import and below enables Metamask snap
-      // new SolflareWalletAdapter(),
+      // new SolflareWalletAdapter()
     ],
     [network],
   );

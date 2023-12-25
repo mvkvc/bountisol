@@ -7,6 +7,8 @@ defmodule CTransfer.Application do
 
   @impl true
   def start(_type, _args) do
+    Oban.Telemetry.attach_default_logger()
+
     children = [
       CTransferWeb.Telemetry,
       CTransfer.Repo,
@@ -18,7 +20,8 @@ defmodule CTransfer.Application do
       # {CTransfer.Worker, arg},
       # Start to serve requests, typically the last entry
       CTransferWeb.Endpoint,
-      CTransferWeb.Presence
+      CTransferWeb.Presence,
+      {Oban, Application.fetch_env!(:ctransfer, Oban)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

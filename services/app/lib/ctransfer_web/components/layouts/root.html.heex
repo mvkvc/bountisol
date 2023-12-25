@@ -30,15 +30,21 @@
       </li>
       <%= if @current_user do %>
       <li>
-        <.link href={~p"/arbitration"} class="btn" disabled>
-          Arbitration
-        </.link>
+        <div class="relative group">
+          <.link href={~p"/disputes"} class="btn" disabled>
+            Disputes
+          </.link>
+            <div class="opacity-0 group-hover:opacity-100 absolute left-1/2 transform -translate-x-1/2 bg-gray-200 text-black font-semibold min-w-full text-center">
+Coming soon</div>
+        </div>
       </li>
-      <li>
-        <.link href={~p"/agreements"} class="btn" disabled>
-          Agreements
-        </.link>
-      </li>
+        <div class="relative group">
+          <.link href={~p"/agreements"} class="btn" disabled>
+            Agreements
+          </.link>
+            <div class="opacity-0 group-hover:opacity-100 absolute left-1/2 transform -translate-x-1/2 bg-gray-200 text-black font-semibold min-w-full text-center">
+Coming soon</div>
+        </div>
       <li>
         <.link href={~p"/invoices"} class="btn">
           Invoices

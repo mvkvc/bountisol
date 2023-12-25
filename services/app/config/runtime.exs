@@ -30,16 +30,6 @@ if config_env() == :prod do
   config :ctransfer,
     network: :devnet
 
-  config :sentry,
-    dsn: System.get_env("SENTRY_URL"),
-    environment_name: :prod,
-    enable_source_code_context: true,
-    root_source_code_path: File.cwd!(),
-    tags: %{
-      env: "production"
-    },
-    included_environments: [:prod]
-
   # maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   # Enable SSL later and determine if `maybe_ipv6` needed

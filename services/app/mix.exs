@@ -61,8 +61,7 @@ defmodule CTransfer.MixProject do
       {:solana, solana_dep()},
       {:phoenix_live_react, phoenix_live_react_dep()},
       #
-      {:sentry, "~> 8.0"},
-      {:hackney, "~> 1.8"},
+      {:oban, "~> 2.16"},
       {:base58, "~> 0.1.1"},
       {:req, "~> 0.4.5"},
       {:random_color, "~> 0.1.0"},
