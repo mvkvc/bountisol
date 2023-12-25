@@ -1,7 +1,5 @@
 # ctransfer
 
-Easily work with anyone and manage your payments using Solana.
-
 ## Features
 
 - [X] ~~Payments~~
@@ -27,7 +25,3 @@ Easily work with anyone and manage your payments using Solana.
 - Copy `.secret_` to `.secret` and fill in the values.
 - Run `nix develop` to enter the Nix environment shell.
 - Run `sh/setup.sh` to install dependencies.
-
-## Related
-
-- [cachet](https://github.com/mvkvc/cachet): On-chain reputation and voting system using Solana.
