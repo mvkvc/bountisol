@@ -5,15 +5,13 @@
 - [X] ~~Payments~~
 - [ ] Invoices
 - [ ] Bounties
-- [ ] Agreements
 - [ ] Disputes
 
 ## Components
 
 - `programs/`: Solana programs.
-- `services/app/`: Main application.
-- `services/node/`: NodeJS server for using JS libraries.
-- `services/site/`: Landing page, documentation, and blog.
+- `app/`: Main application.
+- `sh/`: Shell scripts.
 
 ## Requirements
 

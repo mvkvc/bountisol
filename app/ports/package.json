@@ -1,0 +1,23 @@
+{
+  "name": "ctransfer",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node dist/main.js",
+    "build": "tsc --outDir dist",
+    "dev": "ts-node src/main.ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@bonfida/spl-name-service": "^2.0.0-alpha.25",
+    "@solana/web3.js": "^1.87.6",
+    "@web3auth/sign-in-with-solana": "^3.0.0",
+    "bs58": "^5.0.0",
+    "portboy": "^0.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "prettier": "^3.1.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^5.3.3"
+  }
+}
