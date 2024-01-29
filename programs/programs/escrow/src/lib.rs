@@ -1,9 +1,9 @@
-use anchor_lang::prelude::*;
-use anchor_spl::token::{Mint, Token, TokenAccount};
-// use borsh::{BorshDeserialize, BorshSerialize};
+pub mod instructions;
+pub mod state;
+pub mod errors;
 
-// Pre fund contract with amount to pay
-// Release function to pay all or some
+use anchor_lang::prelude::*;
+use instructions::*;
 
 declare_id!("EkcjDCwoF7ffZox75WTqqtkirDEWdcNF4oUjigqEEmut");
 

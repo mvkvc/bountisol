@@ -21,7 +21,8 @@ defmodule CTransfer.Application do
       # Start to serve requests, typically the last entry
       CTransferWeb.Endpoint,
       CTransferWeb.Presence,
-      {Oban, Application.fetch_env!(:ctransfer, Oban)}
+      {Oban, Application.fetch_env!(:ctransfer, Oban)},
+      Portboy.child_pool(:solana, {System.find_executable("node"), [Path.join(:code.priv_dir(:ctransfer), "/ports/solana/out/main.js")]}, 5, 2)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

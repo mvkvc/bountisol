@@ -2,8 +2,8 @@ defmodule CTransfer.MixProject do
   use Mix.Project
 
   @name "CTransfer"
-  @description "Work with everyone, everywhere."
-  @source_url "https://github.com/mvkvc/akshi"
+  @description "Work with anyone from anywhere."
+  @source_url "https://github.com/mvkvc/ctransfer"
   @version "0.1.0"
 
   def project do

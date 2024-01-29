@@ -1,6 +1,6 @@
 import { Connection } from "@solana/web3.js";
 
-function createConnection(network: string, api_key: string): Connection {
+export default function createConnection(network: string, api_key: string): Connection {
   if (!api_key) {
     throw new Error("RPC_API_KEY environment variable is not set");
   }
@@ -18,12 +18,5 @@ function createConnection(network: string, api_key: string): Connection {
   }
 
   const url = url_base + api_key;
-  try {
-    const connection = new Connection(url, "confirmed");
-    return connection;
-  } catch (e: any) {
-    throw new Error(`Error occurred: ${e.message}`);
-  }
+  return new Connection(url, "confirmed");
 }
-
-export default createConnection;

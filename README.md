@@ -4,7 +4,7 @@ Work with anyone from anywhere.
 
 ## Features
 
-- [X] ~~Payments~~
+- [X] Payments
 - [ ] Invoices
 - [ ] Disputes
 - [ ] Bounties

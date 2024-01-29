@@ -1,8 +1,9 @@
-defmodule CTransfer.Services do
+defmodule CTransfer.Solana do
   @moduledoc false
   alias CTransfer.Accounts
 
   def verify_signature(%{address: address, message: message, signature: signature}) do
+    # Portboy.run_pool(:solana)
     req =
       Req.post(
         System.fetch_env!("APP_VERIFY_URL"),
