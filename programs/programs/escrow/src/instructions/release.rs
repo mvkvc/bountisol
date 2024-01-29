@@ -2,13 +2,38 @@ use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
-pub fn release(ctx: Context<Escrow>, amount: u64) -> Result<()> {
+#[derive(AnchorSerialize, AnchorDeserialize, Debug)]
+pub enum Release {
+    Partial,
+    Full
+}
+
+pub fn release(ctx: Context<FundEscrow>, release: Release) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
     let worker = escrow.worker;
+    let time = Clock::get()?.unix_timestamp;
+    let hours_to_expiration = escrow.hours_to_expiration;
+    let expiration = hours_to_expiration * 60 * 60;
+
+    if time > escrow.expiration {
+        // Escrow has expired
+        return Err(ErrorCode::EscrowExpired.into());
+    }
+
+    match release {
+        Partial => {
+            // Partial release
+        },
+        Full => {
+            // Full release
+        }
+    }
+
+    //
 }
 
 #[derive(Accounts)]
-pub struct FundEscrow<'info> {
+pub struct ReleaseEscrow<'info> {
     // Escrow
     #[account(
         init,
@@ -29,14 +54,6 @@ pub struct FundEscrow<'info> {
         associated_token::authority = pool,
     )]
     pub pool_token_account: Account<'info, token::TokenAccount>,
-    /// The payer's token account for the asset
-    /// being deposited into the pool
-    #[account(
-        mut,
-        associated_token::mint = mint,
-        associated_token::authority = payer,
-    )]
-    pub payer_token_account: Account<'info, token::TokenAccount>,
     // Payer
     #[account(mut)]
     pub payer: Signer<'info>,

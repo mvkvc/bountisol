@@ -22,13 +22,6 @@
       <li>
         <p><%= CTransfer.Accounts.truncate_address(@current_user.address) %></p>
       </li>
-      <% end %>
-      <li>
-        <.link href={~p"/bounties"} class="btn">
-          Bounties
-        </.link>
-      </li>
-      <%= if @current_user do %>
       <li>
         <div class="relative group">
           <.link href={~p"/disputes"} class="btn" disabled>
@@ -36,6 +29,19 @@
           </.link>
         </div>
       </li>
+      <% else %>
+      <li>
+        <.link href={~p"/arbitration"} class="btn" disabled>
+          Disputes
+        </.link>
+      </li>
+      <% end %>
+      <li>
+        <.link href={~p"/bounties"} class="btn">
+          Bounties
+        </.link>
+      </li>
+      <%= if @current_user do %>
       <li>
         <.link href={~p"/invoices"} class="btn">
           Invoices
@@ -50,11 +56,6 @@
         <.link href={~p"/users/settings"} class="btn">Settings</.link>
       </li>
       <% else %>
-      <li>
-        <.link href={~p"/arbitration"} class="btn" disabled>
-          Disputes
-        </.link>
-      </li>
       <li>
         <.link href={~p"/invoices"} class="btn" disabled>
           Invoices

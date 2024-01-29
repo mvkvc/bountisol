@@ -22,7 +22,7 @@ defmodule CTransfer.Application do
       CTransferWeb.Endpoint,
       CTransferWeb.Presence,
       {Oban, Application.fetch_env!(:ctransfer, Oban)},
-      Portboy.child_pool(:solana, {System.find_executable("node"), [Path.join(:code.priv_dir(:ctransfer), "/ports/solana/out/main.js")]}, 5, 2)
+      # Portboy.child_pool(:solana, {System.find_executable("node"), [Path.join(:code.priv_dir(:ctransfer), "/ports/solana/out/main.js")]}, 5, 2)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

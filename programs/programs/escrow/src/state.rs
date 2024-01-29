@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use anchor_lang::prelude::*;
+use std::collections::HashMap;
 
 const SUPPORTED_TOKENS: HashMap<&str, &str> = &[
     ("SOL", ""),
@@ -7,28 +7,45 @@ const SUPPORTED_TOKENS: HashMap<&str, &str> = &[
     ("USDT", ""),
     ("Bonk", ""),
     ("Wif", ""),
-].iter().cloned().collect();
+]
+.iter()
+.cloned()
+.collect();
 
 #[account]
 pub struct Escrow {
     pub bump: u8,
     pub amount: u64,
     pub mint_account: Pubkey,
+    pub funder: Pubkey,
     pub worker: Pubkey,
     pub arbitrator: Pubkey,
+    pub partial_percent: u8,
+    pub hours_to_expiration: u64,
 }
 
 impl Escrow {
     pub const SEED_PREFIX: &'static str = "escrow";
     pub const SPACE: usize = 8 + 4 + 1;
 
-    pub fn new(bump: u8, amount: u64, mint_account: Pubkey, arbitrator: Pubkey) -> Self {
+    pub fn new(
+        bump: u8,
+        amount: u64,
+        mint_account: Pubkey,
+        worker: Pubkey,
+        arbitrator: Pubkey,
+        partial_percent: u8,
+        hours_to_expiration: u64,
+    ) -> Self {
         Self {
             bump,
             amount,
             mint_account,
+            funder,
             worker,
             arbitrator,
+            partial_percent,
+            hours_to_expiration,
         }
     }
 }
@@ -49,7 +66,7 @@ pub trait EscrowAccount {
 }
 
 impl<'info> EscorwAccount<'info> for Account<'info, Escrow> {
-        /// Validates an asset's key is present in the Liquidity Pool's list of mint
+    /// Validates an asset's key is present in the Liquidity Pool's list of mint
     /// addresses, and throws an error if it is not
     fn check_asset_key(&self, key: &Pubkey) -> Result<()> {
         if self.assets.contains(key) {
