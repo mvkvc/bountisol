@@ -1,11 +1,13 @@
 # ctransfer
 
+Work with anyone from anywhere.
+
 ## Features
 
 - [X] ~~Payments~~
 - [ ] Invoices
-- [ ] Bounties
 - [ ] Disputes
+- [ ] Bounties
 
 ## Components
 

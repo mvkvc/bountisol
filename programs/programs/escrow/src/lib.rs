@@ -2,6 +2,9 @@ use anchor_lang::prelude::*;
 use anchor_spl::token::{Mint, Token, TokenAccount};
 // use borsh::{BorshDeserialize, BorshSerialize};
 
+// Pre fund contract with amount to pay
+// Release function to pay all or some
+
 declare_id!("EkcjDCwoF7ffZox75WTqqtkirDEWdcNF4oUjigqEEmut");
 
 #[program]
