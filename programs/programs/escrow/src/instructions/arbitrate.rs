@@ -1,17 +1,17 @@
-use crate::state::*;
+use crate::{instruction::Release, state::*};
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
 // Rewrite this to arbitrate function
 
-pub fn release(ctx: Context<Escrow>) -> Result<()> {
+pub fn arbitrate(ctx: Context<Escrow>, release: Release) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
     //
 }
 
 #[derive(Accounts)]
-pub struct FundEscrow<'info> {
+pub struct ArbitrateEscrow<'info> {
     // Escrow
     #[account(
         init,

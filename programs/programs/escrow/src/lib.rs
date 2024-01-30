@@ -1,6 +1,6 @@
+pub mod errors;
 pub mod instructions;
 pub mod state;
-pub mod errors;
 
 use anchor_lang::prelude::*;
 use instructions::*;
@@ -11,90 +11,35 @@ declare_id!("EkcjDCwoF7ffZox75WTqqtkirDEWdcNF4oUjigqEEmut");
 pub mod escrow {
     use super::*;
 
-    pub fn initialize(
-        ctx: Context<Initialize>,
+    pub fn create(
+        ctx: Context<CreateEscrow>,
         amount: u64,
-        fee_percent: u64,
-        counterparty: Pubkey,
+        worker: Pubkey,
         arbitrator: Pubkey,
+        hours_to_expiration: u64,
     ) -> Result<()> {
-        let config_account = &mut ctx.accounts.config;
-        config_account.counterparty = counterparty;
-        config_account.arbitrator = arbitrator;
-
-        anchor_spl::token::transfer(
-            CpiContext::new(
-                ctx.accounts.token_program.to_account_info(),
-                anchor_spl::token::Transfer {
-                    from: ctx.accounts.signer_tokens.to_account_info(),
-                    to: ctx.accounts.escrow_tokens.to_account_info(),
-                    authority: ctx.accounts.signer.to_account_info(),
-                },
-            ),
+        instructions::create(
+            ctx,
             amount,
-        )?;
-
-        Ok(())
+            worker,
+            arbitrator,
+            hours_to_expiration,
+        )
     }
 
-    pub fn evidence(
-        ctx: Context<Evidence>,
-        hash: String
-    ) -> Result<()> {
-        let caller = ctx.accounts.signer.key();
-        let config = &ctx.accounts.config;
-
-        if caller == &config.signer {
-            config.evidence_signer = Some(hash);
-        }
-        else if caller == &config.counterparty {
-            config.evidence_counterparty = Some(hash);
-        } else {
-            return Err(ErrorCode::Unauthorized.into());
-        }
-
-        Ok(())
+    pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
+        instructions::fund(ctx, amount)
     }
 
-    pub fn decision(
-        ctx: Context<Decision>,
-        decision: bool
-    ) -> Result<()> {
-        let caller = ctx.accounts.signer.key();
-        let config = &ctx.accounts.config;
+    pub fn release(ctx: Context<ReleaseEscrow>, release: Release) -> Result<()> {
+        instructions::release(ctx, release)
+    }
 
-        if caller == &config.arbitrator {
-            if decision {
+    pub fn dispute(ctx: Context<DisputeEscrow>) -> Result<()> {
+        instructions::dispute(ctx)
+    }
 
-}
-
-#[account]
-pub struct EscrowConfig {
-    pub counterparty: Pubkey,
-    pub arbitrator: Pubkey,
-    pub evidence_signer: Option<String>,
-    pub evidence_counterparty: Option<String>,
-}
-
-#[derive(Accounts)]
-pub struct Escrow<'info> {
-    pub token_program: AccountInfo<'info>,
-    pub escrow_tokens: Account<'info, TokenAccount>,
-    pub signer: Signer<'info>,
-    pub signer_tokens: Account<'info, TokenAccount>,
-    pub config: Account<'info, EscrowConfig>
-}
-
-#[derive(Accounts)]
-pub struct Initialize<'info> {
-    // Add constraints
-    pub config: Account<'info, EscrowConfig>,
-    pub token_program: AccountInfo<'info>,
-    pub escrow_tokens: Account<'info, TokenAccount>,
-    pub signer: Signer<'info>,
-    pub signer_tokens: Account<'info, TokenAccount>,
-}
-
-#[derive(Accounts)]
-pub struct Evidence<'info> {
+    pub fn arbitrate(ctx: Context<ArbitrateEscrow>, release: Release) -> Result<()> {
+        instructions::arbitrate(ctx, release)
+    }
 }

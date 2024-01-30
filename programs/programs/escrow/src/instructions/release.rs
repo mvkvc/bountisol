@@ -5,10 +5,10 @@ use anchor_spl::{associated_token, token};
 #[derive(AnchorSerialize, AnchorDeserialize, Debug)]
 pub enum Release {
     Partial,
-    Full
+    Full,
 }
 
-pub fn release(ctx: Context<FundEscrow>, release: Release) -> Result<()> {
+pub fn release(ctx: Context<ReleaseEscrow>, release: Release) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
     let worker = escrow.worker;
     let time = Clock::get()?.unix_timestamp;
@@ -23,7 +23,7 @@ pub fn release(ctx: Context<FundEscrow>, release: Release) -> Result<()> {
     match release {
         Partial => {
             // Partial release
-        },
+        }
         Full => {
             // Full release
         }

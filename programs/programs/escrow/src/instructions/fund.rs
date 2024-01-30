@@ -2,7 +2,7 @@ use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
-pub fn fund(ctx: Context<Escrow>, amount: u64) -> Result<()> {
+pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
     if *ctx.accounts.mint.to_account_info().key != escrow.mint_account {

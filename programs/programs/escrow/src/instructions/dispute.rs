@@ -14,20 +14,11 @@ pub fn dispute(ctx: Context<Escrow>) -> Result<()> {
         return Err(ErrorCode::EscrowExpired.into());
     }
 
-    match release {
-        Partial => {
-            // Partial release
-        },
-        Full => {
-            // Full release
-        }
-    }
-
     //
 }
 
 #[derive(Accounts)]
-pub struct FundEscrow<'info> {
+pub struct DisputeEscrow<'info> {
     // Escrow
     #[account(
         init,

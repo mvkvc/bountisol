@@ -6,7 +6,7 @@ const SUPPORTED_TOKENS: HashMap<&str, &str> = &[
     ("USDC", ""),
     ("USDT", ""),
     ("Bonk", ""),
-    ("Wif", ""),
+    ("Wen", ""),
 ]
 .iter()
 .cloned()
@@ -16,8 +16,6 @@ const SUPPORTED_TOKENS: HashMap<&str, &str> = &[
 pub struct Escrow {
     pub bump: u8,
     pub amount: u64,
-    pub mint_account: Pubkey,
-    pub funder: Pubkey,
     pub worker: Pubkey,
     pub arbitrator: Pubkey,
     pub partial_percent: u8,
@@ -31,7 +29,6 @@ impl Escrow {
     pub fn new(
         bump: u8,
         amount: u64,
-        mint_account: Pubkey,
         worker: Pubkey,
         arbitrator: Pubkey,
         partial_percent: u8,
@@ -40,7 +37,6 @@ impl Escrow {
         Self {
             bump,
             amount,
-            mint_account,
             funder,
             worker,
             arbitrator,

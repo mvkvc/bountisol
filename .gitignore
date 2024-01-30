@@ -5,3 +5,6 @@ assets/og/
 .secret
 *.code-workspace
 .elixir-tools/
+.history/
+erl_crash.dump
+.elixir_ls/
