@@ -25,4 +25,7 @@ pub enum EscrowProgramError {
 
     #[msg("The worker is not authorized to call this instruction.")]
     InvalidWorkerError,
+
+    #[msg("The deadline has not passed.")]
+    InvalidTimeError,
 }

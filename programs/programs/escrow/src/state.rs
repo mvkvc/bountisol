@@ -17,7 +17,7 @@ pub struct Escrow {
 
 impl Escrow {
     pub const SEED_PREFIX: &'static str = "escrow";
-    pub const SPACE: usize = 8 + 4 + 1;
+    pub const SPACE: usize = 1 + 8 + 32 + 32 + 32 + 32 + 8;
 
     pub fn new(
         bump: u8,

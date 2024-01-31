@@ -4,13 +4,15 @@ use anchor_spl::{associated_token, token};
 use crate::state::*;
 use crate::errors::*;
 
-// Rewrite this to arbitrate function
-
 pub fn arbitrate(ctx: Context<ArbitrateEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
     if *ctx.accounts.payer.key != escrow.creator {
         return Err(EscrowProgramError::InvalidPayerError.into());
+    }
+
+    if escrow.deadline > Clock::get()?.unix_timestamp.try_into().unwrap() {
+        return Err(EscrowProgramError::InvalidTimeError.into());
     }
 
     let creator_token_amount = ctx.accounts.escrow_token_account.amount - amount;
