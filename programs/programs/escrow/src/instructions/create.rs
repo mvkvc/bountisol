@@ -1,5 +1,6 @@
-use crate::state::*;
 use anchor_lang::prelude::*;
+
+use crate::state::*;
 
 pub fn create(
     ctx: Context<CreateEscrow>,
@@ -7,19 +8,20 @@ pub fn create(
     token: Pubkey,
     worker: Pubkey,
     arbitrator: Pubkey,
-    deadline: u64,
+    deadline: u64
 ) -> Result<()> {
     // `set_inner` used to replace the account with the new state
     ctx.accounts.escrow.set_inner(Escrow::new(
-        *ctx.bumps
-            .get("escrow")
-            .expect("Failed to fetch bump for `pool`"),
+        // Bump
+        ctx.bumps.escrow,
         amount,
-        *ctx.accounts.payer.key,
+        token,
+        ctx.accounts.payer.key(),
         worker,
         arbitrator,
-        deadline,
+        deadline
     ));
+
 
     Ok(())
 }

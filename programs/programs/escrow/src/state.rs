@@ -1,14 +1,18 @@
-use anchor_lang::prelude::*;
-use anchor_spl::token::{Mint, TokenAccount, Transfer};
+use anchor_lang::{prelude::*, system_program};
+use anchor_spl::token::{transfer, Mint, Token, TokenAccount, Transfer};
+
+use crate::errors::EscrowProgramError;
 
 #[account]
 pub struct Escrow {
     pub bump: u8,
+    pub assets: Vec<Pubkey>,
     pub amount: u64,
+    pub token: Pubkey,
     pub creator: Pubkey,
     pub worker: Pubkey,
     pub arbitrator: Pubkey,
-    pub deadline: u64,
+    pub deadline: u64
 }
 
 impl Escrow {
@@ -18,23 +22,26 @@ impl Escrow {
     pub fn new(
         bump: u8,
         amount: u64,
+        token: Pubkey,
         creator: Pubkey,
         worker: Pubkey,
         arbitrator: Pubkey,
-        deadline: u64,
+        deadline: u64
     ) -> Self {
         Self {
             bump,
+            assets: vec![],
             amount,
+            token,
             creator,
             worker,
             arbitrator,
-            deadline
+            deadline,
         }
     }
 }
 
-pub trait EscrowAccount {
+pub trait EscrowAccount<'info>{
     fn check_asset_key(&self, key: &Pubkey) -> Result<()>;
     fn add_asset(
         &mut self,
@@ -60,6 +67,17 @@ pub trait EscrowAccount {
         system_program: &Program<'info, System>,
         token_program: &Program<'info, Token>,
     ) -> Result<()>;
+    fn release(
+        &mut self,
+        withdraw: (
+            &Account<'info, Mint>,
+            &Account<'info, TokenAccount>,
+            &Account<'info, TokenAccount>,
+            u64,
+        ),
+        authority: &Signer<'info>,
+        token_program: &Program<'info, Token>,
+    ) -> Result<()>;
 }
 
 impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
@@ -69,7 +87,7 @@ impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
         if self.assets.contains(key) {
             Ok(())
         } else {
-            Err(SwapProgramError::InvalidAssetKey.into())
+            Err(EscrowProgramError::InvalidAssetKey.into())
         }
     }
 
@@ -147,51 +165,28 @@ impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
         Ok(())
     }
 
-    fn process_swap(
+    fn release(
         &mut self,
-        receive: (
-            &Account<'info, Mint>,
-            &Account<'info, TokenAccount>,
-            &Account<'info, TokenAccount>,
-        ),
         pay: (
             &Account<'info, Mint>,
             &Account<'info, TokenAccount>,
             &Account<'info, TokenAccount>,
             u64,
         ),
-        authority: &Signer<'info>,
+        _authority: &Signer<'info>,
         token_program: &Program<'info, Token>,
     ) -> Result<()> {
         // (From, To)
-        let (receive_mint, pool_recieve, payer_recieve) = receive;
-        self.check_asset_key(&receive_mint.key())?;
-        // (From, To)
         let (pay_mint, payer_pay, pool_pay, pay_amount) = pay;
         self.check_asset_key(&pay_mint.key())?;
-        // Determine the amount the payer will recieve of the requested asset
-        let receive_amount = determine_swap_receive(
-            pool_recieve.amount,
-            receive_mint.decimals,
-            pool_pay.amount,
-            pay_mint.decimals,
-            pay_amount,
-        )?;
-        // Process the swap
-        if receive_amount == 0 {
-            Err(SwapProgramError::InvalidSwapNotEnoughPay.into())
+
+        // Process the release
+        if pay_amount == 0 {
+            Err(EscrowProgramError::InvalidAmountError.into())
         } else {
-            process_transfer_to_pool(payer_pay, pool_pay, pay_amount, authority, token_program)?;
-            process_transfer_from_pool(
-                pool_recieve,
-                payer_recieve,
-                receive_amount,
-                self,
-                token_program,
-            )?;
+            process_transfer_from_escrow(pool_pay, payer_pay, pay_amount, self, token_program)?;
             Ok(())
         }
-    }
     }
 }
 

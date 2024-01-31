@@ -1,15 +1,30 @@
-use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
-pub fn release(ctx: Context<ReleaseEscrow>, amount: u8) -> Result<()> {
+use crate::state::*;
+use crate::errors::*;
+
+pub fn release(ctx: Context<ReleaseEscrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
     if *ctx.accounts.payer.key != escrow.creator {
-        return Err(ErrorCode::Unauthorized.into());
+        // The Payer is not the Escrow creator
+        return Err(EscrowProgramError::InvalidPayerError.into());
     }
 
-    //
+    if *ctx.accounts.worker.key != escrow.worker {
+        // The Worker is not the Escrow worker
+        return Err(EscrowProgramError::InvalidWorkerError.into());
+    }
+
+    let pay = (
+        &ctx.accounts.mint,
+        &ctx.accounts.escrow_token_account,
+        &ctx.accounts.worker_token_account,
+        ctx.accounts.escrow_token_account.amount,
+    );
+
+    let _ = escrow.release(pay, &ctx.accounts.payer, &ctx.accounts.token_program);
 
     Ok(())
 }
@@ -25,6 +40,7 @@ pub struct ReleaseEscrow<'info> {
         bump,
     )]
     pub escrow: Account<'info, Escrow>,
+    // Worker (not signer only stored as pubkey in escrow var)
     /// The mint account for the asset being deposited into the pool
     pub mint: Account<'info, token::Mint>,
     /// The Escrow's token account for the asset being deposited into
@@ -33,9 +49,20 @@ pub struct ReleaseEscrow<'info> {
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = pool,
+        associated_token::authority = escrow
     )]
-    pub pool_token_account: Account<'info, token::TokenAccount>,
+    pub escrow_token_account: Account<'info, token::TokenAccount>,
+    // Get worker account
+    #[account(mut)]
+    pub worker: AccountInfo<'info>,
+
+    #[account(
+        init_if_needed,
+        payer = payer,
+        associated_token::mint = mint,
+        associated_token::authority = worker
+    )]
+    pub worker_token_account: Account<'info, token::TokenAccount>,
     // Payer
     #[account(mut)]
     pub payer: Signer<'info>,
