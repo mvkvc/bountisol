@@ -5,16 +5,11 @@ use anchor_spl::{associated_token, token};
 pub fn dispute(ctx: Context<Escrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    let time = Clock::get()?.unix_timestamp;
-    let hours_to_expiration = escrow.hours_to_expiration;
-    let expiration = hours_to_expiration * 60 * 60;
+        // let time = Clock::get()?.unix_timestamp;
+    // if time > escrow.deadline {
+    //     return Err(ErrorCode::EscrowExpired.into());
+    // }
 
-    if time > escrow.expiration {
-        // Escrow has expired
-        return Err(ErrorCode::EscrowExpired.into());
-    }
-
-    //
 }
 
 #[derive(Accounts)]

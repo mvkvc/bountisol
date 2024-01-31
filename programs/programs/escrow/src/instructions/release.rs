@@ -2,34 +2,16 @@ use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
-#[derive(AnchorSerialize, AnchorDeserialize, Debug)]
-pub enum Release {
-    Partial,
-    Full,
-}
-
-pub fn release(ctx: Context<ReleaseEscrow>, release: Release) -> Result<()> {
+pub fn release(ctx: Context<ReleaseEscrow>, amount: u8) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
-    let worker = escrow.worker;
-    let time = Clock::get()?.unix_timestamp;
-    let hours_to_expiration = escrow.hours_to_expiration;
-    let expiration = hours_to_expiration * 60 * 60;
 
-    if time > escrow.expiration {
-        // Escrow has expired
-        return Err(ErrorCode::EscrowExpired.into());
-    }
-
-    match release {
-        Partial => {
-            // Partial release
-        }
-        Full => {
-            // Full release
-        }
+    if *ctx.accounts.payer.key != escrow.creator {
+        return Err(ErrorCode::Unauthorized.into());
     }
 
     //
+
+    Ok(())
 }
 
 #[derive(Accounts)]

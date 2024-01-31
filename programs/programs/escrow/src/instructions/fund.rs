@@ -5,7 +5,7 @@ use anchor_spl::{associated_token, token};
 pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    if *ctx.accounts.mint.to_account_info().key != escrow.mint_account {
+    if &ctx.accounts.mint.key() != &escrow.mint {
         return Err(ErrorCode::InvalidTokenError.into());
     }
 
@@ -46,7 +46,7 @@ pub struct FundEscrow<'info> {
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = pool,
+        associated_token::authority = escrow,
     )]
     pub pool_token_account: Account<'info, token::TokenAccount>,
     /// The payer's token account for the asset

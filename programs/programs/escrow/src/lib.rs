@@ -16,15 +16,9 @@ pub mod escrow {
         amount: u64,
         worker: Pubkey,
         arbitrator: Pubkey,
-        hours_to_expiration: u64,
+        deadline: u64,
     ) -> Result<()> {
-        instructions::create(
-            ctx,
-            amount,
-            worker,
-            arbitrator,
-            hours_to_expiration,
-        )
+        instructions::create(ctx, amount, worker, arbitrator, deadline)
     }
 
     pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
