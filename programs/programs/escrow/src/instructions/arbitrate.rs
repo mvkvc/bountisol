@@ -1,13 +1,51 @@
-use crate::{instruction::Release, state::*};
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
+use crate::state::*;
+use crate::errors::*;
+
 // Rewrite this to arbitrate function
 
-pub fn arbitrate(ctx: Context<Escrow>, release: Release) -> Result<()> {
+pub fn arbitrate(ctx: Context<ArbitrateEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    //
+    if *ctx.accounts.payer.key != escrow.creator {
+        return Err(EscrowProgramError::InvalidPayerError.into());
+    }
+
+    let creator_token_amount = ctx.accounts.escrow_token_account.amount - amount;
+
+    if amount > 0 {
+        let pay_worker = (
+            &ctx.accounts.mint,
+            &ctx.accounts.escrow_token_account,
+            &ctx.accounts.worker_token_account,
+            amount
+        );
+
+        let _ = escrow.release(
+            pay_worker,
+            &ctx.accounts.payer,
+            &ctx.accounts.token_program,
+        );
+    }
+
+    if creator_token_amount > 0 {
+        let pay_creator = (
+            &ctx.accounts.mint,
+            &ctx.accounts.escrow_token_account,
+            &ctx.accounts.creator_token_account,
+            creator_token_amount
+        );
+
+        let _ = escrow.release(
+            pay_creator,
+            &ctx.accounts.payer,
+            &ctx.accounts.token_program,
+        );
+    }
+
+    Ok(())
 }
 
 #[derive(Accounts)]
@@ -29,9 +67,9 @@ pub struct ArbitrateEscrow<'info> {
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = pool,
+        associated_token::authority = escrow,
     )]
-    pub pool_token_account: Account<'info, token::TokenAccount>,
+    pub escrow_token_account: Account<'info, token::TokenAccount>,
     /// The payer's token account for the asset
     /// being deposited into the pool
     #[account(
@@ -40,6 +78,22 @@ pub struct ArbitrateEscrow<'info> {
         associated_token::authority = payer,
     )]
     pub payer_token_account: Account<'info, token::TokenAccount>,
+
+    pub creator: AccountInfo<'info>,
+    #[account(
+        mut,
+        associated_token::mint = mint,
+        associated_token::authority = creator
+    )]
+    pub creator_token_account: Account<'info, token::TokenAccount>,
+
+    pub worker: AccountInfo<'info>,
+    #[account(
+        mut,
+        associated_token::mint = mint,
+        associated_token::authority = worker
+    )]
+    pub worker_token_account: Account<'info, token::TokenAccount>,
     // Payer
     #[account(mut)]
     pub payer: Signer<'info>,

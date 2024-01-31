@@ -1,25 +1,18 @@
-use anchor_lang::prelude::*;
-use std::collections::HashMap;
+use anchor_lang::{prelude::*, system_program};
+use anchor_spl::token::{transfer, Mint, Token, TokenAccount, Transfer};
 
-const SUPPORTED_TOKENS: HashMap<&str, &str> = &[
-    ("SOL", ""),
-    ("USDC", ""),
-    ("USDT", ""),
-    ("Bonk", ""),
-    ("Wen", ""),
-]
-.iter()
-.cloned()
-.collect();
+use crate::errors::EscrowProgramError;
 
 #[account]
 pub struct Escrow {
     pub bump: u8,
+    pub assets: Vec<Pubkey>,
     pub amount: u64,
+    pub token: Pubkey,
+    pub creator: Pubkey,
     pub worker: Pubkey,
     pub arbitrator: Pubkey,
-    pub partial_percent: u8,
-    pub hours_to_expiration: u64,
+    pub deadline: u64
 }
 
 impl Escrow {
@@ -29,24 +22,39 @@ impl Escrow {
     pub fn new(
         bump: u8,
         amount: u64,
+        token: Pubkey,
+        creator: Pubkey,
         worker: Pubkey,
         arbitrator: Pubkey,
-        partial_percent: u8,
-        hours_to_expiration: u64,
+        deadline: u64
     ) -> Self {
         Self {
             bump,
+            assets: vec![],
             amount,
-            funder,
+            token,
+            creator,
             worker,
             arbitrator,
-            partial_percent,
-            hours_to_expiration,
+            deadline,
         }
     }
 }
 
-pub trait EscrowAccount {
+pub trait EscrowAccount<'info>{
+    fn check_asset_key(&self, key: &Pubkey) -> Result<()>;
+    fn add_asset(
+        &mut self,
+        key: Pubkey,
+        payer: &Signer<'info>,
+        system_program: &Program<'info, System>,
+    ) -> Result<()>;
+    fn realloc(
+        &mut self,
+        space_to_add: usize,
+        payer: &Signer<'info>,
+        system_program: &Program<'info, System>,
+    ) -> Result<()>;
     fn fund(
         &mut self,
         deposit: (
@@ -59,16 +67,27 @@ pub trait EscrowAccount {
         system_program: &Program<'info, System>,
         token_program: &Program<'info, Token>,
     ) -> Result<()>;
+    fn release(
+        &mut self,
+        withdraw: (
+            &Account<'info, Mint>,
+            &Account<'info, TokenAccount>,
+            &Account<'info, TokenAccount>,
+            u64,
+        ),
+        authority: &Signer<'info>,
+        token_program: &Program<'info, Token>,
+    ) -> Result<()>;
 }
 
-impl<'info> EscorwAccount<'info> for Account<'info, Escrow> {
+impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
     /// Validates an asset's key is present in the Liquidity Pool's list of mint
     /// addresses, and throws an error if it is not
     fn check_asset_key(&self, key: &Pubkey) -> Result<()> {
         if self.assets.contains(key) {
             Ok(())
         } else {
-            Err(SwapProgramError::InvalidAssetKey.into())
+            Err(EscrowProgramError::InvalidAssetKey.into())
         }
     }
 
@@ -145,6 +164,30 @@ impl<'info> EscorwAccount<'info> for Account<'info, Escrow> {
         process_transfer_to_escrow(from, to, amount, authority, token_program)?;
         Ok(())
     }
+
+    fn release(
+        &mut self,
+        pay: (
+            &Account<'info, Mint>,
+            &Account<'info, TokenAccount>,
+            &Account<'info, TokenAccount>,
+            u64,
+        ),
+        _authority: &Signer<'info>,
+        token_program: &Program<'info, Token>,
+    ) -> Result<()> {
+        // (From, To)
+        let (pay_mint, payer_pay, pool_pay, pay_amount) = pay;
+        self.check_asset_key(&pay_mint.key())?;
+
+        // Process the release
+        if pay_amount == 0 {
+            Err(EscrowProgramError::InvalidAmountError.into())
+        } else {
+            process_transfer_from_escrow(pool_pay, payer_pay, pay_amount, self, token_program)?;
+            Ok(())
+        }
+    }
 }
 
 /// Process a transfer from one the payer's token account to the
@@ -190,12 +233,4 @@ fn process_transfer_from_escrow<'info>(
         ),
         amount,
     )
-}
-
-pub fn check_token_supported(mint_account: &str) -> Result<bool> {
-    if SUPPORTED_TOKENS.contains_key(mint_account) {
-        Ok(true)
-    } else {
-        Err(ErrorCode::UnsupportedTokenError.into())
-    }
 }

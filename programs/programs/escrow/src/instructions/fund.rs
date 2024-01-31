@@ -1,22 +1,21 @@
-use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
+
+use crate::state::*;
+use crate::errors::*;
 
 pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    if *ctx.accounts.mint.to_account_info().key != escrow.mint_account {
-        return Err(ErrorCode::InvalidTokenError.into());
-    }
-
-    if amount < escrow.amount {
-        return Err(ErrorCode::InsufficientFundsError.into());
+    if *ctx.accounts.mint.to_account_info().key != escrow.token {
+        return Err(EscrowProgramError::InvalidTokenError.into());
     }
 
     let deposit = (
         &ctx.accounts.mint,
         &ctx.accounts.payer_token_account,
         &ctx.accounts.escrow_token_account,
+        amount
     );
 
     escrow.fund(
@@ -46,9 +45,9 @@ pub struct FundEscrow<'info> {
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = pool,
+        associated_token::authority = escrow,
     )]
-    pub pool_token_account: Account<'info, token::TokenAccount>,
+    pub escrow_token_account: Account<'info, token::TokenAccount>,
     /// The payer's token account for the asset
     /// being deposited into the pool
     #[account(

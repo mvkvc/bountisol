@@ -14,32 +14,23 @@ pub mod escrow {
     pub fn create(
         ctx: Context<CreateEscrow>,
         amount: u64,
+        token: Pubkey,
         worker: Pubkey,
         arbitrator: Pubkey,
-        hours_to_expiration: u64,
+        deadline: u64,
     ) -> Result<()> {
-        instructions::create(
-            ctx,
-            amount,
-            worker,
-            arbitrator,
-            hours_to_expiration,
-        )
+        instructions::create(ctx, amount, token, worker, arbitrator, deadline)
     }
 
     pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
         instructions::fund(ctx, amount)
     }
 
-    pub fn release(ctx: Context<ReleaseEscrow>, release: Release) -> Result<()> {
-        instructions::release(ctx, release)
+    pub fn release(ctx: Context<ReleaseEscrow>) -> Result<()> {
+        instructions::release(ctx)
     }
 
-    pub fn dispute(ctx: Context<DisputeEscrow>) -> Result<()> {
-        instructions::dispute(ctx)
-    }
-
-    pub fn arbitrate(ctx: Context<ArbitrateEscrow>, release: Release) -> Result<()> {
-        instructions::arbitrate(ctx, release)
+    pub fn arbitrate(ctx: Context<ArbitrateEscrow>, amount: u64) -> Result<()> {
+        instructions::arbitrate(ctx, amount)
     }
 }
