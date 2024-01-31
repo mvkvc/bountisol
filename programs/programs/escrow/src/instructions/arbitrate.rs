@@ -80,7 +80,6 @@ pub struct ArbitrateEscrow<'info> {
         associated_token::authority = payer,
     )]
     pub payer_token_account: Account<'info, token::TokenAccount>,
-
     pub creator: AccountInfo<'info>,
     #[account(
         mut,

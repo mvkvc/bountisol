@@ -4,29 +4,33 @@
   inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs//bf744fe90419885eefced41b3e5ae442d732712d";
       flake-utils.url = "github:numtide/flake-utils";
+      rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
+  outputs = { self, nixpkgs, flake-utils, rust-overlay }:
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system}; in {
+      let
+        overlays = [
+          # (import rust-overlay)
+        ];
+        pkgs = import nixpkgs {
+          inherit system overlays;
+        };
+      in
+      with pkgs;
+        {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [
+          buildInputs = [
             erlangR26
             pkgs.beam.packages.erlangR26.elixir
             nodejs-18_x
             yarn
-            python310
-            python310Packages.pipx
-            # Erroring trying to create temp dir
-            # rustup
-            rebar3
             earthly
             direnv
-            libsodium
+            # rust-bin.beta.latest.default
           ];
           shellHook = ''
             eval "$(direnv hook bash)"
-            export POETRY_VIRTUALENVS_IN_PROJECT=true
             export MIX_HOME=$PWD/.nix_mix
             export HEX_HOME=$PWD/.nix_hex
             export PATH=$MIX_HOME/bin:$PATH

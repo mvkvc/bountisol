@@ -5,9 +5,6 @@ if [[ -z "$MIX_HOME" || -z "$HEX_HOME" ]]; then
     exit 1
 fi
 
-echo "Installing Poetry..."
-pipx install poetry
-
 echo "Installing Rebar, Hex, and Livebook..."
 mkdir -p "$MIX_HOME" &&
 mkdir -p "$HEX_HOME" &&
@@ -16,17 +13,8 @@ mix "do" local.rebar --force --if-missing &&
 mix "do" local.hex --force --if-missing &&
 if [ ! -f "$MIX_HOME/escripts/livebook" ]; then mix escript.install hex livebook --force; fi
 
-echo "Installing contract dependencies..."
-(cd ./programs && yarn install --dev)
-
-echo "Installing research dependencies..."
-(cd ./research && poetry install --with=dev)
-
 echo "Installing app dependencies..."
 (cd ./services/app && mix setup)
 
-echo "Installing site dependencies..."
-(cd ./services/node && yarn install --dev)
-
-echo "Installing site dependencies..."
-(cd ./services/site && yarn install --dev)
+echo "Installing contract dependencies..."
+(cd ./programs && yarn install --dev)
