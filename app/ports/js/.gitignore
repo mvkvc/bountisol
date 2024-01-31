@@ -2,6 +2,7 @@
 .secret*
 dist/
 dist/
+src/**/*.js
 
 # Logs
 logs

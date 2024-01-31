@@ -11,6 +11,7 @@ defmodule CTransfer.Accounts.User do
     field :email, :string
     field :confirmed_at, :naive_datetime
     field :domain, :string
+    field :sns, {:array, :string}
 
     has_many :contacts, Contact
     has_many :payments, Payment

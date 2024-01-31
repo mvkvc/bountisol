@@ -12,7 +12,7 @@ defmodule CTransferWeb.UserSessionController do
   # Use Jason to pass around maps
 
   def create(conn, params) do
-    create(conn, params, "Welcome back!")
+    create(conn, params, "Welcome!")
   end
 
   defp create(conn, %{"message" => message, "address" => address, "signature" => signature} = params, info) do

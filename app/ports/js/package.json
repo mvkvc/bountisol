@@ -1,10 +1,11 @@
 {
   "name": "ctransfer",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "start": "node dist/main.js",
-    "build": "tsc --outDir dist",
-    "dev": "ts-node src/main.ts",
+    "start": "node dist/main.cjs",
+    "build": "esbuild src/main.cts --bundle --platform=node --outfile=dist/main.cjs",
+    "dev": "ts-node src/main.cts",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -12,7 +13,8 @@
     "@solana/web3.js": "^1.87.6",
     "@web3auth/sign-in-with-solana": "^3.0.0",
     "bs58": "^5.0.0",
-    "portboy": "^0.1.2"
+    "esbuild": "^0.20.0",
+    "portboy": "../../../../../os/portboy/clients/js/"
   },
   "devDependencies": {
     "@types/node": "^20.10.4",

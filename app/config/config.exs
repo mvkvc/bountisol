@@ -31,7 +31,7 @@ config :ctransfer, Oban,
   plugins: [
     {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
     {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)}],
-  queues: [default: 10, mailers: 20]
+  queues: [default: 10, mailers: 10]
 
 
 # Configures the mailer

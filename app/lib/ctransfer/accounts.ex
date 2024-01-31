@@ -9,6 +9,7 @@ defmodule CTransfer.Accounts do
   alias CTransfer.Accounts.UserNotifier
   alias CTransfer.Accounts.UserToken
   alias CTransfer.Repo
+  alias CTransfer.Jobs.SNS
 
   def truncate_address(address) do
     # String.slice(address, 0, 8) <> "..."
@@ -28,20 +29,36 @@ defmodule CTransfer.Accounts do
   def update_user_nonce(address) do
     user = get_user_by_address(address)
 
-    attrs = %{
-      "address" => address,
-      "nonce" => generate_account_nonce()
-    }
+    if user do
+      attrs = %{
+        "address" => address,
+        "nonce" => generate_account_nonce()
+      }
 
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
+      user
+      |> User.changeset(attrs)
+      |> Repo.update()
+    end
   end
 
   def create_user(attrs) do
     %User{}
     |> User.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_user_domain(address, domain) do
+    user  = get_user_by_address(address)
+
+    if user do
+      attrs = %{
+        "domain" => domain
+      }
+
+      user
+      |> User.changeset(attrs)
+      |> Repo.update()
+    end
   end
 
   def create_user_if_not_exists(address) do
@@ -54,28 +71,18 @@ defmodule CTransfer.Accounts do
       nil ->
         create_user(attrs)
 
+        %{address: address}
+        |> SNS.new()
+        |> Oban.insert()
+
       user ->
         {:ok, user}
     end
   end
 
-  # def verify_message_signature(address, signature) do
-  #   # IO.puts("verify_message_signature")
-  #   with %User{} = user <- get_user_by_address(address) do
-  #     # IO.inspect(user, label: "user")
-  #     message = "You are signing this message to sign in with CTransfer. Nonce: #{user.nonce}"
-  #     # IO.inspect(message, label: "message")
-
-  #     # signing_address = ExWeb3EcRecover.recover_personal_signature(message, signature)
-  #     # IO.inspect(signing_address, label: "signing_address")
-  #     # IO.inspect(eth_address, label: "eth_address")
-
-  #     if String.downcase(address) == String.downcase(address) do
-  #       update_user_nonce(address)
-  #       user
-  #     end
-  #   end
-  # end
+  def get_sns_by_address(address) do
+    result = Portboy.run_pool(:js, "sns", %{address: address})
+  end
 
   ## Database getters
 

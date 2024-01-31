@@ -3,9 +3,8 @@ import siws from "./siws";
 import sns from "./sns";
 
 const siws_schema = z.object({
-    header: z.string(),
-    payload: z.string(),
-    _signature: z.string()
+    message: z.any(),
+    signature: z.any(),
 }).strict()
 
 const sns_schema = z.object({
@@ -13,8 +12,8 @@ const sns_schema = z.object({
 }).strict()
 
 const registry = register([
-    {function: siws, schema: siws_schema},
-    {function: sns, schema: sns_schema}
+    {function: siws, schema: siws_schema, async: true},
+    {function: sns, schema: sns_schema, async: true}
 ])
 
 run(registry);

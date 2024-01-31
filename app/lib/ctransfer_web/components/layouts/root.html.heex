@@ -19,9 +19,15 @@
     </div>
     <ul class="flex flex-row space-x-4 items-center">
       <%= if @current_user do %>
-        <li>
-          <p><%= CTransfer.Accounts.truncate_address(@current_user.address) %></p>
-        </li>
+        <%= if @current_user.domain do %>
+          <li>
+            <p><%= @current_user.domain %></p>
+          </li>
+        <% else %>
+          <li>
+            <p><%= CTransfer.Accounts.truncate_address(@current_user.address) %></p>
+          </li>
+        <% end %>
       <% end %>
       <details class="dropdown">
         <summary class="m-1 btn">Menu</summary>
@@ -48,7 +54,14 @@
             </.link>
           </li>
           <li>
-            <.link href={~p"/users/settings"} class="btn">Settings</.link>
+            <.link href={~p"/disputes"} class="btn">
+              Disputes
+            </.link>
+          </li>
+          <li>
+            <.link href={~p"/users/settings"} class="btn">
+              Settings
+            </.link>
           </li>
           <% else %>
           <li>
@@ -61,34 +74,23 @@
               Payments
             </.link>
           </li>
-          <% end %>
-          <%= if @current_user do %>
           <li>
-            <.link href={~p"/disputes"} class="btn" disabled>
+            <.link href={~p"/arbitration"} class="btn" disabled>
               Disputes
             </.link>
           </li>
           <li>
-            <.link href={~p"/disputes"} class="btn">
+            <.link href={~p"/users/settings"} class="btn" disabled>
               Settings
             </.link>
           </li>
-        <% else %>
-        <li>
-          <.link href={~p"/arbitration"} class="btn" disabled>
-            Disputes
-          </.link>
-        </li>
-        <li>
-          <.link href={~p"/users/settings"} class="btn" disabled>
-            Settings
-          </.link>
-        </li>
-        <% end %>
+          <% end %>
         </ul>
       </details>
       <li>
-        <%= live_render(@conn, CTransferWeb.SignInLive, id: "sign-in") %>
+        <div class="min-w-32">
+          <%= live_render(@conn, CTransferWeb.SignInLive, id: "sign-in") %>
+        </div>
       </li>
     </ul>
   </header>

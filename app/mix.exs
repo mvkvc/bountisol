@@ -58,7 +58,8 @@ defmodule CTransfer.MixProject do
 
   defp deps do
     [
-      {:portboy, git: "https://github.com/mvkvc/portboy.git"},
+      # {:portboy, git: "https://github.com/mvkvc/portboy.git"},
+      {:portboy, path: "../../../os/portboy"},
       {:solana, git: "https://github.com/mvkvc/solana-elixir.git"},
       {:phoenix_live_react, git: "https://github.com/mvkvc/phoenix_live_react.git"},
       #
