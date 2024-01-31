@@ -12,7 +12,7 @@ defmodule CTransferWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex justify-center items-center h-screen">
+    <div class="flex justify-center items-center">
       <ul class="list-none mt-9" id="cursor" phx-hook="TrackClientCursor">
         <%= for user <- @users do %>
           <li

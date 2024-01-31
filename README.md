@@ -2,25 +2,31 @@
 
 Work with anyone from anywhere.
 
+## Demo
+
+WIP
+
 ## Features
 
-- [X] Payments
+- [X] Track/request payments
+- [ ] Bounties
 - [ ] Invoices
 - [ ] Disputes
-- [ ] Bounties
 
 ## Components
 
 - `programs/`: Solana programs.
-- `app/`: Main application.
+- `app/`: Full-stack web application.
 - `sh/`: Shell scripts.
 
-## Requirements
+## Developing
+
+### Requirements
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Nix](https://nixos.org/download.html) (w/ [flakes](https://nixos.wiki/wiki/Flakes) enabled)
 
-## Setup
+### Setup
 
 - Copy `.secret_` to `.secret` and fill in the values.
 - Run `nix develop` to enter the Nix environment shell.
