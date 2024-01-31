@@ -3,6 +3,7 @@ use anchor_spl::{associated_token, token};
 
 use crate::state::*;
 use crate::errors::*;
+use crate::events::*;
 
 pub fn arbitrate(ctx: Context<ArbitrateEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
@@ -80,6 +81,7 @@ pub struct ArbitrateEscrow<'info> {
         associated_token::authority = payer,
     )]
     pub payer_token_account: Account<'info, token::TokenAccount>,
+    /// CHECK: This is not dangerous because we don't read or write from this account
     pub creator: AccountInfo<'info>,
     #[account(
         mut,
@@ -87,7 +89,7 @@ pub struct ArbitrateEscrow<'info> {
         associated_token::authority = creator
     )]
     pub creator_token_account: Account<'info, token::TokenAccount>,
-
+    /// CHECK: This is not dangerous because we don't read or write from this account
     pub worker: AccountInfo<'info>,
     #[account(
         mut,

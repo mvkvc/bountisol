@@ -106,7 +106,7 @@ defmodule CTransfer.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["cmd --cd assets yarn install --dev"],
-      "assets.build": ["cmd --cd assets yarn build"],
+      "assets.build": ["cmd --cd assets yarn build", "ports"],
       "assets.deploy": ["assets.build", "phx.digest"],
       testd: ["cmd sh/db_test.sh", "test", "cmd docker stop ctransfer_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]

@@ -3,6 +3,7 @@ use anchor_spl::{associated_token, token};
 
 use crate::state::*;
 use crate::errors::*;
+use crate::events::*;
 
 pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;

@@ -2,6 +2,10 @@ use crate::state::*;
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
+use crate::state::*;
+use crate::errors::*;
+use crate::events::*;
+
 pub fn dispute(ctx: Context<Escrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 

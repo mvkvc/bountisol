@@ -5,7 +5,8 @@ libs/
 plts/
 .env.*
 .secret.*
-
+priv/ports/js/*
+!priv/ports/js/.keep
 
 # The directory Mix will write compiled artifacts to.
 /_build/

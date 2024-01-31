@@ -27,6 +27,11 @@
         <summary class="m-1 btn">Menu</summary>
           <ul class="p-2 space-y-1 shadow menu dropdown-content bg-base-100 rounded-box">
           <li>
+            <.link href={~p"/"} class="btn">
+              Home
+            </.link>
+          </li>
+          <li>
             <.link href={~p"/bounties"} class="btn">
               Bounties
             </.link>
@@ -59,16 +64,24 @@
           <% end %>
           <%= if @current_user do %>
           <li>
-          <div class="relative group">
             <.link href={~p"/disputes"} class="btn" disabled>
               Disputes
             </.link>
-          </div>
-        </li>
+          </li>
+          <li>
+            <.link href={~p"/disputes"} class="btn">
+              Settings
+            </.link>
+          </li>
         <% else %>
         <li>
           <.link href={~p"/arbitration"} class="btn" disabled>
             Disputes
+          </.link>
+        </li>
+        <li>
+          <.link href={~p"/users/settings"} class="btn" disabled>
+            Settings
           </.link>
         </li>
         <% end %>

@@ -3,6 +3,7 @@ use anchor_spl::{associated_token, token};
 
 use crate::state::*;
 use crate::errors::*;
+use crate::events::*;
 
 pub fn release(ctx: Context<ReleaseEscrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
@@ -54,6 +55,7 @@ pub struct ReleaseEscrow<'info> {
     pub escrow_token_account: Account<'info, token::TokenAccount>,
     // Get worker account
     #[account(mut)]
+    /// CHECK: This is not dangerous because we don't read or write from this account
     pub worker: AccountInfo<'info>,
 
     #[account(

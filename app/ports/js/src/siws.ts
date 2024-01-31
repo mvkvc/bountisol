@@ -1,7 +1,7 @@
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import bs58 from "bs58";
 
-export default async function siws(header, payload, _signature): Promise<boolean> {
+export default async function siws(header: any, payload: any, _signature: any): Promise<boolean> {
   const signature_data = Uint8Array.from(Buffer.from(_signature.data));
 
   const signature = {

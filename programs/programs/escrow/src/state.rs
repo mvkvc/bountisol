@@ -1,7 +1,8 @@
 use anchor_lang::{prelude::*, system_program};
 use anchor_spl::token::{transfer, Mint, Token, TokenAccount, Transfer};
 
-use crate::errors::EscrowProgramError;
+use crate::errors::*;
+use crate::events::*;
 
 #[account]
 pub struct Escrow {
@@ -12,7 +13,8 @@ pub struct Escrow {
     pub creator: Pubkey,
     pub worker: Pubkey,
     pub arbitrator: Pubkey,
-    pub deadline: u64
+    pub deadline: u64,
+    pub disputed: bool,
 }
 
 impl Escrow {
@@ -34,9 +36,10 @@ impl Escrow {
             amount,
             token,
             creator,
-            worker,
+            worker: None,
             arbitrator,
             deadline,
+            disputed: false,
         }
     }
 }
