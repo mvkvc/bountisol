@@ -5,7 +5,8 @@ Work with anyone from anywhere.
 ## Components
 
 - `app/`: Full-stack web application.
-- `arbitrator/`: LLM inference service.
+- `inference/`: LLM inference service.
+- `model/`: (WIP) LLM dataset creation and training.
 - `programs/`: Solana programs.
 - `sh/`: Shell scripts.
 
@@ -13,7 +14,6 @@ Work with anyone from anywhere.
 
 ### Requirements
 
-- [Docker](https://docs.docker.com/get-docker/)
 - [Nix](https://nixos.org/download.html) (w/ [flakes](https://nixos.wiki/wiki/Flakes) enabled)
 
 ### Setup

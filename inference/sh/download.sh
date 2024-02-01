@@ -17,5 +17,3 @@ if [ ! -f $MODEL_PATH ]; then
 else
     echo "Model already exists"
 fi
-
-./server -m $MODEL_PATH -c 8000 -p 8080
