@@ -5,4 +5,4 @@ doppler secrets download \
     --config dev \
     --format env \
     --no-file \
-    > .secret
+    > .env.app

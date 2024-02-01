@@ -25,7 +25,6 @@
             pkgs.beam.packages.erlangR26.elixir
             nodejs-18_x
             yarn
-            earthly
             direnv
             # rust-bin.beta.latest.default
           ];

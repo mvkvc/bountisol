@@ -9,3 +9,5 @@ assets/og/
 erl_crash.dump
 .elixir_ls/
 .vscode/
+.env.*
+!.env.*_

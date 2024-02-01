@@ -39,13 +39,7 @@
           </li>
           <li>
             <.link href={~p"/"} class="btn w-28">
-              Bounties
-            </.link>
-          </li>
-          <%= if @current_user do %>
-          <li>
-            <.link href={~p"/"} class="btn w-28">
-              Invoices
+              Agreements
             </.link>
           </li>
           <li>
@@ -58,23 +52,6 @@
               Settings
             </.link>
           </li>
-          <% else %>
-          <li>
-            <.link href={~p"/"} class="btn disabled w-28">
-              Invoices
-            </.link>
-          </li>
-          <li>
-            <.link href={~p"/"} class="btn disabled w-28">
-              Disputes
-            </.link>
-          </li>
-          <li>
-            <.link href={~p"/users/settings"} class="btn w-28">
-              Settings
-            </.link>
-          </li>
-          <% end %>
         </ul>
       </details>
       <li>

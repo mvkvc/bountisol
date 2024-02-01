@@ -1,0 +1,6 @@
+[submodule "submodules/portboy"]
+	path = submodules/portboy
+	url = git@github.com:mvkvc/portboy.git
+[submodule "submodules/llama_cpp_ex"]
+	path = submodules/llama_cpp_ex
+	url = git@github.com:mvkvc/llama_cpp_ex.git
