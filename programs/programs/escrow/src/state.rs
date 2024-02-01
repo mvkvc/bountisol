@@ -8,38 +8,39 @@ use crate::events::*;
 pub struct Escrow {
     pub bump: u8,
     pub assets: Vec<Pubkey>,
-    pub amount: u64,
-    pub token: Pubkey,
     pub creator: Pubkey,
-    pub worker: Pubkey,
+    pub worker: Option<Pubkey>,
     pub arbitrator: Pubkey,
     pub deadline: u64,
     pub disputed: bool,
+    pub requirements: String,
+    pub creator_evidence: Option<String>,
+    pub worker_evidence: Option<String>,
 }
 
 impl Escrow {
-    pub const SEED_PREFIX: &'static str = "escrow";
-    pub const SPACE: usize = 1 + 8 + 32 + 32 + 32 + 32 + 8;
+    pub const SEED_PREFIX: &'static str = "ctransfer_escrow";
+    // https://book.anchor-lang.com/anchor_references/space.html
+    pub const SPACE: usize = 8 + 1 + 4 + 8 + 32 + 33 + 32 + 8 + 1 + 50 + 51 + 51;
 
     pub fn new(
         bump: u8,
-        amount: u64,
-        token: Pubkey,
         creator: Pubkey,
-        worker: Pubkey,
         arbitrator: Pubkey,
-        deadline: u64
+        deadline: u64,
+        requirements: String,
     ) -> Self {
         Self {
             bump,
             assets: vec![],
-            amount,
-            token,
             creator,
             worker: None,
             arbitrator,
             deadline,
             disputed: false,
+            requirements,
+            creator_evidence: None,
+            worker_evidence: None
         }
     }
 }
@@ -60,7 +61,7 @@ pub trait EscrowAccount<'info>{
     ) -> Result<()>;
     fn fund(
         &mut self,
-        deposit: (
+        transaction: (
             &Account<'info, Mint>,
             &Account<'info, TokenAccount>,
             &Account<'info, TokenAccount>,
@@ -70,9 +71,14 @@ pub trait EscrowAccount<'info>{
         system_program: &Program<'info, System>,
         token_program: &Program<'info, Token>,
     ) -> Result<()>;
+    fn assign(
+        &mut self,
+        worker: Pubkey,
+        authority: &Signer<'info>,
+    ) -> Result<()>;
     fn release(
         &mut self,
-        withdraw: (
+        transaction: (
             &Account<'info, Mint>,
             &Account<'info, TokenAccount>,
             &Account<'info, TokenAccount>,
@@ -80,6 +86,10 @@ pub trait EscrowAccount<'info>{
         ),
         authority: &Signer<'info>,
         token_program: &Program<'info, Token>,
+    ) -> Result<()>;
+    fn dispute(
+        &mut self,
+        authority: &Signer<'info>,
     ) -> Result<()>;
 }
 
@@ -90,7 +100,7 @@ impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
         if self.assets.contains(key) {
             Ok(())
         } else {
-            Err(EscrowProgramError::InvalidAssetKey.into())
+            Err(EscrowError::InvalidAssetKey.into())
         }
     }
 
@@ -150,6 +160,24 @@ impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
         Ok(())
     }
 
+    fn assign(
+            &mut self,
+            worker: Pubkey,
+            authority: &Signer<'info>,
+        ) -> Result<()> {
+
+            if authority.key() != self.creator {
+                return Err(EscrowError::InvalidPayer.into());
+            }
+
+            if self.worker.is_some() {
+                return Err(EscrowError::AlreadyAssigned.into());
+            }
+
+            self.worker = Some(worker);
+            Ok(())
+    }
+
     fn fund(
         &mut self,
         deposit: (
@@ -185,11 +213,27 @@ impl<'info> EscrowAccount<'info> for Account<'info, Escrow> {
 
         // Process the release
         if pay_amount == 0 {
-            Err(EscrowProgramError::InvalidAmountError.into())
+            return Err(EscrowError::InvalidAmount.into())
         } else {
             process_transfer_from_escrow(pool_pay, payer_pay, pay_amount, self, token_program)?;
-            Ok(())
         }
+
+        Ok(())
+    }
+    fn dispute(
+            &mut self,
+            authority: &Signer<'info>,
+        ) -> Result<()> {
+            if self.worker.is_none() {
+                return Err(EscrowError::NoWorker.into());
+            }
+
+            if self.disputed {
+                return Err(EscrowError::AlreadyDisputed.into());
+            }
+
+            self.disputed = true;
+            Ok(())
     }
 }
 

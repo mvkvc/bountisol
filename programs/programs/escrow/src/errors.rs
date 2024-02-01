@@ -1,31 +1,46 @@
 use anchor_lang::prelude::*;
 
 #[error_code]
-pub enum EscrowProgramError {
+pub enum EscrowError {
     #[msg("This token is unsupported.")]
-    UnsupportedTokenError,
+    UnsupportedToken,
 
     #[msg("This is not the correct token for this escrow.")]
-    InvalidTokenError,
+    InvalidToken,
 
     #[msg("The escrow requires more funds.")]
-    InsufficientFundsError,
+    InsufficientFunds,
 
     #[msg("The amount of funds to release is invalid.")]
-    InvalidReleaseAmountError,
+    InvalidReleaseAmount,
 
     #[msg("The amount of funds to release is invalid.")]
-    InvalidAmountError,
+    InvalidAmount,
 
     #[msg("The asset key is invalid.")]
     InvalidAssetKey,
 
     #[msg("The payer is not authorized to call this instruction.")]
-    InvalidPayerError,
+    InvalidPayer,
 
     #[msg("The worker is not authorized to call this instruction.")]
-    InvalidWorkerError,
+    InvalidWorker,
 
     #[msg("The deadline has not passed.")]
-    InvalidTimeError,
+    InvalidTime,
+
+    #[msg("The escrow has already been assigned.")]
+    AlreadyAssigned,
+
+    #[msg("The escrow has already been disputed.")]
+    AlreadyDisputed,
+
+    #[msg("The escrow has no worker.")]
+    NoWorker,
+
+    #[msg("The deadline has not passed.")]
+    BeforeDeadline
+
+    #[msg("The escrow has not been disputed.")]
+    NotDisputed,
 }

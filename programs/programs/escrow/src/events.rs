@@ -1,6 +1,5 @@
-use anchor_lang::prelude::*;
+// use anchor_lang::prelude::*;
 
-#[event]
-pub struct EventExample {
-    pub signer: Pubkey
-}
+// #[event]
+// pub struct EscrowEvent {
+// }

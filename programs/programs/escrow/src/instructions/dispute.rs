@@ -4,21 +4,22 @@ use anchor_spl::{associated_token, token};
 
 use crate::state::*;
 use crate::errors::*;
-use crate::events::*;
+// use crate::events::*;
 
 pub fn dispute(ctx: Context<Escrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-        // let time = Clock::get()?.unix_timestamp;
-    // if time > escrow.deadline {
-    //     return Err(ErrorCode::EscrowExpired.into());
-    // }
+    let current_unix = Clock::get()?.unix_timestamp.try_into().unwrap();
 
+    if escrow.deadline < current_unix {
+        return Err(EscrowError::BeforeDeadline.into());
+    }
+
+    escrow.dispute(&ctx.accounts.payer)
 }
 
 #[derive(Accounts)]
 pub struct DisputeEscrow<'info> {
-    // Escrow
     #[account(
         init,
         space = Escrow::SPACE,
@@ -27,35 +28,6 @@ pub struct DisputeEscrow<'info> {
         bump,
     )]
     pub escrow: Account<'info, Escrow>,
-    // /// The mint account for the asset being deposited into the pool
-    // pub mint: Account<'info, token::Mint>,
-    // /// The Escrow's token account for the asset being deposited into
-    // /// the pool
-    // #[account(
-    //     init_if_needed,
-    //     payer = payer,
-    //     associated_token::mint = mint,
-    //     associated_token::authority = pool,
-    // )]
-    // pub pool_token_account: Account<'info, token::TokenAccount>,
-    // /// The payer's token account for the asset
-    // /// being deposited into the pool
-    // #[account(
-    //     mut,
-    //     associated_token::mint = mint,
-    //     associated_token::authority = payer,
-    // )]
-    // pub payer_token_account: Account<'info, token::TokenAccount>,
-    // // Payer
     #[account(mut)]
     pub payer: Signer<'info>,
-    // /// System Program: Required for creating the Escrow's token account
-    // /// for the asset being deposited into the pool
-    // pub system_program: Program<'info, System>,
-    // /// Token Program: Required for transferring the assets from the Escrow
-    // /// Provider's token account into the Escrow's token account
-    // pub token_program: Program<'info, token::Token>,
-    // /// Associated Token Program: Required for creating the Escrow's
-    // /// token account for the asset being deposited into the pool
-    // pub associated_token_program: Program<'info, associated_token::AssociatedToken>,
 }

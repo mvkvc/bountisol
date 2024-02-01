@@ -44,7 +44,7 @@ defmodule CTransferWeb.SignInLive do
           <button type="submit" class="btn">Log out</button>
         </.form>
       <% end %>
-      <div>
+      <div class="min-w-36 bg-purple-100 rounded-lg shadow-md">
         <%= live_react_component(
           "Components.WalletAdapter",
           [network_type: Application.get_env(:ctransfer, CTransfer.WalletLive)[:network]],

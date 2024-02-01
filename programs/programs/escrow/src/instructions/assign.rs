@@ -1,32 +1,23 @@
 use anchor_lang::prelude::*;
 
 use crate::state::*;
-use crate::errors::*;
-use crate::events::*;
+// use crate::errors::*;
+// use crate::events::*;
 
 pub fn assign(
     ctx: Context<AssignEscrow>,
     worker: Pubkey,
 ) -> Result<()> {
-    // `set_inner` used to replace the account with the new state
-    ctx.accounts.escrow.set_inner(Escrow::new(
-        // Bump
-        ctx.bumps.escrow,
-        amount,
-        token,
-        ctx.accounts.payer.key(),
+    let escrow = &mut ctx.accounts.escrow;
+
+    escrow.assign(
         worker,
-        arbitrator,
-        deadline
-    ));
-
-
-    Ok(())
+        ctx.accounts.payer,
+    );
 }
 
 #[derive(Accounts)]
 pub struct CreateEscrow<'info> {
-    // Escrow
     #[account(
         init,
         space = Escrow::SPACE,
@@ -35,9 +26,6 @@ pub struct CreateEscrow<'info> {
         bump,
     )]
     pub escrow: Account<'info, Escrow>,
-    /// Rent payer
-    #[account(mut)]
+    #[account(mut, address = escrow.creator)]
     pub payer: Signer<'info>,
-    /// System Program: Required for creating the Escrow
-    pub system_program: Program<'info, System>,
 }

@@ -2,17 +2,13 @@ use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
 use crate::state::*;
-use crate::errors::*;
-use crate::events::*;
+// use crate::errors::*;
+// use crate::events::*;
 
 pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    if *ctx.accounts.mint.to_account_info().key != escrow.token {
-        return Err(EscrowProgramError::InvalidTokenError.into());
-    }
-
-    let deposit = (
+    let transaction = (
         &ctx.accounts.mint,
         &ctx.accounts.payer_token_account,
         &ctx.accounts.escrow_token_account,
@@ -20,7 +16,7 @@ pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
     );
 
     escrow.fund(
-        deposit,
+        transaction,
         &ctx.accounts.payer,
         &ctx.accounts.system_program,
         &ctx.accounts.token_program,

@@ -2,32 +2,20 @@ use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
 use crate::state::*;
-use crate::errors::*;
-use crate::events::*;
+// use crate::errors::*;
+// use crate::events::*;
 
 pub fn release(ctx: Context<ReleaseEscrow>) -> Result<()> {
     let escrow = &mut ctx.accounts.escrow;
 
-    if *ctx.accounts.payer.key != escrow.creator {
-        // The Payer is not the Escrow creator
-        return Err(EscrowProgramError::InvalidPayerError.into());
-    }
-
-    if *ctx.accounts.worker.key != escrow.worker {
-        // The Worker is not the Escrow worker
-        return Err(EscrowProgramError::InvalidWorkerError.into());
-    }
-
-    let pay = (
+    let transaction = (
         &ctx.accounts.mint,
         &ctx.accounts.escrow_token_account,
         &ctx.accounts.worker_token_account,
         ctx.accounts.escrow_token_account.amount,
     );
 
-    let _ = escrow.release(pay, &ctx.accounts.payer, &ctx.accounts.token_program);
-
-    Ok(())
+    escrow.release(transaction, &ctx.accounts.payer, &ctx.accounts.token_program)
 }
 
 #[derive(Accounts)]
@@ -53,11 +41,11 @@ pub struct ReleaseEscrow<'info> {
         associated_token::authority = escrow
     )]
     pub escrow_token_account: Account<'info, token::TokenAccount>,
-    // Get worker account
-    #[account(mut)]
-    /// CHECK: This is not dangerous because we don't read or write from this account
-    pub worker: AccountInfo<'info>,
-
+    #[account(
+        mut,
+        address = escrow.worker,
+    )]
+    pub worker: UncheckedAccount<'info>,
     #[account(
         init_if_needed,
         payer = payer,
@@ -66,7 +54,10 @@ pub struct ReleaseEscrow<'info> {
     )]
     pub worker_token_account: Account<'info, token::TokenAccount>,
     // Payer
-    #[account(mut)]
+    #[account(
+        mut,
+        address = escrow.creator
+    )]
     pub payer: Signer<'info>,
     /// System Program: Required for creating the Escrow's token account
     /// for the asset being deposited into the pool
