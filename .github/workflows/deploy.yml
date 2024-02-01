@@ -6,16 +6,18 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/app_deploy.yml
-      - services/app/**
+      - .github/workflows/deploy.yml
+      - app/**
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        working-directory: services/app

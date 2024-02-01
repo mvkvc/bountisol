@@ -31,56 +31,46 @@
       <% end %>
       <details class="dropdown">
         <summary class="m-1 btn">Menu</summary>
-          <ul class="p-2 space-y-1 shadow menu dropdown-content bg-base-100 rounded-box">
+          <ul class="p-2 space-y-1 shadow dropdown-content bg-base-100 rounded-box">
           <li>
-            <.link href={~p"/"} class="btn">
+            <.link href={~p"/"} class="btn w-28">
               Home
             </.link>
           </li>
           <li>
-            <.link href={~p"/bounties"} class="btn">
+            <.link href={~p"/"} class="btn w-28">
               Bounties
             </.link>
           </li>
           <%= if @current_user do %>
           <li>
-            <.link href={~p"/invoices"} class="btn">
+            <.link href={~p"/"} class="btn w-28">
               Invoices
             </.link>
           </li>
           <li>
-            <.link href={~p"/payments"} class="btn">
-              Payments
-            </.link>
-          </li>
-          <li>
-            <.link href={~p"/disputes"} class="btn">
+            <.link href={~p"/"} class="btn w-28">
               Disputes
             </.link>
           </li>
           <li>
-            <.link href={~p"/users/settings"} class="btn">
+            <.link href={~p"/users/settings"} class="btn w-28">
               Settings
             </.link>
           </li>
           <% else %>
           <li>
-            <.link href={~p"/invoices"} class="btn" disabled>
+            <.link href={~p"/"} class="btn disabled w-28">
               Invoices
             </.link>
           </li>
           <li>
-            <.link href={~p"/payments"} class="btn" disabled>
-              Payments
-            </.link>
-          </li>
-          <li>
-            <.link href={~p"/arbitration"} class="btn" disabled>
+            <.link href={~p"/"} class="btn disabled w-28">
               Disputes
             </.link>
           </li>
           <li>
-            <.link href={~p"/users/settings"} class="btn" disabled>
+            <.link href={~p"/users/settings"} class="btn w-28">
               Settings
             </.link>
           </li>
@@ -88,7 +78,7 @@
         </ul>
       </details>
       <li>
-        <div class="min-w-32">
+        <div class="">
           <%= live_render(@conn, CTransferWeb.SignInLive, id: "sign-in") %>
         </div>
       </li>

@@ -65,7 +65,18 @@ defmodule CTransferWeb.HomeLive do
 
     socket = assign_current_user(socket, session)
     current_user = socket.assigns.current_user
-    username = if current_user, do: Accounts.truncate_address(current_user.address), else: MnemonicSlugs.generate_slug()
+
+    # Do this better
+    username = if current_user do
+      if Map.get(current_user, :domain) do
+        current_user.domain
+      else
+        Accounts.truncate_address(current_user.address)
+      end
+    else
+      MnemonicSlugs.generate_slug()
+    end
+
     color = RandomColor.hex(luminosity: :light)
 
     if connected?(socket) do

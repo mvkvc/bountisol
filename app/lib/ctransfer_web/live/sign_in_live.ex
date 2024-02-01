@@ -112,7 +112,7 @@ defmodule CTransferWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("effect_connected", %{"wallet" => wallet} = params, socket) do
+  def handle_event("effect_connected", %{"wallet" => wallet}, socket) do
     {:noreply,
      socket
      |> assign(connected: true)

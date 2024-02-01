@@ -28,20 +28,4 @@ defmodule CTransfer.AccountsFixtures do
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
   end
-
-  @doc """
-  Generate a contact.
-  """
-  def contact_fixture(attrs \\ %{}) do
-    {:ok, contact} =
-      attrs
-      |> Enum.into(%{
-        description: "some description",
-        domain: "some domain",
-        email: "some email"
-      })
-      |> CTransfer.Accounts.create_contact()
-
-    contact
-  end
 end

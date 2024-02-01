@@ -2,26 +2,20 @@ defmodule CTransfer.Accounts.User do
   @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
-  alias CTransfer.Accounts.Contact
-  alias CTransfer.Transactions.Payment
 
   schema "users" do
     field :address, :string
     field :nonce, :string
+    field :domain, :string
     field :email, :string
     field :confirmed_at, :naive_datetime
-    field :domain, :string
-    field :sns, {:array, :string}
-
-    has_many :contacts, Contact
-    has_many :payments, Payment
 
     timestamps(type: :utc_datetime)
   end
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:address, :nonce, :email])
+    |> cast(attrs, [:address, :nonce, :email, :domain])
     |> validate_required([:address, :nonce])
     |> unique_constraint(:address)
   end
