@@ -1,6 +1,13 @@
 # ctransfer
 
+[![deploy_app](https://github.com/mvkvc/ctransfer/actions/workflows/deploy_app.yml/badge.svg)](https://github.com/mvkvc/ctransfer/actions/workflows/deploy_app.yml)
+[![deploy_inference](https://github.com/mvkvc/ctransfer/actions/workflows/deploy_inference.yml/badge.svg)](https://github.com/mvkvc/ctransfer/actions/workflows/deploy_inference.yml)
+
 Work with anyone from anywhere.
+
+## Links
+
+- https://ctransfer-app.fly.dev
 
 ## Components
 

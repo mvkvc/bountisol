@@ -1,7 +1,10 @@
 defmodule CTransfer.Oban.SNS do
+  @moduledoc false
   use Oban.Worker, queue: :default
-  require Logger
+
   alias CTransfer.Accounts
+
+  require Logger
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"address" => address}}) do
@@ -10,7 +13,8 @@ defmodule CTransfer.Oban.SNS do
         result = String.trim(result)
         Accounts.update_user_domain(address, result <> ".sol")
 
-      {:error, reason} -> Logger.error("SNS lookup failed: #{inspect(reason)}")
+      {:error, reason} ->
+        Logger.error("SNS lookup failed: #{inspect(reason)}")
     end
   end
 end

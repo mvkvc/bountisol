@@ -8,14 +8,13 @@ defmodule CTransfer.Accounts do
   alias CTransfer.Accounts.User
   alias CTransfer.Accounts.UserNotifier
   alias CTransfer.Accounts.UserToken
-  alias CTransfer.Repo
   alias CTransfer.Oban.SNS
+  alias CTransfer.Repo
 
   def truncate_address(address) do
     # String.slice(address, 0, 8) <> "..."
     String.slice(address, 0, 4) <> "..." <> String.slice(address, -4, 4)
   end
-
 
   def get_user_by_address(nil), do: nil
   def get_user_by_address(address), do: Repo.get_by(User, address: address)
@@ -48,7 +47,7 @@ defmodule CTransfer.Accounts do
   end
 
   def update_user_domain(address, domain) do
-    user  = get_user_by_address(address)
+    user = get_user_by_address(address)
 
     if user do
       attrs = %{
@@ -144,7 +143,7 @@ defmodule CTransfer.Accounts do
 
   """
   def change_user_registration(%User{} = user, attrs \\ %{}) do
-    User.registration_changeset(user, attrs,  validate_email: false)
+    User.registration_changeset(user, attrs, validate_email: false)
   end
 
   ## Settings

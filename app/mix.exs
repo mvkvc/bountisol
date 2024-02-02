@@ -63,6 +63,7 @@ defmodule CTransfer.MixProject do
       {:solana, git: "https://github.com/mvkvc/solana-elixir.git"},
       {:phoenix_live_react, git: "https://github.com/mvkvc/phoenix_live_react.git"},
       #
+      {:instructor, "~> 0.0.4"},
       {:oban, "~> 2.16"},
       {:base58, "~> 0.1.1"},
       {:req, "~> 0.4.5"},

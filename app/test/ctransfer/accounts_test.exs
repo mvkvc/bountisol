@@ -508,9 +508,9 @@ defmodule CTransfer.AccountsTest do
   end
 
   describe "contacts" do
-    alias CTransfer.Accounts.Contact
-
     import CTransfer.AccountsFixtures
+
+    alias CTransfer.Accounts.Contact
 
     @invalid_attrs %{domain: nil, description: nil, email: nil}
 
@@ -539,7 +539,12 @@ defmodule CTransfer.AccountsTest do
 
     test "update_contact/2 with valid data updates the contact" do
       contact = contact_fixture()
-      update_attrs = %{domain: "some updated domain", description: "some updated description", email: "some updated email"}
+
+      update_attrs = %{
+        domain: "some updated domain",
+        description: "some updated description",
+        email: "some updated email"
+      }
 
       assert {:ok, %Contact{} = contact} = Accounts.update_contact(contact, update_attrs)
       assert contact.domain == "some updated domain"

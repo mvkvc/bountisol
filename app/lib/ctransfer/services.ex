@@ -13,8 +13,6 @@ defmodule CTransfer.Services do
 
     if result do
       Accounts.get_user_by_address(address)
-    else
-      nil
     end
   end
 end
