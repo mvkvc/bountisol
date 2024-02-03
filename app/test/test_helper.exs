@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(CTransfer.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Bountisol.Repo, :manual)

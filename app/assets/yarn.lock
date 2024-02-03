@@ -24,9 +24,9 @@
     buffer "^6.0.3"
 
 "@bonfida/spl-name-service@^2.0.0-alpha.25":
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/@bonfida/spl-name-service/-/spl-name-service-2.3.5.tgz#957eda7efa2ef33c63cfca61b7eae75111525625"
-  integrity sha512-JnHbTfkWagbn8gDEW/C4+OkInf4lCg1M/hWufwoe9m/n3gS9Yueh05qPve/Fhtf2oQmEIMWQDzZ8zoN1HtUEcw==
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/@bonfida/spl-name-service/-/spl-name-service-2.3.6.tgz#a25e5fbd0c337d5cb10230a5a0abce1f97cb321c"
+  integrity sha512-3i19tNeoU1pQMxHRrMCYa9/xF/mVFGu9O8Gk8moAJKh/pDxkI9bGVFrJUBO8PutvXGwrznKQu3RU75fMAs/vsg==
   dependencies:
     "@bonfida/sns-records" "0.0.1"
     "@noble/curves" "^1.3.0"
@@ -482,9 +482,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "20.11.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.14.tgz#9fdc9c2550c2f6693508ca4530f821474c4ee3bb"
-  integrity sha512-w3yWCcwULefjP9DmDDsgUskrMoOy5Z8MiwKHr1FvqGPtx7CvJzQvxD7eKpxNtklQxLruxSXWddyeRtyud0RcXQ==
+  version "20.11.16"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.16.tgz#4411f79411514eb8e2926f036c86c9f0e4ec6708"
+  integrity sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==
   dependencies:
     undici-types "~5.26.4"
 
@@ -506,9 +506,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.2.43":
-  version "18.2.48"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.48.tgz#11df5664642d0bd879c1f58bc1d37205b064e8f1"
-  integrity sha512-qboRCl6Ie70DQQG9hhNREz81jqC1cs9EVNcjQ1AU+jH6NFfSAhVVbrrY/+nSF+Bsk4AOwm9Qa61InvMCyV+H3w==
+  version "18.2.52"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.52.tgz#83ca0c62bd1ff31464dac4cf1937e55c78f77aa2"
+  integrity sha512-E/YjWh3tH+qsLKaUzgpZb5AY0ChVa+ZJzF7ogehVILrFpdQk6nC/WXOv0bfFEABbXbgNxLBGU7IIZByPKb6eBw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -772,9 +772,9 @@ camelcase-css@^2.0.1:
   integrity sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==
 
 caniuse-lite@^1.0.30001578, caniuse-lite@^1.0.30001580:
-  version "1.0.30001581"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001581.tgz#0dfd4db9e94edbdca67d57348ebc070dece279f4"
-  integrity sha512-whlTkwhqV2tUmP3oYhtNfaWGYHDdS3JYFQBKXxcUR9qqPWsRhFHhoISO2Xnl/g0xyKzht9mI1LZpiNWfMzHixQ==
+  version "1.0.30001583"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001583.tgz#abb2970cc370801dc7e27bf290509dc132cfa390"
+  integrity sha512-acWTYaha8xfhA/Du/z4sNZjHUWjkiuoAi2LM+T/aL+kemKQgPT1xBb/YKjlQ0Qo8gvbHsGNplrEJ+9G3gL7i4Q==
 
 chokidar@^3.5.3:
   version "3.5.3"
@@ -876,9 +876,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.648:
-  version "1.4.652"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.652.tgz#1591c7542d43c990de786374c07a9d6ad2b63787"
-  integrity sha512-XvQaa8hVUAuEJtLw6VKQqvdOxTOfBLWfI10t2xWpezx4XXD3k8bdLweEKeItqaa0+OkJX5l0mP1W+JWobyIDrg==
+  version "1.4.656"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.656.tgz#b374fb7cab9b782a5bc967c0ce0e19826186b9c9"
+  integrity sha512-9AQB5eFTHyR3Gvt2t/NwR0le2jBSUNwCnMbUCejFWHD+so4tH40/dRLgoE+jxlPeWS43XJewyvCv+I8LPMl49Q==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -1350,7 +1350,7 @@ pathe@^1.1.0, pathe@^1.1.2:
   integrity sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==
 
 "phoenix@file:../deps/phoenix":
-  version "1.7.10"
+  version "1.7.11"
 
 "phoenix_html@file:../deps/phoenix_html":
   version "3.3.3"
@@ -1359,7 +1359,7 @@ pathe@^1.1.0, pathe@^1.1.2:
   version "0.4.2"
 
 "phoenix_live_view@file:../deps/phoenix_live_view":
-  version "0.20.2"
+  version "0.20.4"
 
 picocolors@^1, picocolors@^1.0.0:
   version "1.0.0"

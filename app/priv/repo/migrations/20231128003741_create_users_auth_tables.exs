@@ -1,4 +1,4 @@
-defmodule CTransfer.Repo.Migrations.CreateUsersAuthTables do
+defmodule Bountisol.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

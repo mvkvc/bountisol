@@ -1,4 +1,4 @@
-defmodule CTransfer.Repo.Migrations.ChangeUserLogin do
+defmodule Bountisol.Repo.Migrations.ChangeUserLogin do
   use Ecto.Migration
 
   def change do

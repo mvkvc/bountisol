@@ -7,27 +7,27 @@
 # General application configuration
 import Config
 
-config :ctransfer,
+config :bountisol,
   network: :devnet,
-  ecto_repos: [CTransfer.Repo],
+  ecto_repos: [Bountisol.Repo],
   generators: [timestamp_type: :utc_datetime]
 
-config :ctransfer, CTransfer.Repo, types: CTransfer.PostgrexTypes
+config :bountisol, Bountisol.Repo, types: Bountisol.PostgrexTypes
 
 # Configures the endpoint
-config :ctransfer, CTransferWeb.Endpoint,
+config :bountisol, BountisolWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   # adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
-    formats: [html: CTransferWeb.ErrorHTML, json: CTransferWeb.ErrorJSON],
+    formats: [html: BountisolWeb.ErrorHTML, json: BountisolWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: CTransfer.PubSub,
+  pubsub_server: Bountisol.PubSub,
   live_view: [signing_salt: "gHc3jy5v"]
 
-config :ctransfer, Oban,
-  repo: CTransfer.Repo,
+config :bountisol, Oban,
+  repo: Bountisol.Repo,
   plugins: [
     {Oban.Plugins.Pruner, max_age: 60 * 60 * 24 * 7},
     {Oban.Plugins.Lifeline, rescue_after: :timer.minutes(30)}
@@ -41,7 +41,7 @@ config :ctransfer, Oban,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :ctransfer, CTransfer.Mailer, adapter: Swoosh.Adapters.Local
+config :bountisol, Bountisol.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 # config :esbuild,

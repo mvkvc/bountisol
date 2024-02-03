@@ -7,10 +7,9 @@ const path = require("path");
 
 module.exports = {
   content: [
-    "js/**/*.js",
-    "js/**/*.jsx",
-    "../lib/ctransfer_web.ex",
-    "../lib/ctransfer_web/**/*.*ex",
+    "js/**/*.{jsx, tsx, js, ts}",
+    "../lib/bountisol_web.ex",
+    "../lib/bountisol_web/**/*.*ex",
   ],
   theme: {
     extend: {

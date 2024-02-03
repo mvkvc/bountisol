@@ -1,7 +1,7 @@
-defmodule CTransfer.AccountsFixtures do
+defmodule Bountisol.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `CTransfer.Accounts` context.
+  entities via the `Bountisol.Accounts` context.
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -18,7 +18,7 @@ defmodule CTransfer.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> CTransfer.Accounts.register_user()
+      |> Bountisol.Accounts.register_user()
 
     user
   end

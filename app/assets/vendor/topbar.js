@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * @license MIT
  * topbar 2.0.0, 2023-02-04

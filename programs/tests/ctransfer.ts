@@ -1,12 +1,12 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { Ctransfer } from "../target/types/ctransfer";
+import { Bountisol } from "../target/types/bountisol";
 
-describe("ctransfer", () => {
+describe("bountisol", () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
 
-  const program = anchor.workspace.Ctransfer as Program<Ctransfer>;
+  const program = anchor.workspace.Bountisol as Program<Bountisol>;
 
   it("Is initialized!", async () => {
     // Add your test here.

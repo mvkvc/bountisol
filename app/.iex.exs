@@ -1,4 +1,4 @@
-alias CTransfer.Repo
-alias CTransfer.Accounts.User
-alias CTransfer.Grammar.Arbitration
-alias CTransfer.Grammar.PVP
+alias Bountisol.Repo
+alias Bountisol.Accounts.User
+alias Bountisol.Grammar.Arbitration
+alias Bountisol.Grammar.PVP

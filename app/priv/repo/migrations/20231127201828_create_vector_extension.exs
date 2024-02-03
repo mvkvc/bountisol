@@ -1,4 +1,4 @@
-defmodule CTransfer.Repo.Migrations.CreateVectorExtension do
+defmodule Bountisol.Repo.Migrations.CreateVectorExtension do
   use Ecto.Migration
 
   def up do

@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for ctransfer-app on 2024-01-31T13:05:07-05:00
+# fly.toml app configuration file generated for bountisol-app on 2024-01-31T13:05:07-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'ctransfer-app'
+app = 'bountisol-app'
 primary_region = 'yyz'
 kill_signal = 'SIGTERM'
 
@@ -13,7 +13,7 @@ kill_signal = 'SIGTERM'
   release_command = '/app/bin/migrate'
 
 [env]
-  PHX_HOST = 'ctransfer-app.fly.dev'
+  PHX_HOST = 'bountisol-app.fly.dev'
   PORT = '8080'
 
 [http_service]

@@ -1,14 +1,14 @@
-defmodule CTransfer.MixProject do
+defmodule Bountisol.MixProject do
   use Mix.Project
 
-  @name "CTransfer"
+  @name "Bountisol"
   @description "Work with anyone from anywhere."
-  @source_url "https://github.com/mvkvc/ctransfer"
+  @source_url "https://github.com/mvkvc/bountisol"
   @version "0.1.0"
 
   def project do
     [
-      app: :ctransfer,
+      app: :bountisol,
       name: @name,
       description: @description,
       source_url: @source_url,
@@ -25,7 +25,7 @@ defmodule CTransfer.MixProject do
 
   def application do
     [
-      mod: {CTransfer.Application, []},
+      mod: {Bountisol.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -110,7 +110,7 @@ defmodule CTransfer.MixProject do
       "assets.setup": ["cmd --cd assets yarn install --dev"],
       "assets.build": ["cmd --cd assets yarn build", "ports"],
       "assets.deploy": ["assets.build", "phx.digest"],
-      testd: ["cmd sh/db_test.sh", "test", "cmd docker stop ctransfer_test_db"],
+      testd: ["cmd sh/db_test.sh", "test", "cmd docker stop bountisol_test_db"],
       lint: ["format --check-formatted", "credo", "dialyzer"]
     ]
   end
