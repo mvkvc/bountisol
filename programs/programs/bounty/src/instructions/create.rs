@@ -4,9 +4,10 @@ use crate::state::*;
 
 pub fn create(
     ctx: Context<CreateEscrow>,
-    arbitrator: Pubkey,
+    token: Pubkey,
+    amount: u64,
     deadline: u64,
-    requirements: String,
+    admin: Pubkey
 ) -> Result<()> {
     ctx.accounts.escrow.set_inner(Escrow::new(
         ctx.bumps.escrow,

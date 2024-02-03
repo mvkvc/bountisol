@@ -14,8 +14,8 @@ Work with anyone from anywhere.
 ## Components
 
 - `app/`: Full-stack web application.
-- `inference/`: :construction: LLM inference service.
-- `model/`: :construction: LLM dataset creation and training.
+- `inference/`: LLM inference.
+- `model/`: LLM dataset creation and training.
 - `programs/`: Solana programs.
 - `sh/`: Shell scripts.
 

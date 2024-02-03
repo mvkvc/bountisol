@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[error_code]
-pub enum EscrowError {
+pub enum BountyError {
     // #[msg("This token is unsupported.")]
     // UnsupportedToken,
 
