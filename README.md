@@ -7,6 +7,8 @@ Work with anyone from anywhere.
 
 ## Links
 
+- https://bounti.sol
+- https://bountisol.xyz
 - https://bountisol-app.fly.dev
 
 ## Components
