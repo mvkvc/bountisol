@@ -16,6 +16,7 @@ defmodule BountisolWeb.UserSessionController do
   end
 
   defp create(conn, %{"message" => message, "address" => address, "signature" => signature} = params, info) do
+    IO.inspect(params, label: "params user auth")
     user = Services.verify_signature(%{address: address, message: message, signature: signature})
 
     if user do

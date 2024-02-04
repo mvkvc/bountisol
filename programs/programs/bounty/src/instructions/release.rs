@@ -2,45 +2,51 @@ use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
 use crate::state::*;
+use crate::events::*;
 
-pub fn release(ctx: Context<ReleaseEscrow>) -> Result<()> {
-    let escrow = &mut ctx.accounts.escrow;
-
-    if escrow.disputed {
-        return Err(ErrorCode::Disputed.into());
-    }
+pub fn release(ctx: Context<ReleaseBounty>, amount: u64) -> Result<()> {
+    let bounty = &mut ctx.accounts.bounty;
 
     let transaction = (
         &ctx.accounts.mint,
-        &ctx.accounts.escrow_token_account,
+        &ctx.accounts.bounty_token_account,
         &ctx.accounts.worker_token_account,
-        ctx.accounts.escrow_token_account.amount,
+        amount,
     );
 
-    escrow.release(
+    bounty.release(
         transaction,
         &ctx.accounts.payer,
         &ctx.accounts.token_program,
-    )
+    );
+
+    emit!(BountyReleased {
+        address: ctx.accounts.bounty.key(),
+        to: ctx.accounts.worker.key(),
+        token: ctx.accounts.mint.key(),
+        amount: amount,
+    });
+
+    Ok(())
 }
 
 #[derive(Accounts)]
-pub struct ReleaseEscrow<'info> {
+pub struct ReleaseBounty<'info> {
     #[account(
         mut,
-        seeds = [Escrow::SEED_PREFIX.as_bytes()],
-        bump = escrow.bump,
+        seeds = [Bounty::SEED_PREFIX.as_bytes()],
+        bump = bounty.bump,
     )]
-    pub escrow: Account<'info, Escrow>,
+    pub bounty: Account<'info, Bounty>,
     pub mint: Account<'info, token::Mint>,
     #[account(
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = escrow
+        associated_token::authority = bounty
     )]
-    pub escrow_token_account: Account<'info, token::TokenAccount>,
-    #[account(address = escrow.worker)]
+    pub bounty_token_account: Account<'info, token::TokenAccount>,
+    #[account(address = bounty.worker)]
     pub worker: UncheckedAccount<'info>,
     #[account(
         init_if_needed,
@@ -49,7 +55,7 @@ pub struct ReleaseEscrow<'info> {
         associated_token::authority = worker
     )]
     pub worker_token_account: Account<'info, token::TokenAccount>,
-    #[account(mut, address = escrow.creator)]
+    #[account(mut, address = bounty.creator)]
     pub payer: Signer<'info>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, token::Token>,

@@ -14,10 +14,15 @@ pub mod bounty {
 
     pub fn create(
         ctx: Context<CreateBounty>,
-        deadline: u64,
+        deadline_work: u64,
+        deadline_dispute: u64,
         admin: Pubkey
     ) -> Result<()> {
-        instructions::create(ctx, admin)
+        instructions::create(ctx, deadline_work, deadline_dispute, admin)
+    }
+
+    pub fn assign(ctx: Context<AssignBounty>, worker: Pubkey) -> Result<()> {
+        instructions::assign(ctx, worker)
     }
 
     pub fn fund(ctx: Context<FundBounty>, amount: u64) -> Result<()> {
@@ -28,11 +33,15 @@ pub mod bounty {
         instructions::release(ctx, amount)
     }
 
-    pub fn arbitrate(ctx: Context<ReleaseAdminBounty>, amount: u64) -> Result<()> {
-        instructions::arbitrate(ctx, amount)
-    }
+    // pub fn arbitrate(ctx: Context<ReleaseAdminBounty>, amount: u64) -> Result<()> {
+    //     instructions::arbitrate(ctx, amount)
+    // }
 
-    pub fn reclaim(ctx: Context<ReclaimBounty>, amount: u64) -> Result<()> {
-        instructions::reclaim(ctx, amount)
-    }
+    // pub fn reclaim(ctx: Context<ReclaimBounty>, amount: u64) -> Result<()> {
+    //     instructions::reclaim(ctx, amount)
+    // }
+
+    // pub fn close(ctx: Context<CloseBounty>) -> Result<()> {
+    //     instructions::close(ctx)
+    // }
 }

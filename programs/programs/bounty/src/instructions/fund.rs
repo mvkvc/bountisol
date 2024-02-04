@@ -2,41 +2,51 @@ use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
 use crate::state::*;
+use crate::events::*;
 
-pub fn fund(ctx: Context<FundEscrow>, amount: u64) -> Result<()> {
-    let escrow = &mut ctx.accounts.escrow;
+pub fn fund(ctx: Context<FundBounty>, amount: u64) -> Result<()> {
+    let bounty = &mut ctx.accounts.bounty;
 
-    let transaction = (
+    let tx = (
         &ctx.accounts.mint,
         &ctx.accounts.payer_token_account,
-        &ctx.accounts.escrow_token_account,
+        &ctx.accounts.bounty_token_account,
         amount,
     );
 
-    escrow.fund(
-        transaction,
+    bounty.fund(
+        tx,
         &ctx.accounts.payer,
         &ctx.accounts.system_program,
         &ctx.accounts.token_program,
-    )
+    );
+
+    emit!(BountyFunded {
+        address: ctx.accounts.bounty.key(),
+        from: ctx.accounts.payer.key(),
+        token: ctx.accounts.mint.key(),
+        amount: amount,
+    });
+
+    Ok(())
 }
 
 #[derive(Accounts)]
-pub struct FundEscrow<'info> {
+pub struct FundBounty<'info> {
     #[account(
         mut,
-        seeds = [Escrow::SEED_PREFIX.as_bytes()],
-        bump = escrow.bump,
+        seeds = [Bounty::SEED_PREFIX.as_bytes()],
+        bump = bounty.bump,
     )]
-    pub escrow: Account<'info, Escrow>,
+    pub bounty: Account<'info, Bounty>,
     pub mint: Account<'info, token::Mint>,
     #[account(
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = escrow,
+        associated_token::authority = bounty,
     )]
-    pub escrow_token_account: Account<'info, token::TokenAccount>,
+    pub bounty_token_account: Account<'info, token::TokenAccount>,
     #[account(
         mut,
         associated_token::mint = mint,

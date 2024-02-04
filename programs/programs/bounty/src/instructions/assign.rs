@@ -1,21 +1,29 @@
 use anchor_lang::prelude::*;
 
 use crate::state::*;
+use crate::events::*;
 
-pub fn assign(ctx: Context<AssignEscrow>, worker: Pubkey) -> Result<()> {
-    let escrow = &mut ctx.accounts.escrow;
+pub fn assign(ctx: Context<AssignBounty>, worker: Pubkey) -> Result<()> {
+    let bounty = &mut ctx.accounts.bounty;
 
-    escrow.assign(worker, &ctx.accounts.payer)
+    bounty.assign(worker, &ctx.accounts.payer);
+
+    emit!(BountyAssigned {
+        address: ctx.accounts.bounty.key(),
+        worker: worker,
+    });
+
+    Ok(())
 }
 
 #[derive(Accounts)]
-pub struct AssignEscrow<'info> {
+pub struct AssignBounty<'info> {
     #[account(
         mut,
-        seeds = [Escrow::SEED_PREFIX.as_bytes()],
-        bump = escrow.bump,
+        seeds = [Bounty::SEED_PREFIX.as_bytes()],
+        bump = bounty.bump,
     )]
-    pub escrow: Account<'info, Escrow>,
-    #[account(mut, address = escrow.creator)]
+    pub bounty: Account<'info, Bounty>,
+    #[account(mut, address = bounty.creator)]
     pub payer: Signer<'info>,
 }

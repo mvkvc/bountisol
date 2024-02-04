@@ -1,9 +1,12 @@
 use anchor_lang::prelude::*;
 
 #[error_code]
-pub enum BountyError {
-    // #[msg("This token is unsupported.")]
-    // UnsupportedToken,
+pub enum BountyErrorCodes {
+    #[msg("This asset does not exist in bounty.")]
+    InvalidAsset,
+
+    #[msg("This worker has already been assigned.")]
+    DuplicateWorker,
 
     // #[msg("This is not the correct token for this escrow.")]
     // InvalidToken,
