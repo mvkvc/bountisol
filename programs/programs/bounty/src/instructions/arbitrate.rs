@@ -1,61 +1,52 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
+use crate::events::*;
 use crate::state::*;
-// use crate::errors::*;
-// use crate::events::*;
 
-pub fn arbitrate(ctx: Context<ArbitrateEscrow>, amount: u64) -> Result<()> {
-    let escrow = &mut ctx.accounts.escrow;
+pub fn arbitrate(ctx: Context<ArbitrateBounty>, amount: u64) -> Result<()> {
+    let bounty = &mut ctx.accounts.bounty;
 
-    let creator_token_amount = ctx.accounts.escrow_token_account.amount - amount;
+    let tx = (
+        &ctx.accounts.mint,
+        &ctx.accounts.bounty_token_account,
+        &ctx.accounts.worker_token_account,
+        amount,
+    );
 
-    if amount > 0 {
-        let pay_worker = (
-            &ctx.accounts.mint,
-            &ctx.accounts.escrow_token_account,
-            &ctx.accounts.worker_token_account,
-            amount,
-        );
-
-        let _ = escrow.release(pay_worker, &ctx.accounts.payer, &ctx.accounts.token_program);
+    match bounty.release(tx, &ctx.accounts.token_program) {
+        Ok(_) => {
+            emit!(BountyArbitrated {
+                address: ctx.accounts.bounty.key(),
+                to: ctx.accounts.worker.key(),
+                token: ctx.accounts.mint.key(),
+                amount: amount,
+            });
+            Ok(())
+        }
+        Err(err) => {
+            return Err(err);
+        }
     }
-
-    if creator_token_amount > 0 {
-        let pay_creator = (
-            &ctx.accounts.mint,
-            &ctx.accounts.escrow_token_account,
-            &ctx.accounts.creator_token_account,
-            creator_token_amount,
-        );
-
-        let _ = escrow.release(
-            pay_creator,
-            &ctx.accounts.payer,
-            &ctx.accounts.token_program,
-        );
-    }
-
-    Ok(())
 }
 
 #[derive(Accounts)]
-pub struct ArbitrateEscrow<'info> {
+pub struct ArbitrateBounty<'info> {
     #[account(
         mut,
-        seeds = [Escrow::SEED_PREFIX.as_bytes()],
-        bump = escrow.bump,
+        seeds = [Bounty::SEED_PREFIX.as_bytes()],
+        bump = bounty.bump,
     )]
-    pub escrow: Account<'info, Escrow>,
+    pub bounty: Account<'info, Bounty>,
     pub mint: Account<'info, token::Mint>,
     #[account(
         init_if_needed,
         payer = payer,
         associated_token::mint = mint,
-        associated_token::authority = escrow,
+        associated_token::authority = bounty,
     )]
-    pub escrow_token_account: Account<'info, token::TokenAccount>,
-    #[account(address = escrow.creator)]
+    pub bounty_token_account: Account<'info, token::TokenAccount>,
+    #[account(address = bounty.admin)]
     pub creator: UncheckedAccount<'info>,
     #[account(
         mut,
@@ -63,7 +54,7 @@ pub struct ArbitrateEscrow<'info> {
         associated_token::authority = creator
     )]
     pub creator_token_account: Account<'info, token::TokenAccount>,
-    #[account(address = escrow.worker)]
+    #[account(constraint = bounty.workers.contains(&worker.key()))]
     pub worker: UncheckedAccount<'info>,
     #[account(
         mut,

@@ -7,7 +7,7 @@ pub struct BountyCreated {
     pub deadline_work: u64,
     pub deadline_dispute: u64,
     pub admin: Pubkey,
-    pub creator: Pubkey
+    pub creator: Pubkey,
 }
 
 #[event]
@@ -26,6 +26,22 @@ pub struct BountyFunded {
 
 #[event]
 pub struct BountyReleased {
+    pub address: Pubkey,
+    pub to: Pubkey,
+    pub token: Pubkey,
+    pub amount: u64,
+}
+
+#[event]
+pub struct BountyArbitrated {
+    pub address: Pubkey,
+    pub to: Pubkey,
+    pub token: Pubkey,
+    pub amount: u64,
+}
+
+#[event]
+pub struct BountyReclaimed {
     pub address: Pubkey,
     pub to: Pubkey,
     pub token: Pubkey,

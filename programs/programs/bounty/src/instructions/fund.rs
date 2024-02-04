@@ -1,8 +1,8 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
-use crate::state::*;
 use crate::events::*;
+use crate::state::*;
 
 pub fn fund(ctx: Context<FundBounty>, amount: u64) -> Result<()> {
     let bounty = &mut ctx.accounts.bounty;
@@ -14,21 +14,25 @@ pub fn fund(ctx: Context<FundBounty>, amount: u64) -> Result<()> {
         amount,
     );
 
-    bounty.fund(
+    match bounty.fund(
         tx,
         &ctx.accounts.payer,
         &ctx.accounts.system_program,
         &ctx.accounts.token_program,
-    );
-
-    emit!(BountyFunded {
-        address: ctx.accounts.bounty.key(),
-        from: ctx.accounts.payer.key(),
-        token: ctx.accounts.mint.key(),
-        amount: amount,
-    });
-
-    Ok(())
+    ) {
+        Ok(_) => {
+            emit!(BountyFunded {
+                address: ctx.accounts.bounty.key(),
+                from: ctx.accounts.payer.key(),
+                token: ctx.accounts.mint.key(),
+                amount: amount,
+            });
+            Ok(())
+        }
+        Err(err) => {
+            return Err(err);
+        }
+    }
 }
 
 #[derive(Accounts)]

@@ -3,8 +3,6 @@ use anchor_spl::token::{transfer, Mint, Token, TokenAccount, Transfer};
 
 use crate::errors::*;
 
-// Ensure space reallocates are handled correctly
-
 #[account]
 pub struct Bounty {
     pub bump: u8,
@@ -65,11 +63,16 @@ pub trait BountyAccount<'info> {
         system_program: &Program<'info, System>,
     ) -> Result<()>;
 
-    fn assign(&mut self, worker: Pubkey, payer: &Signer<'info>) -> Result<()>;
+    fn assign(
+        &mut self,
+        worker: Pubkey,
+        payer: &Signer<'info>,
+        system_program: &Program<'info, System>,
+    ) -> Result<()>;
 
     fn fund(
         &mut self,
-        transaction: (
+        tx: (
             &Account<'info, Mint>,
             &Account<'info, TokenAccount>,
             &Account<'info, TokenAccount>,
@@ -82,13 +85,12 @@ pub trait BountyAccount<'info> {
 
     fn release(
         &mut self,
-        transaction: (
+        tx: (
             &Account<'info, Mint>,
             &Account<'info, TokenAccount>,
             &Account<'info, TokenAccount>,
             u64,
         ),
-        authority: &Signer<'info>,
         token_program: &Program<'info, Token>,
     ) -> Result<()>;
 }
@@ -141,14 +143,19 @@ impl<'info> BountyAccount<'info> for Account<'info, Bounty> {
     }
 
     fn add_asset(
-            &mut self,
-            key: Pubkey,
-            payer: &Signer<'info>,
-            system_program: &Program<'info, System>,
-        ) -> Result<()> {
-            self.check_asset(&key)?;
-            self.assets.push(key);
-            Ok(())
+        &mut self,
+        asset: Pubkey,
+        payer: &Signer<'info>,
+        system_program: &Program<'info, System>,
+    ) -> Result<()> {
+        match self.check_asset(&asset) {
+            Ok(()) => (),
+            Err(_) => {
+                self.realloc(32, payer, system_program)?;
+                self.assets.push(asset)
+            }
+        };
+        Ok(())
     }
 
     fn add_worker(
@@ -157,15 +164,24 @@ impl<'info> BountyAccount<'info> for Account<'info, Bounty> {
         payer: &Signer<'info>,
         system_program: &Program<'info, System>,
     ) -> Result<()> {
-        self.check_worker(&worker)?;
-        self.workers.push(worker);
+        match self.check_worker(&worker) {
+            Ok(()) => (),
+            Err(_) => {
+                self.realloc(32, payer, system_program)?;
+                self.assets.push(worker)
+            }
+        };
         Ok(())
     }
 
-    fn assign(&mut self, worker: Pubkey, payer: &Signer<'info>) -> Result<()> {
+    fn assign(
+        &mut self,
+        worker: Pubkey,
+        payer: &Signer<'info>,
+        system_program: &Program<'info, System>,
+    ) -> Result<()> {
         self.check_worker(&worker)?;
-        self.workers.push(worker);
-
+        self.add_worker(worker, payer, system_program)?;
         Ok(())
     }
 
@@ -195,7 +211,6 @@ impl<'info> BountyAccount<'info> for Account<'info, Bounty> {
             &Account<'info, TokenAccount>,
             u64,
         ),
-        authority: &Signer<'info>,
         token_program: &Program<'info, Token>,
     ) -> Result<()> {
         let (mint, from, to, amount) = tx;

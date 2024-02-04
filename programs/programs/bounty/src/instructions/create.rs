@@ -1,20 +1,20 @@
 use anchor_lang::prelude::*;
 
-use crate::state::*;
 use crate::events::*;
+use crate::state::*;
 
 pub fn create(
     ctx: Context<CreateBounty>,
     deadline_work: u64,
     deadline_dispute: u64,
-    admin: Pubkey
+    admin: Pubkey,
 ) -> Result<()> {
     ctx.accounts.bounty.set_inner(Bounty::new(
         ctx.bumps.bounty,
         deadline_work,
         deadline_dispute,
         admin,
-        ctx.accounts.payer.key()
+        ctx.accounts.payer.key(),
     ));
 
     emit!(BountyCreated {
