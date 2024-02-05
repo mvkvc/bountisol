@@ -32,7 +32,7 @@ export const Wallet: any = {
 
       try {
         const bounty: Bounty = getBounty();
-        (this as any).pushEventTo("#bounty", "", {});
+        bounty.create();
       } catch (e) {
         console.error("Error:", e);
       }

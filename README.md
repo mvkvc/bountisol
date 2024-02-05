@@ -15,8 +15,8 @@ Fully on-chain bounties and payments on Solana.
 
 - `app/`: Full-stack web application.
 - `dataset/`: LLM training dataset creation.
-- `frame/`: Farcaster Frame endpoint.
-- `inference/`: LLM inference endpoint.
+- `frames/`: Farcaster Frames service.
+- `inference/`: LLM inference service.
 - `model/`: LLM training.
 - `programs/`: Solana programs.
 - `sh/`: Shell scripts.
