@@ -1,41 +1,14 @@
-import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
-import { getProvider } from "../utils/wallet";
-import { Bounty } from "../../../../programs/target/types/bounty";
+import { createSolanaMessage, getProvider } from "../utils/wallet";
+import { Bounty } from "../idl/bounty";
+import { getBounty } from "../utils/anchor";
 
-function createSolanaMessage(
-  address: string,
-  statement: string,
-  nonce: string,
-): SIWS {
-  try {
-    const domain = window.location.host;
-    const origin = window.location.origin;
-
-    const header = new Header();
-    header.t = "sip99";
-    const payload = new Payload();
-    payload.domain = domain;
-    payload.uri = origin;
-    payload.address = address;
-    payload.statement = statement;
-    payload.nonce = nonce;
-    payload.version = "1";
-    payload.chainId = 1;
-
-    return new SIWS({ header, payload });
-  } catch (error) {
-    console.error("Error creating message:", JSON.stringify(error));
-    throw error;
-  }
-}
-
-export const Wallet = {
+export const Wallet: any = {
   mounted() {
     window.addEventListener("phx:signature", async (e: any) => {
       const { address, statement, nonce } = e.detail;
 
       try {
-        const provider: any = await getProvider()
+        const provider: any = await getProvider();
         const message = createSolanaMessage(address, statement, nonce);
         const encodedMessage = new TextEncoder().encode(
           message.prepareMessage(),
@@ -59,14 +32,10 @@ export const Wallet = {
 
       try {
         const bounty: Bounty = getBounty();
-        bounty.create
-
-        (this as any).pushEventTo("#bounty", "" {});
+        (this as any).pushEventTo("#bounty", "", {});
       } catch (e) {
         console.error("Error:", e);
       }
-    }
-  }
+    });
+  },
 };
-
-export default Wallet;

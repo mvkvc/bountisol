@@ -16,7 +16,9 @@ const WalletEffectHandler: FC<any> = ({ pushEventTo }) => {
     if (connected && wallet && pushEventTo) {
       const wallet_name = wallet.adapter.name.toLowerCase();
       sessionStorage.setItem("_wallet_name", wallet_name);
-      pushEventTo("#wallet-adapter", "effect_connected", {"wallet": wallet_name});
+      pushEventTo("#wallet-adapter", "effect_connected", {
+        wallet: wallet_name,
+      });
     }
 
     if (disconnecting && pushEventTo) {

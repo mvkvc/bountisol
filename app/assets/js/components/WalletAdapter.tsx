@@ -14,11 +14,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 
 import WalletEffectHandler from "./WalletEffectHandler";
 
-const WalletAdapter: FC<any> = ({
-  network_type,
-  pushEvent,
-  pushEventTo,
-}) => {
+const WalletAdapter: FC<any> = ({ network_type, pushEvent, pushEventTo }) => {
   const network =
     network_type === "main"
       ? WalletAdapterNetwork.Mainnet
@@ -29,7 +25,7 @@ const WalletAdapter: FC<any> = ({
     () => [
       // Phantom included in default
       // Solflare is added using import and below enables Metamask snap
-      new SolflareWalletAdapter()
+      new SolflareWalletAdapter(),
     ],
     [network],
   );

@@ -1,19 +1,21 @@
-import { Program } from '@coral-xyz/anchor';
-import { Connection, PublicKey } from '@solana/web3.js';
-import { Bounty } from '../../../../programs/target/types/bounty';
+import { Program } from "@coral-xyz/anchor";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { Bounty } from "../../../../programs/target/types/bounty";
 import { IDL } from "../../../../programs/target/idl/bounty.json";
-import { getConnection, getProvider } from './wallet';
+import { getConnection, getProvider } from "./wallet";
 
 const PROGRAM_ID_MAINNET = "";
 
 export function getProgramID() {
-  return new PublicKey(process.env.PROGRAM_ID ? process.env.PROGRAM_ID : PROGRAM_ID_MAINNET);
+  return new PublicKey(
+    process.env.PROGRAM_ID ? process.env.PROGRAM_ID : PROGRAM_ID_MAINNET,
+  );
 }
 
 export function getBounty() {
   return new Program(IDL, getProgramID(), {
     provider: getProvider(),
-    connection: getConnection()
+    connection: getConnection(),
   }) as Bounty;
 }
 

@@ -1,16 +1,21 @@
 import {
-  PublicKey,
+  // PublicKey,
   Connection,
-  SystemProgram,
-  LAMPORTS_PER_SOL,
-  Transaction
+  // SystemProgram,
+  // LAMPORTS_PER_SOL,
+  // Transaction
 } from "@solana/web3.js";
+import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
 
-export const getConnection() => {
-  return new Connection(process.env.NETWORK_URL ? process.env.NETWORK_URL : "https://api.mainnet-beta.solana.com");
+export function getConnection() {
+  return new Connection(
+    process.env.NETWORK_URL
+      ? process.env.NETWORK_URL
+      : "https://api.mainnet-beta.solana.com",
+  );
 }
 
-export const getProvider = async () => {
+export async function getProvider() {
   let provider: any;
   const provider_name = sessionStorage.getItem("_wallet_name");
 
@@ -20,15 +25,42 @@ export const getProvider = async () => {
     provider = (window as any).solflare;
   } else {
     console.error("No Solana wallet installed.");
-  };
+  }
 
   if (provider) {
     if (!provider.isConnected) {
       await provider.connect();
-    };
+    }
     return provider;
   }
-};
+}
+
+export function createSolanaMessage(
+  address: string,
+  statement: string,
+  nonce: string,
+): SIWS {
+  try {
+    const domain = window.location.host;
+    const origin = window.location.origin;
+
+    const header = new Header();
+    header.t = "sip99";
+    const payload = new Payload();
+    payload.domain = domain;
+    payload.uri = origin;
+    payload.address = address;
+    payload.statement = statement;
+    payload.nonce = nonce;
+    payload.version = "1";
+    payload.chainId = 1;
+
+    return new SIWS({ header, payload });
+  } catch (error) {
+    console.error("Error creating message:", JSON.stringify(error));
+    throw error;
+  }
+}
 
 // export const sendPayment = async (
 //   provider: any,
