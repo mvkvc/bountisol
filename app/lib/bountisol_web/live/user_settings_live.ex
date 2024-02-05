@@ -11,7 +11,7 @@ defmodule BountisolWeb.UserSettingsLive do
       <:subtitle>Manage your account</:subtitle>
     </.header>
 
-    <div class="max-w-screen text-center items-center align-center space-y-12">
+    <div class="flex flex-col max-w-screen text-center items-center align-center space-y-12">
       <%= if @current_email do %>
         <p>Your email is confirmed as <%= @current_email %>.</p>
       <% else %>
@@ -22,11 +22,11 @@ defmodule BountisolWeb.UserSettingsLive do
         id="email_form"
         phx-submit="update_email"
         phx-change="validate_email"
-        class="max-w-lg items-center"
+        class=""
       >
-        <.input field={@email_form[:email]} type="email" label="Email" required />
+        <.input field={@email_form[:email]} class="" type="email" label="Email" required />
         <:actions>
-          <.button phx-disable-with="Changing...">Change Email</.button>
+          <.button phx-disable-with="Changing..." class="">Change Email</.button>
         </:actions>
       </.simple_form>
     </div>

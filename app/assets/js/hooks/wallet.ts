@@ -1,6 +1,6 @@
 import { createSolanaMessage, getProvider } from "../utils/wallet";
 import { Bounty } from "../idl/bounty";
-import { getBounty } from "../utils/anchor";
+// import { getBounty } from "../utils/anchor";
 
 export const Wallet: any = {
   mounted() {
@@ -27,15 +27,15 @@ export const Wallet: any = {
       }
     });
 
-    window.addEventListener("phx:bounty-create", async (e: any) => {
-      const {} = e.detail;
+    // window.addEventListener("phx:bounty-create", async (e: any) => {
+    //   const {} = e.detail;
 
-      try {
-        const bounty: Bounty = getBounty();
-        bounty.create();
-      } catch (e) {
-        console.error("Error:", e);
-      }
-    });
+    //   try {
+    //     const bounty: Bounty = getBounty();
+    //     bounty.create();
+    //   } catch (e) {
+    //     console.error("Error:", e);
+    //   }
+    // });
   },
 };

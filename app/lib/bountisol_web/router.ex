@@ -22,11 +22,18 @@ defmodule BountisolWeb.Router do
 
     get "/", PageController, :home
     # live "/", HomeLive
+
+    live "/bounties", BountyLive.Index, :index
+    live "/bounties/:id", BountyLive.Show, :show
+
+    live "/submissions/:id", SubmissionLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
   scope "/api", BountisolWeb do
     pipe_through :api
+
+    post "/webhooks/helius", WebhookController, :helius
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
@@ -68,21 +75,14 @@ defmodule BountisolWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
 
-      live "/payments", PaymentLive.Index, :index
-      live "/payments/new", PaymentLive.Index, :new
-      live "/payments/:id/edit", PaymentLive.Index, :edit
-      live "/payments/:id", PaymentLive.Show, :show
-      live "/payments/:id/show/edit", PaymentLive.Show, :edit
-
-      live "/invoices", InvoiceLive.Index, :index
-      live "/invoices/new", InvoiceLive.Index, :new
-      live "/invoices/:id/edit", InvoiceLive.Index, :edit
-      live "/invoices/:id", InvoiceLive.Show, :show
-      live "/invoices/:id/show/edit", InvoiceLive.Show, :edit
-
       live "/bounties/new", BountyLive.Index, :new
       live "/bounties/:id/edit", BountyLive.Index, :edit
       live "/bounties/:id/show/edit", BountyLive.Show, :edit
+
+      live "/submissions", SubmissionLive.Index, :index
+      live "/submissions/new", SubmissionLive.Index, :new
+      live "/submissions/:id/edit", SubmissionLive.Index, :edit
+      live "/submissions/:id/show/edit", SubmissionLive.Show, :edit
     end
   end
 
