@@ -22,6 +22,8 @@ defmodule BountisolWeb.BountyLive.FormComponent do
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:summary]} type="text" label="Summary" />
         <.input field={@form[:requirements]} type="text" label="Requirements" />
+        <.input field={@form[:deadline]} type="datetime" label="Deadline" />
+        <.input field={@form[:gated]} type="select" options={["true", "false"]} label="Gated" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Bounty</.button>
         </:actions>

@@ -2,6 +2,7 @@ defmodule BountisolWeb.BountyLive.Show do
   use BountisolWeb, :live_view
 
   alias Bountisol.Bounties
+  alias Bountisol.Accounts
 
   @impl true
   def mount(_params, _session, socket) do
