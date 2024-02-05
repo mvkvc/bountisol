@@ -2,8 +2,8 @@
 
 [![deploy_app](https://github.com/mvkvc/bountisol/actions/workflows/deploy_app.yml/badge.svg)](https://github.com/mvkvc/bountisol/actions/workflows/deploy_app.yml)
 [![deploy_inference](https://github.com/mvkvc/bountisol/actions/workflows/deploy_inference.yml/badge.svg)](https://github.com/mvkvc/bountisol/actions/workflows/deploy_inference.yml)
-;o-
-Work with anyone from anywhere.
+
+Fully on-chain bounties and payments on Solana.
 
 ## Links
 
