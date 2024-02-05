@@ -14,8 +14,10 @@ Work with anyone from anywhere.
 ## Components
 
 - `app/`: Full-stack web application.
-- `inference/`: LLM inference.
-- `model/`: LLM dataset creation and training.
+- `dataset`: LLM training dataset creation.
+- `frame`: Farcaster Frame service.
+- `inference/`: LLM inference service.
+- `model/`: LLM training.
 - `programs/`: Solana programs.
 - `sh/`: Shell scripts.
 

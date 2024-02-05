@@ -1,5 +1,6 @@
 import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
-import { getProvider } from "../utils/walletUtils";
+import { getProvider } from "../utils/wallet";
+import { Bounty } from "../../../../programs/target/types/bounty";
 
 function createSolanaMessage(
   address: string,
@@ -46,12 +47,25 @@ export const Wallet = {
 
         (this as any).pushEventTo("#wallet", "verify-signature", {
           message: JSON.stringify(message),
-          signature: JSON.stringify(signedMessage),
+          signature: JSON.stringify(signedMessage.signature.data),
         });
       } catch (e) {
         console.error("Error signing message:", e);
       }
     });
+
+    window.addEventListener("phx:bounty-create", async (e: any) => {
+      const {} = e.detail;
+
+      try {
+        const bounty: Bounty = getBounty();
+        bounty.create
+
+        (this as any).pushEventTo("#bounty", "" {});
+      } catch (e) {
+        console.error("Error:", e);
+      }
+    }
   }
 };
 

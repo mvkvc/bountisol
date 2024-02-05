@@ -1,9 +1,9 @@
-defmodule Data.MixProject do
+defmodule Dataset.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :data,
+      app: :dataset,
       version: "0.1.0",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Data.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Data.Application, []}
+      mod: {Dataset.Application, []}
     ]
   end
 

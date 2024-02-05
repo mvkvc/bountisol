@@ -46,8 +46,9 @@ pub struct ReleaseBounty<'info> {
         associated_token::authority = bounty
     )]
     pub bounty_token_account: Account<'info, token::TokenAccount>,
+    /// CHECK: Pubkey check
     #[account(constraint = bounty.workers.contains(&worker.key()))]
-    pub worker: UncheckedAccount<'info>,
+    pub worker: AccountInfo<'info>,
     #[account(
         init_if_needed,
         payer = payer,

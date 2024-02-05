@@ -22,8 +22,17 @@ defmodule BountisolWeb.SignInLive do
             phx-trigger-action={@trigger_sign_in}
           >
             <.input type="hidden" name="address" value={@address} />
+            <%!-- <p>
+              <%= @address %>
+            </p> --%>
             <.input type="hidden" name="message" value={@message} />
+            <%!-- <p>
+              <%= @message %>
+            </p> --%>
             <.input type="hidden" name="signature" value={@signature} />
+            <%!-- <p>
+              <%= @signature %>
+            </p> --%>
             <button class="btn">
               Sign in
             </button>
@@ -103,7 +112,7 @@ defmodule BountisolWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("verify-signature", %{"signature" => signature, "message" => message} = _payload, socket) do
+  def handle_event("verify-signature", %{"signature" => signature, "message" => message} = payload, socket) do
     {:noreply,
      socket
      |> assign(signature: signature)

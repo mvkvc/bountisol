@@ -7,11 +7,14 @@ skip-lint = false
 [programs.localnet]
 bountisol = "EkcjDCwoF7ffZox75WTqqtkirDEWdcNF4oUjigqEEmut"
 
+[programs.devnet]
+bountisol = "EkcjDCwoF7ffZox75WTqqtkirDEWdcNF4oUjigqEEmut"
+
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "/home/mvkvc/.config/solana/id.json"
 
 [scripts]

@@ -1,11 +1,16 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{associated_token, token};
 
+use crate::errors::*;
 use crate::events::*;
 use crate::state::*;
 
 pub fn arbitrate(ctx: Context<ArbitrateBounty>, amount: u64) -> Result<()> {
     let bounty = &mut ctx.accounts.bounty;
+
+    if Clock::get()?.unix_timestamp < bounty.deadline_work.try_into().unwrap() {
+        return Err(BountyErrorCodes::BountyNotExpired.into());
+    }
 
     let tx = (
         &ctx.accounts.mint,
@@ -46,16 +51,18 @@ pub struct ArbitrateBounty<'info> {
         associated_token::authority = bounty,
     )]
     pub bounty_token_account: Account<'info, token::TokenAccount>,
+    /// CHECK: Pubkey check
     #[account(address = bounty.admin)]
-    pub creator: UncheckedAccount<'info>,
+    pub creator: AccountInfo<'info>,
     #[account(
         mut,
         associated_token::mint = mint,
         associated_token::authority = creator
     )]
     pub creator_token_account: Account<'info, token::TokenAccount>,
+    /// CHECK: Pubkey check
     #[account(constraint = bounty.workers.contains(&worker.key()))]
-    pub worker: UncheckedAccount<'info>,
+    pub worker: AccountInfo<'info>,
     #[account(
         mut,
         associated_token::mint = mint,

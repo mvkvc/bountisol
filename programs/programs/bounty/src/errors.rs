@@ -7,4 +7,10 @@ pub enum BountyErrorCodes {
 
     #[msg("This worker has already been assigned.")]
     DuplicateWorker,
+
+    #[msg("This bounty period has not expired yet.")]
+    BountyNotExpired,
+
+    #[msg("This arbitration period has not expired yet.")]
+    ArbitrationNotExpired,
 }
