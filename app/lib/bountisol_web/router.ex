@@ -20,13 +20,10 @@ defmodule BountisolWeb.Router do
   scope "/", BountisolWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    # live "/", HomeLive
+    live "/", HomeLive
+    # get "/", PageController, :home
 
     live "/bounties", BountyLive.Index, :index
-    live "/bounties/:id", BountyLive.Show, :show
-
-    live "/submissions/:id", SubmissionLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
@@ -72,28 +69,25 @@ defmodule BountisolWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{BountisolWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-
-      live "/bounties/new", BountyLive.Index, :new
-      live "/bounties/:id/edit", BountyLive.Index, :edit
-      live "/bounties/:id/show/edit", BountyLive.Show, :edit
-
-      live "/submissions", SubmissionLive.Index, :index
-      live "/submissions/new", SubmissionLive.Index, :new
-      live "/submissions/:id/edit", SubmissionLive.Index, :edit
-      live "/submissions/:id/show/edit", SubmissionLive.Show, :edit
+      # live "/users/settings", UserSettingsLive, :edit
+      # live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
+
+    live "/bounties/new", BountyLive.Index, :new
+    live "/bounties/:id", BountyLive.Show, :show
+    live "/bounties/:id/edit", BountyLive.Index, :edit
+    live "/bounties/:id/show/edit", BountyLive.Show, :edit
+
+    live "/submissions", SubmissionLive.Index, :index
+    live "/submissions/new", SubmissionLive.Index, :new
+    live "/submissions/:id", SubmissionLive.Show, :show
+    live "/submissions/:id/edit", SubmissionLive.Index, :edit
+    live "/submissions/:id/show/edit", SubmissionLive.Show, :edit
   end
 
   scope "/", BountisolWeb do
     pipe_through [:browser]
     delete "/users/log_out", UserSessionController, :delete
-
-    live "/payments/:id/send", PaymentLive.Send
-
-    live "/bounties", BountyLive.Index, :index
-    live "/bounties/:id", BountyLive.Show, :show
 
     live_session :current_user,
       on_mount: [{BountisolWeb.UserAuth, :mount_current_user}] do

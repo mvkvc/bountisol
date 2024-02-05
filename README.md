@@ -3,21 +3,16 @@
 [![deploy_app](https://github.com/mvkvc/bountisol/actions/workflows/deploy_app.yml/badge.svg)](https://github.com/mvkvc/bountisol/actions/workflows/deploy_app.yml)
 [![deploy_inference](https://github.com/mvkvc/bountisol/actions/workflows/deploy_inference.yml/badge.svg)](https://github.com/mvkvc/bountisol/actions/workflows/deploy_inference.yml)
 
-Fully on-chain bounties and payments on Solana.
+Fully transparent on-chain bounties on Solana.
 
 ## Links
 
 - https://bounti.sol
 - https://bountisol.xyz
-- https://bountisol-app.fly.dev
 
 ## Components
 
 - `app/`: Full-stack web application.
-- `dataset/`: LLM training dataset creation.
-- `frames/`: Farcaster Frames service.
-- `inference/`: LLM inference service.
-- `model/`: LLM training.
 - `programs/`: Solana programs.
 - `sh/`: Shell scripts.
 

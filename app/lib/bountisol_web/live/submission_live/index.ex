@@ -5,7 +5,8 @@ defmodule BountisolWeb.SubmissionLive.Index do
   alias Bountisol.Bounties.Submission
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
+    socket = assign_current_user(socket, session)
     current_user = socket.assigns.current_user
     {:ok, stream(socket, :submissions, Bounties.list_submissions_by_user(current_user.id))}
   end
@@ -44,5 +45,17 @@ defmodule BountisolWeb.SubmissionLive.Index do
     {:ok, _} = Bounties.delete_submission(submission)
 
     {:noreply, stream_delete(socket, :submissions, submission)}
+  end
+
+  defp assign_current_user(socket, session) do
+    case session do
+      %{"user_token" => user_token} ->
+        assign_new(socket, :current_user, fn ->
+          Accounts.get_user_by_session_token(user_token)
+        end)
+
+      %{} ->
+        assign_new(socket, :current_user, fn -> nil end)
+    end
   end
 end
