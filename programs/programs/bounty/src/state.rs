@@ -20,16 +20,14 @@ impl Bounty {
 
     pub fn new(
         bump: u8,
-        deadline_work: u64,
-        deadline_dispute: u64,
         admin: Pubkey,
         creator: Pubkey,
     ) -> Self {
         Self {
             bump,
             assets: vec![],
-            deadline_work,
-            deadline_dispute,
+            deadline_work: 0,
+            deadline_dispute: 0,
             admin,
             creator,
             workers: vec![],

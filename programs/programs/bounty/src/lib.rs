@@ -14,11 +14,9 @@ pub mod bounty {
 
     pub fn create(
         ctx: Context<CreateBounty>,
-        deadline_work: u64,
-        deadline_dispute: u64,
         admin: Pubkey,
     ) -> Result<()> {
-        instructions::create(ctx, deadline_work, deadline_dispute, admin)
+        instructions::create(ctx, admin)
     }
 
     pub fn assign(ctx: Context<AssignBounty>, worker: Pubkey) -> Result<()> {

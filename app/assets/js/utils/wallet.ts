@@ -4,11 +4,13 @@ import {
   // SystemProgram,
   // LAMPORTS_PER_SOL,
   // Transaction
+  clusterApiUrl
 } from "@solana/web3.js";
 import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
 
 export function getConnection() {
-  return new Connection(process.env.RPC_URL as string);
+  // return new Connection(process.env.RPC_URL as string);
+  return new Connection(clusterApiUrl("devnet"));
 }
 
 export async function getProvider() {

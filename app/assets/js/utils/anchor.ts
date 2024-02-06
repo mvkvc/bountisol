@@ -4,12 +4,13 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { IDL } from "../idl/bounty";
 import { getConnection, getProvider } from "./wallet";
 
-export function getProgramID() {
-  return new PublicKey(process.env.PROGRAM_ID as string);
-}
+// export function getProgramID() {
+//   // console.log("process.env.PROGRAM_ID", process.env.PROGRAM_ID);
+//   return new PublicKey(process.env.PROGRAM_ID?.toString() ?? new PublicKey("HF6z2ujyhfeBxDV3KQr8T8mCGo8ATzSK16Hf7swvX49v");
+// }
 
 export async function getBounty() {
-  return new Program(IDL, getProgramID(), await getProvider());
+  return new Program(IDL, new PublicKey("HF6z2ujyhfeBxDV3KQr8T8mCGo8ATzSK16Hf7swvX49v"), await getProvider());
 }
 
 // "name": "create",

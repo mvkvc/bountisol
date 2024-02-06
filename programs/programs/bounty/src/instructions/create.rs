@@ -5,14 +5,10 @@ use crate::state::*;
 
 pub fn create(
     ctx: Context<CreateBounty>,
-    deadline_work: u64,
-    deadline_dispute: u64,
     admin: Pubkey,
 ) -> Result<()> {
     ctx.accounts.bounty.set_inner(Bounty::new(
         ctx.bumps.bounty,
-        deadline_work,
-        deadline_dispute,
         admin,
         ctx.accounts.payer.key(),
     ));
@@ -20,8 +16,8 @@ pub fn create(
     emit!(BountyCreated {
         address: ctx.accounts.bounty.key(),
         bump: ctx.bumps.bounty,
-        deadline_work: deadline_work,
-        deadline_dispute: deadline_dispute,
+        deadline_work: 0,
+        deadline_dispute: 0,
         admin: admin,
         creator: ctx.accounts.payer.key()
     });
