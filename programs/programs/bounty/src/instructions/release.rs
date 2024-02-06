@@ -18,6 +18,7 @@ pub fn release(ctx: Context<ReleaseBounty>, amount: u64) -> Result<()> {
         Ok(_) => {
             emit!(BountyReleased {
                 address: ctx.accounts.bounty.key(),
+                authority: ctx.accounts.payer.key(),
                 to: ctx.accounts.worker.key(),
                 token: ctx.accounts.mint.key(),
                 amount: amount,
@@ -56,9 +57,9 @@ pub struct ReleaseBounty<'info> {
         associated_token::authority = worker
     )]
     pub worker_token_account: Account<'info, token::TokenAccount>,
-    #[account(mut, address = bounty.creator)]
+    #[account(mut, constraint = *payer.owner == bounty.admin || *payer.owner == bounty.creator)]
     pub payer: Signer<'info>,
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, token::Token>,
-    pub associated_token_program: Program<'info, associated_token::AssociatedToken>,
+    pub associated_token_program: Program<'info, associated_token::AssociatedToken>
 }

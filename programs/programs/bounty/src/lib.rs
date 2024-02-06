@@ -30,12 +30,4 @@ pub mod bounty {
     pub fn release(ctx: Context<ReleaseBounty>, amount: u64) -> Result<()> {
         instructions::release(ctx, amount)
     }
-
-    pub fn arbitrate(ctx: Context<ArbitrateBounty>, amount: u64) -> Result<()> {
-        instructions::arbitrate(ctx, amount)
-    }
-
-    pub fn reclaim(ctx: Context<ReclaimBounty>, amount: u64) -> Result<()> {
-        instructions::reclaim(ctx, amount)
-    }
 }

@@ -4,8 +4,6 @@ use anchor_lang::prelude::*;
 pub struct BountyCreated {
     pub address: Pubkey,
     pub bump: u8,
-    pub deadline_work: u64,
-    pub deadline_dispute: u64,
     pub admin: Pubkey,
     pub creator: Pubkey,
 }
@@ -27,22 +25,7 @@ pub struct BountyFunded {
 #[event]
 pub struct BountyReleased {
     pub address: Pubkey,
-    pub to: Pubkey,
-    pub token: Pubkey,
-    pub amount: u64,
-}
-
-#[event]
-pub struct BountyArbitrated {
-    pub address: Pubkey,
-    pub to: Pubkey,
-    pub token: Pubkey,
-    pub amount: u64,
-}
-
-#[event]
-pub struct BountyReclaimed {
-    pub address: Pubkey,
+    pub authority: Pubkey,
     pub to: Pubkey,
     pub token: Pubkey,
     pub amount: u64,

@@ -7,8 +7,6 @@ use crate::errors::*;
 pub struct Bounty {
     pub bump: u8,
     pub assets: Vec<Pubkey>,
-    pub deadline_work: u64,
-    pub deadline_dispute: u64,
     pub admin: Pubkey,
     pub creator: Pubkey,
     pub workers: Vec<Pubkey>,
@@ -26,8 +24,6 @@ impl Bounty {
         Self {
             bump,
             assets: vec![],
-            deadline_work: 0,
-            deadline_dispute: 0,
             admin,
             creator,
             workers: vec![],

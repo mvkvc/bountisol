@@ -16,8 +16,6 @@ pub fn create(
     emit!(BountyCreated {
         address: ctx.accounts.bounty.key(),
         bump: ctx.bumps.bounty,
-        deadline_work: 0,
-        deadline_dispute: 0,
         admin: admin,
         creator: ctx.accounts.payer.key()
     });

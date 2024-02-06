@@ -28,7 +28,7 @@ pub struct AssignBounty<'info> {
         bump = bounty.bump,
     )]
     pub bounty: Account<'info, Bounty>,
-    #[account(mut, address = bounty.creator)]
+    #[account(mut, constraint = *payer.owner == bounty.admin || *payer.owner == bounty.creator)]
     pub payer: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
