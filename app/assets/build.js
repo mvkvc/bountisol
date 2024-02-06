@@ -22,7 +22,7 @@ const plugins = [
 
 // Define esbuild options
 let opts = {
-  entryPoints: ["out/app.js"],
+  entryPoints: ["out/js/app.js"],
   bundle: true,
   logLevel: "info",
   target: "es2020",

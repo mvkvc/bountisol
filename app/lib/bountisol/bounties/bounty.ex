@@ -11,6 +11,8 @@ defmodule Bountisol.Bounties.Bounty do
     field :tokens, :map
     field :gated, :boolean, default: false
     field :deadline, :utc_datetime
+    field :account, :string
+    field :status, :string, default: "not_deployed"
 
     belongs_to :user, User
     has_many :submissions, Submission
@@ -21,7 +23,7 @@ defmodule Bountisol.Bounties.Bounty do
   @doc false
   def changeset(bounty, attrs) do
     bounty
-    |> cast(attrs, [:title, :summary, :requirements, :tokens, :gated, :deadline])
+    |> cast(attrs, [:title, :summary, :requirements, :tokens, :gated, :deadline, :user_id])
     |> validate_required([:title, :summary, :requirements, :gated])
   end
 end

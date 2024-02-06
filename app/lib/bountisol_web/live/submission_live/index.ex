@@ -3,6 +3,7 @@ defmodule BountisolWeb.SubmissionLive.Index do
 
   alias Bountisol.Bounties
   alias Bountisol.Bounties.Submission
+  alias Bountisol.Accounts
 
   @impl true
   def mount(_params, session, socket) do
@@ -22,10 +23,17 @@ defmodule BountisolWeb.SubmissionLive.Index do
     |> assign(:submission, Bounties.get_submission!(id))
   end
 
-  defp apply_action(socket, :new, _params) do
+  defp apply_action(socket, :new, %{"bounty_id" => bounty_id}) do
+    current_user = socket.assigns.current_user
+
+    submission = %Submission{
+      user_id: current_user.id,
+      bounty_id: bounty_id
+    }
+
     socket
     |> assign(:page_title, "New Submission")
-    |> assign(:submission, %Submission{})
+    |> assign(:submission, submission)
   end
 
   defp apply_action(socket, :index, _params) do

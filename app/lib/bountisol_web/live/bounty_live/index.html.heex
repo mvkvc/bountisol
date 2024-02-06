@@ -1,9 +1,11 @@
 <.header>
   Listing Bounties
   <:actions>
-    <.link patch={~p"/bounties/new"}>
-      <.button>New Bounty</.button>
-    </.link>
+    <%= if @current_user do %>
+      <.link patch={~p"/bounties/new"}>
+        <.button>New Bounty</.button>
+      </.link>
+    <% end %>
   </:actions>
 </.header>
 

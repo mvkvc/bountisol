@@ -19,6 +19,7 @@ defmodule BountisolWeb.BountyLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:user_id]} type="text" readonly="true" />
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:summary]} type="text" label="Summary" />
         <.input field={@form[:requirements]} type="text" label="Requirements" />

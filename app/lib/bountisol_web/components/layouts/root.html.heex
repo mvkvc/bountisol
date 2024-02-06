@@ -33,25 +33,25 @@
         <summary class="m-1 btn">Menu</summary>
         <ul class="p-2 space-y-1 shadow dropdown-content bg-base-100 rounded-box">
           <li>
-            <.link href={~p"/"} class="btn w-28">
+            <.link navigate={~p"/"} class="btn w-28">
               Home
             </.link>
           </li>
           <li>
-            <.link href={~p"/bounties"} class="btn w-28">
+            <.link navigate={~p"/bounties"} class="btn w-28">
               Bounties
             </.link>
           </li>
           <li>
-            <.link href={~p"/submissions"} class="btn w-28">
+            <.link navigate={~p"/submissions"} class="btn w-28">
               Submissions
             </.link>
           </li>
-          <%!-- <li>
-            <.link href={~p"/users/settings"} class="btn w-28">
+          <li>
+            <.link navigate={~p"/users/settings"} class="btn w-28">
               Settings
             </.link>
-          </li> --%>
+          </li>
         </ul>
       </details>
       <li>

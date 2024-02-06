@@ -14,7 +14,7 @@ defmodule Bountisol.Bounties.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:data])
+    |> cast(attrs, [:data, :bounty_id])
     |> validate_required([])
   end
 end

@@ -16,7 +16,8 @@ defmodule Bountisol.Bounties.Submission do
   @doc false
   def changeset(submission, attrs) do
     submission
-    |> cast(attrs, [:content])
-    |> validate_required([:content])
+    |> cast(attrs, [:content, :user_id, :bounty_id])
+    |> validate_required([:content, :user_id, :bounty_id])
+    |> unique_constraint([:bounty_id, :user_id], message: "already submitted")
   end
 end

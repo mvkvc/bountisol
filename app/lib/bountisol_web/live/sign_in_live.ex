@@ -112,7 +112,7 @@ defmodule BountisolWeb.SignInLive do
   end
 
   @impl true
-  def handle_event("verify-signature", %{"signature" => signature, "message" => message} = payload, socket) do
+  def handle_event("verify-signature", %{"signature" => signature, "message" => message}, socket) do
     {:noreply,
      socket
      |> assign(signature: signature)

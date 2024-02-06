@@ -12,5 +12,6 @@ defmodule Bountisol.Repo.Migrations.CreateSubmissions do
 
     create index(:submissions, [:user_id])
     create index(:submissions, [:bounty_id])
+    create unique_index(:submissions, [:bounty_id, :user_id])
   end
 end

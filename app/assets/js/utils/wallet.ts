@@ -8,11 +8,7 @@ import {
 import { Header, Payload, SIWS } from "@web3auth/sign-in-with-solana";
 
 export function getConnection() {
-  return new Connection(
-    process.env.NETWORK_URL
-      ? process.env.NETWORK_URL
-      : "https://api.mainnet-beta.solana.com",
-  );
+  return new Connection(process.env.RPC_URL as string);
 }
 
 export async function getProvider() {

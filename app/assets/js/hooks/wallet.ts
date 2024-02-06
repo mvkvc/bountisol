@@ -1,8 +1,11 @@
 import { createSolanaMessage, getProvider } from "../utils/wallet";
-import { Bounty } from "../idl/bounty";
-// import { getBounty } from "../utils/anchor";
+// import { Bounty } from "../idl/bounty";
+// import { SystemProgram } from "@coral-xyz/anchor";
+import { PublicKey, SystemProgram } from "@solana/web3.js";
+import { getBounty } from "../utils/anchor";
+import { getTimePlus } from "../utils/time";
 
-export const Wallet: any = {
+const Wallet = {
   mounted() {
     window.addEventListener("phx:signature", async (e: any) => {
       const { address, statement, nonce } = e.detail;
@@ -18,24 +21,18 @@ export const Wallet: any = {
           "utf8",
         );
 
+        console.log("Message", message)
+        console.log("Signed message:", signedMessage);
+
         (this as any).pushEventTo("#wallet", "verify-signature", {
           message: JSON.stringify(message),
-          signature: JSON.stringify(signedMessage.signature.data),
+          signature: JSON.stringify(signedMessage.signature),
         });
       } catch (e) {
         console.error("Error signing message:", e);
       }
     });
-
-    // window.addEventListener("phx:bounty-create", async (e: any) => {
-    //   const {} = e.detail;
-
-    //   try {
-    //     const bounty: Bounty = getBounty();
-    //     bounty.create();
-    //   } catch (e) {
-    //     console.error("Error:", e);
-    //   }
-    // });
-  },
+  }
 };
+
+export default Wallet;

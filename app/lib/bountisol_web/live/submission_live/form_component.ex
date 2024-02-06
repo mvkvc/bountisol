@@ -19,6 +19,8 @@ defmodule BountisolWeb.SubmissionLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:bounty_id]} type="text" readonly="true" />
+        <.input field={@form[:user_id]} type="text" readonly="true" />
         <.input field={@form[:content]} type="text" label="Content" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Submission</.button>
@@ -68,6 +70,7 @@ defmodule BountisolWeb.SubmissionLive.FormComponent do
   end
 
   defp save_submission(socket, :new, submission_params) do
+    IO.inspect(submission_params, label: "submission_params")
     case Bounties.create_submission(submission_params) do
       {:ok, submission} ->
         notify_parent({:saved, submission})
